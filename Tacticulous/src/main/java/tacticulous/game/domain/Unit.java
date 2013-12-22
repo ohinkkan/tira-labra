@@ -16,9 +16,26 @@ public class Unit {
     private int defense;
     private int attack;
     private int hitPoints;
-    private char nimi;
+    private String name;
+    private int x;
+    private int y;
+    private boolean notAttacked;
+    private boolean notMoved;
 
-    public Unit(int speed, int defense, int attack, int hitPoints, char nimi) {
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setXY(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    public Unit(int speed, int defense, int attack, int hitPoints, String name) {
         if (speed < 0 || hitPoints < 1) {
             throw new IllegalArgumentException();
         }
@@ -26,19 +43,29 @@ public class Unit {
         this.defense = defense;
         this.attack = attack;
         this.hitPoints = hitPoints;
-        this.nimi = nimi;
+        this.name = name;
+        this.notAttacked = true;
+        this.notMoved = true;
     }
 
-    // returns -1 if attack misses, 0 if it hits, 1 if it kills target
-    public int attack(Unit target, int dieRoll) {
-        int result = this.attack + dieRoll - target.getDefense();
-        if (result > 0) {
-            if (target.isHitAndDies()) {
-                return 1;
-            }
-            return 0;
-        }
-        return -1;
+    public boolean isNotAttacked() {
+        return notAttacked;
+    }
+
+    public void setNotAttacked(boolean notAttacked) {
+        this.notAttacked = notAttacked;
+    }
+
+    public boolean isNotMoved() {
+        return notMoved;
+    }
+
+    public void setNotMoved(boolean notMoved) {
+        this.notMoved = notMoved;
+    }
+
+    public int getAttack() {
+        return attack;
     }
 
     public int getHitPoints() {
@@ -61,7 +88,7 @@ public class Unit {
         return speed;
     }
 
-    public char getNimi() {
-        return nimi;
+    public String getNimi() {
+        return name;
     }
 }

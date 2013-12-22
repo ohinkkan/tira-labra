@@ -21,35 +21,32 @@ public class UnitTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void negativeSpeedNotAllowed() {
-        unit = new Unit(-1, 1, 1, 1, 'A');
+        unit = new Unit(-1, 1, 1, 1, "A");
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void zeroStartingHitpointsNotAllowed() {
-        unit = new Unit(1, 1, 1, 0, 'A');
+        unit = new Unit(1, 1, 1, 0, "A");
     }
 
     @Test
     public void hitRemovesHealth() {
-        unit = new Unit(1, 1, 1, 1, 'A');
-        Unit unit2 = new Unit(1, 1, 1, 1, 'B');
-        unit.attack(unit2, 1);
-        assertEquals(0, unit2.getHitPoints());
+        unit = new Unit(1, 1, 1, 2, "A");
+        unit.isHitAndDies();
+        assertEquals(1, unit.getHitPoints());
     }
 
     @Test
-    public void missDoesNotRemoveHealth() {
-        unit = new Unit(1, 1, 1, 1, 'A');
-        Unit unit2 = new Unit(1, 1, 1, 1, 'B');
-        unit.attack(unit2, -1);
-        assertEquals(1, unit2.getHitPoints());
+    public void killsWhenHealthAtZero() {
+        unit = new Unit(1, 1, 1, 1, "A");
+        assertEquals(true, unit.isHitAndDies());
     }
     
     @Test
-    public void unitDiesAtZeroHitpoints() {
-        unit = new Unit(1, 1, 1, 1, 'A');
-        Unit unit2 = new Unit(1, 1, 1, 1, 'B');
-        assertEquals(1, unit.attack(unit2, 1));
+    public void noKillIfHealthAboveZero() {
+        unit = new Unit(1, 1, 1, 2, "A");
+        assertEquals(false, unit.isHitAndDies());
     }
+    
     
 }

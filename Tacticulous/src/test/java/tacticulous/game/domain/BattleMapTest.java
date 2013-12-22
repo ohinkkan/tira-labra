@@ -30,73 +30,29 @@ public class BattleMapTest {
     @Test(expected = IllegalArgumentException.class)
     public void legalSizeForMap() {
         die = new FixedDie(5);
-        map = new BattleMap(0, die);
+        map = new BattleMap(0, die, 0);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void legalRandomTerrainForMap() {
+        die = new FixedDie(5);
+        map = new BattleMap(0, die, -1);
     }
 
     @Test
     public void unitPlacingWorks() {
         die = new FixedDie(5);
-        map = new BattleMap(10, die);
-        unit = new Unit(1, 1, 1, 1, 'A');
+        map = new BattleMap(10, die, 0);
+        unit = new Unit(1, 1, 1, 1, "A");
         map.getTile(0, 0).setUnit(unit);
         assertEquals(unit, map.getTile(0, 0).getUnit());
     }
 
     @Test
-    public void legalMoveWorks() {
+    public void legitCheckWorks() {
         die = new FixedDie(5);
-        map = new BattleMap(10, die);
-        unit = new Unit(1, 1, 1, 1, 'A');
-        map.getTile(0, 0).setUnit(unit);
-        map.move(0, 0, 5, 5);
-        assertEquals(null, map.getTile(0, 0).getUnit());
-        assertEquals(unit, map.getTile(5, 5).getUnit());
-    }
+        map = new BattleMap(10, die, 1);
+        assertTrue(map.legit(0, 5, 9) && !map.legit(-1) && !map.legit(10));
 
-    @Test
-    public void illegalMoveDoesNotWork() {
-        die = new FixedDie(5);
-        map = new BattleMap(10, die);
-        unit = new Unit(1, 1, 1, 1, 'A');
-        map.getTile(0, 0).setUnit(unit);
-        map.move(0, 0, 11, 5);
-        assertEquals(unit, map.getTile(0, 0).getUnit());
-        assertEquals(null, map.getTile(5, 5).getUnit());
-    }
-
-    @Test
-    public void lethalAttackRemovesTarget() {
-        die = new FixedDie(5);
-        map = new BattleMap(10, die);
-        unit = new Unit(1, 1, 1, 1, 'A');
-        Unit unit2 = new Unit(1, 1, 1, 1, 'B');
-        map.getTile(0, 0).setUnit(unit);
-        map.getTile(1, 1).setUnit(unit2);
-        map.attack(0, 0, 1, 1);
-        assertEquals(null, map.getTile(1, 1).getUnit());
-    }
-
-    @Test
-    public void missingAttackDoesNotRemoveTarget() {
-        die = new FixedDie(-2);
-        map = new BattleMap(10, die);
-        unit = new Unit(1, 1, 1, 1, 'A');
-        Unit unit2 = new Unit(1, 1, 1, 1, 'B');
-        map.getTile(0, 0).setUnit(unit);
-        map.getTile(1, 1).setUnit(unit2);
-        map.attack(0, 0, 1, 1);
-        assertEquals(unit2, map.getTile(1, 1).getUnit());
-    }
-
-    @Test
-    public void nonLethalAttackDoesNotRemoveTarget() {
-        die = new FixedDie(2);
-        map = new BattleMap(10, die);
-        unit = new Unit(1, 1, 1, 1, 'A');
-        Unit unit2 = new Unit(1, 1, 1, 5, 'B');
-        map.getTile(0, 0).setUnit(unit);
-        map.getTile(1, 1).setUnit(unit2);
-        map.attack(0, 0, 1, 1);
-        assertEquals(unit2, map.getTile(1, 1).getUnit());
     }
 }
