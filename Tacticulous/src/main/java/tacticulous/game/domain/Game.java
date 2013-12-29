@@ -45,7 +45,6 @@ public class Game {
 
     public void run() {
         while (true) {
-            map.drawMap();
             for (UserInterface current : playerUIs) {
                 current.takeTurn();
             }

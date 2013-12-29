@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite failures="0" time="0.098" errors="0" skipped="0" tests="11" name="tacticulous.game.commands.CommandTest">
+<testsuite failures="0" time="0.099" errors="0" skipped="0" tests="11" name="tacticulous.game.commands.CommandTest">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.7.0_45\jre\bin"/>
@@ -61,15 +61,15 @@
     <property name="sun.desktop" value="windows"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase time="0.006" classname="tacticulous.game.commands.CommandTest" name="CannotMoveIfTargetTileOccupied"/>
-  <testcase time="0" classname="tacticulous.game.commands.CommandTest" name="missingAttackDoesNotRemoveTarget"/>
-  <testcase time="0.001" classname="tacticulous.game.commands.CommandTest" name="nonLethalAttackDoesNotRemoveTarget"/>
-  <testcase time="0" classname="tacticulous.game.commands.CommandTest" name="illegalMoveDoesNotWork"/>
+  <testcase time="0.006" classname="tacticulous.game.commands.CommandTest" name="legalMoveWorks"/>
+  <testcase time="0.001" classname="tacticulous.game.commands.CommandTest" name="illegalMoveDoesNotWork"/>
   <testcase time="0" classname="tacticulous.game.commands.CommandTest" name="illegalAttackDoesNotWork"/>
   <testcase time="0" classname="tacticulous.game.commands.CommandTest" name="mustHaveTarget"/>
   <testcase time="0" classname="tacticulous.game.commands.CommandTest" name="hitRemovesHealth"/>
   <testcase time="0" classname="tacticulous.game.commands.CommandTest" name="missDoesNotRemoveHealth"/>
-  <testcase time="0.001" classname="tacticulous.game.commands.CommandTest" name="unitDiesAtZeroHitpoints"/>
-  <testcase time="0" classname="tacticulous.game.commands.CommandTest" name="lethalAttackRemovesTarget"/>
-  <testcase time="0" classname="tacticulous.game.commands.CommandTest" name="legalMoveWorks"/>
+  <testcase time="0" classname="tacticulous.game.commands.CommandTest" name="unitDiesAtZeroHitpoints"/>
+  <testcase time="0.001" classname="tacticulous.game.commands.CommandTest" name="lethalAttackRemovesTarget"/>
+  <testcase time="0" classname="tacticulous.game.commands.CommandTest" name="CannotMoveIfTargetTileOccupied"/>
+  <testcase time="0" classname="tacticulous.game.commands.CommandTest" name="missingAttackDoesNotRemoveTarget"/>
+  <testcase time="0.001" classname="tacticulous.game.commands.CommandTest" name="nonLethalAttackDoesNotRemoveTarget"/>
 </testsuite>
