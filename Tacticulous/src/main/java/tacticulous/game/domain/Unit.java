@@ -15,12 +15,14 @@ public class Unit {
     private int speed;
     private int defense;
     private int attack;
+    private int range;
     private int hitPoints;
     private String name;
     private int x;
     private int y;
     private boolean notAttacked;
     private boolean notMoved;
+    private Player player;
 
     public int getX() {
         return x;
@@ -44,24 +46,54 @@ public class Unit {
         this.attack = attack;
         this.hitPoints = hitPoints;
         this.name = name;
+        this.range = 1;
         this.notAttacked = true;
         this.notMoved = true;
+        this.player = null;
     }
 
-    public boolean isNotAttacked() {
+    public Player getPlayer() {
+        return player;
+    }
+
+    public Unit(int speed, int defense, int attack, int range, int hitPoints, String name, Player player) {
+        if (speed < 0 || hitPoints < 1) {
+            throw new IllegalArgumentException();
+        }
+        this.speed = speed;
+        this.defense = defense;
+        this.attack = attack;
+        this.hitPoints = hitPoints;
+        this.name = name;
+        this.range = range;
+        this.notAttacked = true;
+        this.notMoved = true;
+        this.player = player;
+    }
+
+    public int getRange() {
+        return range;
+    }
+
+    public boolean hasNotAttacked() {
         return notAttacked;
     }
 
-    public void setNotAttacked(boolean notAttacked) {
-        this.notAttacked = notAttacked;
+    public void attacks() {
+        this.notAttacked = false;
     }
 
-    public boolean isNotMoved() {
+    public boolean hasNotMoved() {
         return notMoved;
     }
 
-    public void setNotMoved(boolean notMoved) {
-        this.notMoved = notMoved;
+    public void moves() {
+        this.notMoved = false;
+    }
+
+    public void newRound() {
+        this.notAttacked = true;
+        this.notMoved = true;
     }
 
     public int getAttack() {

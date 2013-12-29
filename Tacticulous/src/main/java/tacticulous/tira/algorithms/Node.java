@@ -15,6 +15,15 @@ public class Node implements Comparable<Node>{
     private int moveCost;
     private int x;
     private int y;
+    private int heapIndex = 0;
+
+    public int getHeapIndex() {
+        return heapIndex;
+    }
+
+    public void setHeapIndex(int heapIndex) {
+        this.heapIndex = heapIndex;
+    }
 
     public int getMoveCost() {
         return moveCost;

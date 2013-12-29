@@ -39,6 +39,32 @@ public class BattleMapTest {
         map = new BattleMap(0, die, -1);
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void legalFixedTerrainForMap() {
+        int[][] intMap = new int[][]{
+            {3, 4, 1, 5, 2},
+            {1, 3, 4, 7, 8},
+            {4, 7, 8, 9, 8},
+            {1, 2, 1, 4, 6},
+            {3, 4, 3, 1}
+        };
+        die = new FixedDie(5);
+        map = new BattleMap(intMap, die);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void legalFixedTerrainForMap2() {
+        int[][] intMap = new int[][]{
+            {3, 4, 1, 5, 2},
+            {1, 3, 4, 7, 8},
+            {4, 7, 8, 9, 8},
+            {1, 2, 1, 4, 0},
+            {3, 4, 3, 1, 4}
+        };
+        die = new FixedDie(5);
+        map = new BattleMap(intMap, die);
+    }
+
     @Test
     public void unitPlacingWorks() {
         die = new FixedDie(5);

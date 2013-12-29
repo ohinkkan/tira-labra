@@ -16,9 +16,9 @@ public abstract class PathFind {
 
     /**
      *
-     * Uses Dijkstra's algorithm to calculate the distances 
-     * to other nodes through shortests paths
-     * from starting node. Paths themselves are not stored. 
+     * Uses Dijkstra's algorithm to calculate the distances to other nodes
+     * through shortests paths from starting node. Paths themselves are not
+     * stored.
      *
      * @param map weights(moveCosts) for nodes are pulled from here
      * @param startX
@@ -31,20 +31,25 @@ public abstract class PathFind {
      * tacticulous.game.domain.BattleMap)
      *
      * speedRange
-     * @return Node array with distances of shortests paths from start
-     * tile.
+     * @return Node array with distances of shortests paths from start tile.
      */
     public static Node[][] dijkstraWithHeap(BattleMap map, int startX, int startY, int range) {
         Node[][] moveCosts = initialiseSingleSource(map.size(), startX, startY, map);
-        PriorityQueue<Node> heapPlaceholder = new PriorityQueue();
+//        PriorityQueue<Node> heapPlaceholder = new PriorityQueue();
+        MinHeap heap = new MinHeap(map.size());
         for (int i = 0; i < moveCosts.length; i++) {
             for (int j = 0; j < moveCosts.length; j++) {
-                heapPlaceholder.add(moveCosts[i][j]);
+//                heapPlaceholder.add(moveCosts[i][j]);
+                heap.insert(moveCosts[i][j]);
             }
         }
-        while (!heapPlaceholder.isEmpty()) {
-            Node u = heapPlaceholder.poll();
-            adjacents(u, moveCosts, heapPlaceholder);
+//        while (!heapPlaceholder.isEmpty()) {
+//            Node u = heapPlaceholder.poll();
+//            adjacents(u, moveCosts, heapPlaceholder);
+//        }
+        while (!heap.isEmpty()) {
+            Node u = heap.delMin();
+            adjacents(u, moveCosts, heap);
         }
         return moveCosts;
     }
@@ -52,7 +57,7 @@ public abstract class PathFind {
     /**
      * Checks which nodes adjacent to node u are valid (= within map borders)
      * and relaxes them.
-     * 
+     *
      * @param u
      * @param map
      * @param notDone nodes(tiles) which have not been examined yet.
@@ -77,25 +82,42 @@ public abstract class PathFind {
         }
     }
 
+    private static void adjacents(Node u, Node[][] map, MinHeap notDone) {
+        Node v;
+        if (legit(map, u.getX() - 1, u.getY())) {
+            v = map[u.getX() - 1][u.getY()];
+            relax(u, v, v.getMoveCost(), notDone);
+        }
+        if (legit(map, u.getX() + 1, u.getY())) {
+            v = map[u.getX() + 1][u.getY()];
+            relax(u, v, v.getMoveCost(), notDone);
+        }
+        if (legit(map, u.getX(), u.getY() - 1)) {
+            v = map[u.getX()][u.getY() - 1];
+            relax(u, v, v.getMoveCost(), notDone);
+        }
+        if (legit(map, u.getX(), u.getY() + 1)) {
+            v = map[u.getX()][u.getY() + 1];
+            relax(u, v, v.getMoveCost(), notDone);
+        }
+    }
+
     /**
      * Checks if given coordinates are within array.
-     * 
+     *
      * @param map
      * @param x
      * @param y
      * @return True if within.
      */
     private static boolean legit(Node[][] map, int x, int y) {
-        if (x >= 0 && y >= 0 && x < map.length && y < map[0].length) {
-            return true;
-        }
-        return false;
+        return x >= 0 && y >= 0 && x < map.length && y < map[0].length;
     }
 
     /**
      * Standard relax used by shortest path algorithms, except that edge weight
      * is target node's weight(moveCost).
-     * 
+     *
      * @param u from-node
      * @param v to-node
      * @param w weight of edge, that is, moveCost of to-node v.
@@ -106,17 +128,25 @@ public abstract class PathFind {
             v.setDistance(u.getDistance() + w);
             notDone.remove(v);
             notDone.add(v);
+
+        }
+    }
+
+    private static void relax(Node u, Node v, int w, MinHeap notDone) {
+        if (v.getDistance() > u.getDistance() + w) {
+            v.setDistance(u.getDistance() + w);
+            notDone.update(v);
         }
     }
 
     /**
      * Initializes and constructs the node map used by dijkstraWithHeap.
-     * 
+     *
      * @param size
      * @param startX
      * @param startY
      * @param map battlemap
-     * @return Node array, all distances are 1000 except for starting node, 
+     * @return Node array, all distances are 1000 except for starting node,
      * weights(moveCosts) are pulled from battlemap.
      */
     private static Node[][] initialiseSingleSource(int size, int startX, int startY, BattleMap map) {

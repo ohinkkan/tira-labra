@@ -26,11 +26,27 @@ public class BattleMap {
         }
         this.die = die;
         Die randomTerrain = new DieRoller(random);
-        
+
         this.battlemap = new Tile[size][size];
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
-                battlemap[i][j] = new Tile(randomTerrain.roll()+1, i, j);
+                battlemap[i][j] = new Tile(randomTerrain.roll() + 1, i, j);
+            }
+        }
+    }
+
+    public BattleMap(int[][] map, Die die) {
+        this.die = die;
+        this.battlemap = new Tile[map.length][map.length];
+        for (int i = 0; i < battlemap.length; i++) {
+            if (map.length != map[i].length) {
+                throw new IllegalArgumentException();
+            }
+            for (int j = 0; j < battlemap.length; j++) {
+                if (map[i][j] < 1) {
+                    throw new IllegalArgumentException();
+                }
+                battlemap[i][j] = new Tile(map[i][j], i, j);
             }
         }
     }

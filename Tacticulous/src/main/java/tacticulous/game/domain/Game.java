@@ -24,6 +24,8 @@ public class Game {
         playerUIs = new ArrayList();
         playerUIs.add(new HumanPlayer(new Player("Player 1"), this));
         playerUIs.add(new HumanPlayer(new Player("Player 2"), this));
+        playerUIs.get(0).getPlayer().testUnits();
+        playerUIs.get(1).getPlayer().testUnits();
         this.map = new BattleMap(10, die, 3);
         placeUnits(playerUIs.get(0).getPlayer().getUnits());
         placeUnits(playerUIs.get(1).getPlayer().getUnits());
@@ -47,7 +49,7 @@ public class Game {
             for (UserInterface current : playerUIs) {
                 current.takeTurn();
             }
-            break;
+            
         }
     }
 
