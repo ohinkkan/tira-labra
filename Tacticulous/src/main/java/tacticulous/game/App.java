@@ -2,14 +2,19 @@ package tacticulous.game;
 
 import tacticulous.game.domain.Game;
 
-
-
 /**
- * Hello world!
+ * Starts the game.
  *
+ * @author O
  */
 public class App 
 {
+
+    /**
+     * Starts the game.
+     * 
+     * @param args
+     */
     public static void main( String[] args )
     {
         Game game = new Game();

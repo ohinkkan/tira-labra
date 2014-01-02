@@ -37,6 +37,13 @@
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>cobertura-maven-plugin</artifactId>
                 <version>2.6</version>
+                <configuration>
+                    <instrumentation>
+                        <excludes>
+                            <exclude>**/obsoleteandnotuptodate/*</exclude>
+                        </excludes>
+                    </instrumentation>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.pitest</groupId>

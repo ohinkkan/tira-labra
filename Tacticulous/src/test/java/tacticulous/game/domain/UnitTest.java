@@ -1,13 +1,5 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package tacticulous.game.domain;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -41,12 +33,27 @@ public class UnitTest {
         unit = new Unit(1, 1, 1, 1, "A");
         assertEquals(true, unit.isHitAndDies());
     }
-    
+
     @Test
     public void noKillIfHealthAboveZero() {
         unit = new Unit(1, 1, 1, 2, "A");
         assertEquals(false, unit.isHitAndDies());
     }
-    
-    
+
+    @Test
+    public void doneForTheRoundAndNewRoundWork() {
+        Player player = new Player("A");
+        player.testUnits();
+        player.newRound();
+        unit = player.activeUnit();
+        assertTrue(!unit.doneForTheRound());
+        unit.attacks();
+        assertTrue(!unit.doneForTheRound());
+        unit.moves();
+        assertTrue(unit.doneForTheRound());
+        unit.newRound();
+        assertTrue(unit.hasNotAttacked());
+        assertTrue(unit.hasNotMoved());
+    }
+
 }

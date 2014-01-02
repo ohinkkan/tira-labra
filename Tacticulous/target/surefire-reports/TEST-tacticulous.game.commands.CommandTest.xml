@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite failures="0" time="0.099" errors="0" skipped="0" tests="11" name="tacticulous.game.commands.CommandTest">
+<testsuite failures="0" time="0.123" errors="0" skipped="0" tests="15" name="tacticulous.game.commands.CommandTest">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.7.0_45\jre\bin"/>
@@ -26,6 +26,7 @@
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="user.variant" value=""/>
     <property name="os.name" value="Windows 7"/>
+    <property name="net.sourceforge.cobertura.datafile" value="C:\TiraLabra\tira-labra\Tacticulous\target\cobertura\cobertura.ser"/>
     <property name="maven.ext.class.path" value="C:\Program Files\NetBeans 7.4\java\maven-nblib\netbeans-eventspy.jar"/>
     <property name="classworlds.conf" value="C:\Program Files\NetBeans 7.4\java\maven\bin\m2.conf"/>
     <property name="sun.jnu.encoding" value="Cp1252"/>
@@ -44,7 +45,7 @@
     <property name="java.vm.specification.version" value="1.7"/>
     <property name="sun.arch.data.model" value="64"/>
     <property name="java.home" value="C:\Program Files\Java\jdk1.7.0_45\jre"/>
-    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher -Dmaven.ext.class.path=C:\Program Files\NetBeans 7.4\java\maven-nblib\netbeans-eventspy.jar test"/>
+    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher -Dmaven.ext.class.path=C:\Program Files\NetBeans 7.4\java\maven-nblib\netbeans-eventspy.jar cobertura:cobertura"/>
     <property name="java.specification.vendor" value="Oracle Corporation"/>
     <property name="user.language" value="fi"/>
     <property name="awt.toolkit" value="sun.awt.windows.WToolkit"/>
@@ -58,18 +59,23 @@
     <property name="java.vendor.url.bug" value="http://bugreport.sun.com/bugreport/"/>
     <property name="sun.cpu.endian" value="little"/>
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
+    <property name="project.build.outputDirectory" value="C:\TiraLabra\tira-labra\Tacticulous\target\generated-classes\cobertura"/>
     <property name="sun.desktop" value="windows"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase time="0.006" classname="tacticulous.game.commands.CommandTest" name="legalMoveWorks"/>
-  <testcase time="0.001" classname="tacticulous.game.commands.CommandTest" name="illegalMoveDoesNotWork"/>
-  <testcase time="0" classname="tacticulous.game.commands.CommandTest" name="illegalAttackDoesNotWork"/>
+  <testcase time="0.026" classname="tacticulous.game.commands.CommandTest" name="CannotMoveIfTargetTileOccupied"/>
+  <testcase time="0" classname="tacticulous.game.commands.CommandTest" name="targetMustBeWithinMapBoundaries"/>
+  <testcase time="0.004" classname="tacticulous.game.commands.CommandTest" name="missingAttackDoesNotRemoveTarget"/>
+  <testcase time="0" classname="tacticulous.game.commands.CommandTest" name="nonLethalAttackDoesNotRemoveTarget"/>
+  <testcase time="0" classname="tacticulous.game.commands.CommandTest" name="legalMoveWorks"/>
+  <testcase time="0" classname="tacticulous.game.commands.CommandTest" name="outOfBoundsMoveDoesNotWork"/>
+  <testcase time="0" classname="tacticulous.game.commands.CommandTest" name="tooSlowMoveDoesNotWork"/>
   <testcase time="0" classname="tacticulous.game.commands.CommandTest" name="mustHaveTarget"/>
+  <testcase time="0" classname="tacticulous.game.commands.CommandTest" name="cannotAttackItself"/>
+  <testcase time="0" classname="tacticulous.game.commands.CommandTest" name="targetNotInRange"/>
   <testcase time="0" classname="tacticulous.game.commands.CommandTest" name="hitRemovesHealth"/>
   <testcase time="0" classname="tacticulous.game.commands.CommandTest" name="missDoesNotRemoveHealth"/>
   <testcase time="0" classname="tacticulous.game.commands.CommandTest" name="unitDiesAtZeroHitpoints"/>
-  <testcase time="0.001" classname="tacticulous.game.commands.CommandTest" name="lethalAttackRemovesTarget"/>
-  <testcase time="0" classname="tacticulous.game.commands.CommandTest" name="CannotMoveIfTargetTileOccupied"/>
-  <testcase time="0" classname="tacticulous.game.commands.CommandTest" name="missingAttackDoesNotRemoveTarget"/>
-  <testcase time="0.001" classname="tacticulous.game.commands.CommandTest" name="nonLethalAttackDoesNotRemoveTarget"/>
+  <testcase time="0" classname="tacticulous.game.commands.CommandTest" name="lethalAttackRemovesTarget"/>
+  <testcase time="0" classname="tacticulous.game.commands.CommandTest" name="chanceToHitWorks"/>
 </testsuite>

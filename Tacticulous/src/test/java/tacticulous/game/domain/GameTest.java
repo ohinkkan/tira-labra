@@ -25,6 +25,7 @@ public class GameTest {
     @Test
     public void newGameNoNullAssets() {
         game = new Game();
+        game.startup();
         assertNotNull(game.getDie());
         assertNotNull(game.getMap());
         assertNotNull(game.getPlayers());
@@ -33,17 +34,72 @@ public class GameTest {
     @Test
     public void unitPlacementWorks() {
         game = new Game();
-        assertNotNull(game.getMap().getTile(0, 4).getUnit());
-        assertNotNull(game.getMap().getTile(9, 4).getUnit());
+        game.startup();
+        assertNotNull(game.getMap().getTile(0, game.getMap().size()/2-1).getUnit());
+        assertNotNull(game.getMap().getTile(game.getMap().size()-1, game.getMap().size()/2-1).getUnit());
     }
-    
+
     @Test
     public void unitPlacementReturnsFalseIfTooManyUnits() {
         game = new Game();
-        ArrayList<Unit> units = game.getPlayers().get(0).getPlayer().getUnits();
-        for (int i = 0; i < 8; i++) {
-            units.add(new Unit(1,1,1,1,"A"));
+        game.startup();
+        ArrayList<Unit> units = game.getPlayers().get(0).getUnits();
+        for (int i = 0; i < game.getMap().size(); i++) {
+            units.add(new Unit(1, 1, 1, 1, "A"));
         }
-        assertEquals(false,game.placeUnits(units));
+        assertEquals(false, game.placeUnits(units));
     }
+
+    @Test
+    public void rollForInitiativeWorks() {
+        game = new Game();
+        game.startup();
+        game.rollForInitiative();
+        assertNotNull(game.getCurrentPlayer());
+        assertNotNull(game.getActiveUnit());
+    }
+
+    @Test
+    public void nextPlayerWorks() {
+        game = new Game();
+        game.startup();
+        game.rollForInitiative();
+        Player player1 = game.getCurrentPlayer();
+        game.nextPlayer();
+        assertNotSame(player1, game.getCurrentPlayer());
+        game.nextPlayer();
+        assertEquals(player1, game.getCurrentPlayer());
+    }
+
+    @Test
+    public void newRoundWorks() {
+        game = new Game();
+        game.startup();
+        game.rollForInitiative();
+        game.getCurrentPlayer().getUnitsWithActions().clear();
+        game.nextPlayer();
+        game.getCurrentPlayer().getUnitsWithActions().clear();
+        assertEquals(1, game.getRound());
+        game.nextPlayer();
+        assertEquals(2, game.getRound());
+    }
+
+    @Test
+    public void endRoundCheckWorks() {
+        game = new Game();
+        game.startup();
+        assertTrue(game.endRoundCheck());
+        assertTrue(!game.endRoundCheck());
+    }
+
+    @Test
+    public void gameOverWorks() {
+        game = new Game();
+        game.startup();
+        game.rollForInitiative();
+        assertTrue(!game.checkIfGameOver());
+        game.getCurrentPlayer().getUnits().clear();
+        assertTrue(game.checkIfGameOver());
+    }
+
 }

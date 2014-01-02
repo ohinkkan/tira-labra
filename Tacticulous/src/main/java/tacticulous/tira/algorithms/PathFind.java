@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package tacticulous.tira.algorithms;
 
 import java.util.PriorityQueue;
@@ -10,6 +6,8 @@ import tacticulous.game.domain.Unit;
 
 /**
  *
+ * Provides simple pathfinding.
+ * 
  * @author O
  */
 public abstract class PathFind {
@@ -54,6 +52,27 @@ public abstract class PathFind {
         return moveCosts;
     }
 
+
+//    private static void adjacents(Node u, Node[][] map, PriorityQueue<Node> notDone) {
+//        Node v;
+//        if (legit(map, u.getX() - 1, u.getY())) {
+//            v = map[u.getX() - 1][u.getY()];
+//            relax(u, v, v.getMoveCost(), notDone);
+//        }
+//        if (legit(map, u.getX() + 1, u.getY())) {
+//            v = map[u.getX() + 1][u.getY()];
+//            relax(u, v, v.getMoveCost(), notDone);
+//        }
+//        if (legit(map, u.getX(), u.getY() - 1)) {
+//            v = map[u.getX()][u.getY() - 1];
+//            relax(u, v, v.getMoveCost(), notDone);
+//        }
+//        if (legit(map, u.getX(), u.getY() + 1)) {
+//            v = map[u.getX()][u.getY() + 1];
+//            relax(u, v, v.getMoveCost(), notDone);
+//        }
+//    }
+    
     /**
      * Checks which nodes adjacent to node u are valid (= within map borders)
      * and relaxes them.
@@ -62,26 +81,6 @@ public abstract class PathFind {
      * @param map
      * @param notDone nodes(tiles) which have not been examined yet.
      */
-    private static void adjacents(Node u, Node[][] map, PriorityQueue<Node> notDone) {
-        Node v;
-        if (legit(map, u.getX() - 1, u.getY())) {
-            v = map[u.getX() - 1][u.getY()];
-            relax(u, v, v.getMoveCost(), notDone);
-        }
-        if (legit(map, u.getX() + 1, u.getY())) {
-            v = map[u.getX() + 1][u.getY()];
-            relax(u, v, v.getMoveCost(), notDone);
-        }
-        if (legit(map, u.getX(), u.getY() - 1)) {
-            v = map[u.getX()][u.getY() - 1];
-            relax(u, v, v.getMoveCost(), notDone);
-        }
-        if (legit(map, u.getX(), u.getY() + 1)) {
-            v = map[u.getX()][u.getY() + 1];
-            relax(u, v, v.getMoveCost(), notDone);
-        }
-    }
-
     private static void adjacents(Node u, Node[][] map, MinHeap notDone) {
         Node v;
         if (legit(map, u.getX() - 1, u.getY())) {
@@ -114,6 +113,16 @@ public abstract class PathFind {
         return x >= 0 && y >= 0 && x < map.length && y < map[0].length;
     }
 
+
+//    private static void relax(Node u, Node v, int w, PriorityQueue<Node> notDone) {
+//        if (v.getDistance() > u.getDistance() + w) {
+//            v.setDistance(u.getDistance() + w);
+//            notDone.remove(v);
+//            notDone.add(v);
+//
+//        }
+//    }
+    
     /**
      * Standard relax used by shortest path algorithms, except that edge weight
      * is target node's weight(moveCost).
@@ -123,15 +132,6 @@ public abstract class PathFind {
      * @param w weight of edge, that is, moveCost of to-node v.
      * @param notDone nodes(tiles) which have not been examined yet.
      */
-    private static void relax(Node u, Node v, int w, PriorityQueue<Node> notDone) {
-        if (v.getDistance() > u.getDistance() + w) {
-            v.setDistance(u.getDistance() + w);
-            notDone.remove(v);
-            notDone.add(v);
-
-        }
-    }
-
     private static void relax(Node u, Node v, int w, MinHeap notDone) {
         if (v.getDistance() > u.getDistance() + w) {
             v.setDistance(u.getDistance() + w);

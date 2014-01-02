@@ -8,7 +8,8 @@ import tacticulous.game.domain.BattleMap;
 import tacticulous.game.domain.Unit;
 
 /**
- *
+ * Contains the primary methods used by non-Tira parts of the program.
+ * 
  * @author O
  */
 public abstract class GameUsage {

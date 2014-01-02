@@ -38,8 +38,8 @@ public class DieTest {
     }
 
     @Test
-    public void zeroDieWorks() {
+    public void oneSideDieWorks() {
         die = new DieRoller(0);
-        assertEquals(0, die.roll());
+        assertEquals(1, die.roll());
     }
 }

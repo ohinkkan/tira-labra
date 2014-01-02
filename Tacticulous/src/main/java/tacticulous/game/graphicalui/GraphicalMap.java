@@ -1,0 +1,106 @@
+package tacticulous.game.graphicalui;
+
+import java.awt.Color;
+import java.awt.Graphics;
+import javax.swing.JPanel;
+import tacticulous.game.domain.Game;
+import tacticulous.game.domain.Tile;
+import tacticulous.game.domain.Unit;
+
+/**
+ * Draws the battlemap display.
+ *
+ * @author O
+ */
+public class GraphicalMap extends JPanel {
+
+    private Game game;
+    private int scale;
+    private Tile tile;
+
+    /**
+     * Initializes battlemap display.
+     *
+     * @param game provides access to necessary data
+     */
+    public GraphicalMap(Game game) {
+        super();
+        this.game = game;
+        scale = 20;
+        super.setBackground(Color.BLACK);
+    }
+
+    /**
+     * Draws the map, tile by tile.
+     *
+     * @param graphics
+     */
+    @Override
+    protected void paintComponent(Graphics graphics) {
+        super.paintComponent(graphics);
+        scale = Math.max(Math.min(this.getHeight(), this.getWidth()) / game.getMap().size(), 1);
+        for (int i = 0; i < game.getMap().size(); i++) {
+            for (int j = 0; j < game.getMap().size(); j++) {
+                tile = game.getMap().getTile(i, j);
+                Unit unit = tile.getUnit();
+                if (unit != null) {
+                    if (tile == game.getTargetTile()) {
+                        drawUnit(Color.PINK, i, j, graphics);
+                    } else if (unit == game.getActiveUnit()) {
+                        drawUnit(Color.CYAN, i, j, graphics);
+                    } else if (unit.getPlayer() == game.getCurrentPlayer()) {
+                        drawUnit(Color.BLUE, i, j, graphics);
+                    } else {
+                        drawUnit(Color.RED, i, j, graphics);
+                    }
+                } else if (tile == game.getTargetTile()) {
+                    drawUnit(Color.YELLOW, i, j, graphics);
+                } else if (game.getActiveUnit().hasNotMoved() && game.getActiveUnit().getSpeed() >= game.getMoveCosts()[i][j]) {
+                    drawMovement(i, j, graphics);
+                } else {
+                    drawTile(tile.getMoveCost(), i, j, graphics);
+                }
+            }
+        }
+    }
+
+    private void drawUnit(Color color, int i, int j, Graphics graphics) {
+        drawTile(tile.getMoveCost(), i, j, graphics);
+        graphics.setColor(color);
+        drawSquare(i, j, Math.max(1, scale / 2), graphics);
+    }
+
+    private void drawMovement(int i, int j, Graphics graphics) {
+        drawTile(tile.getMoveCost(), i, j, graphics);
+        graphics.setColor(Color.GREEN);
+        drawSquare(i, j, Math.max(1, scale / 4), graphics);
+    }
+
+    private void drawTile(int terrain, int i, int j, Graphics graphics) {
+        if (terrain == 1) {
+            graphics.setColor(Color.WHITE);
+        } else if (terrain < 3) {
+            graphics.setColor(Color.LIGHT_GRAY);
+        } else if (terrain < 4) {
+            graphics.setColor(Color.GRAY);
+        } else {
+            graphics.setColor(Color.DARK_GRAY);
+        }
+        drawSquare(i, j, scale - 1, graphics);
+    }
+
+    /**
+     * Scale is the size in pixels of a single tile. It is calculated from the
+     * sizes of the map display and battlemap.
+     *
+     * @return the current scale of the map.
+     */
+    public int getScale() {
+        return scale;
+    }
+
+    private void drawSquare(int i, int j, int size, Graphics graphics) {
+        int diff = (scale - size) / 2;
+        graphics.fill3DRect(j * scale + diff, i * scale + diff, size, size, true);
+    }
+}

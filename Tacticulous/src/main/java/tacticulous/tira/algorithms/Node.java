@@ -5,7 +5,8 @@
 package tacticulous.tira.algorithms;
 
 /**
- *
+ * Utility class, used by PathFind.
+ * 
  * @author O
  * 
  */
