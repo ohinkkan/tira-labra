@@ -4,6 +4,7 @@
  */
 package tacticulous.tira.algorithms;
 
+import java.util.ArrayList;
 import tacticulous.game.domain.BattleMap;
 import tacticulous.game.domain.Unit;
 
@@ -37,5 +38,22 @@ public abstract class GameUsage {
             }
         }
         return costs;
+    }
+    
+    public static ArrayList<Node> getTilesToMoveTo(Unit unit, BattleMap map) {
+        Node[][] moveCosts = PathFind.dijkstraWithHeap(map, unit.getX(), unit.getY(), unit.getSpeed());
+        int fromX = Math.max(0, unit.getX() - unit.getSpeed());
+        int fromY = Math.max(0, unit.getY() - unit.getSpeed());
+        int toX = Math.min(moveCosts.length, unit.getX() + unit.getSpeed() + 1);        
+        int toY = Math.min(moveCosts.length, unit.getY() + unit.getSpeed() + 1);
+        ArrayList<Node> tiles = new ArrayList();        
+        for (int i = fromX; i < toX; i++) {
+            for (int j = fromY; j < toY; j++) {
+                if (moveCosts[i][j].getDistance() <= unit.getSpeed() && moveCosts[i][j].getDistance() > 0) {
+                    tiles.add(moveCosts[i][j]);
+                }
+            }
+        }       
+        return tiles;
     }
 }

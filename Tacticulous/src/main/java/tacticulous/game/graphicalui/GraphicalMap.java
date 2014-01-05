@@ -2,7 +2,7 @@ package tacticulous.game.graphicalui;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import javax.swing.JPanel;
+import javax.swing.JComponent;
 import tacticulous.game.domain.Game;
 import tacticulous.game.domain.Tile;
 import tacticulous.game.domain.Unit;
@@ -12,7 +12,7 @@ import tacticulous.game.domain.Unit;
  *
  * @author O
  */
-public class GraphicalMap extends JPanel {
+public class GraphicalMap extends JComponent {
 
     private Game game;
     private int scale;
@@ -48,15 +48,15 @@ public class GraphicalMap extends JPanel {
                         drawUnit(Color.PINK, i, j, graphics);
                     } else if (unit == game.getActiveUnit()) {
                         drawUnit(Color.CYAN, i, j, graphics);
-                    } else if (unit.getPlayer() == game.getCurrentPlayer()) {
-                        drawUnit(Color.BLUE, i, j, graphics);
                     } else {
-                        drawUnit(Color.RED, i, j, graphics);
+                        drawUnit(unit.getPlayer().getColor(), i, j, graphics);
                     }
                 } else if (tile == game.getTargetTile()) {
                     drawUnit(Color.YELLOW, i, j, graphics);
                 } else if (game.getActiveUnit().hasNotMoved() && game.getActiveUnit().getSpeed() >= game.getMoveCosts()[i][j]) {
                     drawMovement(i, j, graphics);
+                } else if (!tile.getCorpses().isEmpty()) {
+                    drawUnit(Color.getHSBColor(100F, 0.5F, 0.5F), i, j, graphics);
                 } else {
                     drawTile(tile.getMoveCost(), i, j, graphics);
                 }

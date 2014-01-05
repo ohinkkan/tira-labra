@@ -34,9 +34,15 @@ public class GameTest {
     @Test
     public void unitPlacementWorks() {
         game = new Game();
-        game.startup();
-        assertNotNull(game.getMap().getTile(0, game.getMap().size()/2-1).getUnit());
-        assertNotNull(game.getMap().getTile(game.getMap().size()-1, game.getMap().size()/2-1).getUnit());
+        game.getPlayers().add(new Player("Player 1", null));
+        game.getPlayers().add(new Player("Player 2", null));
+        game.getPlayers().get(0).testUnits();
+        game.getPlayers().get(1).testUnits();
+        game.setMap(new BattleMap(10, 1));
+        game.placeUnits(game.getPlayers().get(0).getUnits());
+        game.placeUnits(game.getPlayers().get(1).getUnits());
+        assertNotNull(game.getMap().getTile(0, game.getMap().size() / 2 - 1).getUnit());
+        assertNotNull(game.getMap().getTile(game.getMap().size() - 1, game.getMap().size() / 2 - 1).getUnit());
     }
 
     @Test
@@ -89,7 +95,6 @@ public class GameTest {
         game = new Game();
         game.startup();
         assertTrue(game.endRoundCheck());
-        assertTrue(!game.endRoundCheck());
     }
 
     @Test

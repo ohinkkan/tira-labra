@@ -22,7 +22,7 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-    
+
     <build>
         <plugins>
             <plugin>
@@ -39,15 +39,35 @@
                 <version>2.6</version>
                 <configuration>
                     <instrumentation>
-                        <excludes>
-                            <exclude>**/obsoleteandnotuptodate/*</exclude>
-                        </excludes>
+                        <includes>
+                            <include>tacticulous/game/domain/*.class</include>
+                            <include>tacticulous/game/utility/*.class</include>
+                            <include>tacticulous/game/commands/*.class</include>
+                            <include>tacticulous/tira/ai/*.class</include>
+                            <include>tacticulous/tira/algorithms/*.class</include>
+                        </includes>
                     </instrumentation>
                 </configuration>
             </plugin>
             <plugin>
                 <groupId>org.pitest</groupId>
                 <artifactId>pitest-maven</artifactId>
+                <configuration>
+                    <targetClasses>
+                        <param>tacticulous.game.domain.*</param>
+                        <param>tacticulous.game.utility.*</param>
+                        <param>tacticulous.game.commands.*</param>
+                        <param>tacticulous.tira.ai.*</param>
+                        <param>tacticulous.tira.algoritms.*</param>
+                    </targetClasses>
+                    <targetTests>
+                        <param>tacticulous.game.domain.*</param>
+                        <param>tacticulous.game.utility.*</param>
+                        <param>tacticulous.game.commands.*</param>
+                        <param>tacticulous.tira.ai.*</param>
+                        <param>tacticulous.tira.algoritms.*</param>
+                    </targetTests>
+                </configuration>
                 <version>0.30</version>
             </plugin>
             <plugin>

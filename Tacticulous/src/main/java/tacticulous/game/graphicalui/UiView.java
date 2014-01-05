@@ -3,17 +3,20 @@ package tacticulous.game.graphicalui;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
 import javax.swing.JTextArea;
+import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 import tacticulous.game.domain.Game;
 
 /**
  * Supreme Ruler class for the graphical user interface.
- * 
+ *
  * @author O
  */
 public class UiView {
@@ -30,50 +33,57 @@ public class UiView {
      */
     public void spawn(Game game) {
         frame = new JFrame("Tacticulous");
-        frame.setPreferredSize(new Dimension(1000, 1000));
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-
         createComponents(frame.getContentPane(), game);
         frame.pack();
         frame.setVisible(true);
     }
 
     private void createComponents(Container container, Game game) {
-        GridLayout layout = new GridLayout(3, 2);
-        container.setLayout(layout);
+        container.setLayout(new BoxLayout(container, BoxLayout.X_AXIS));
+        JPanel leftSide = new JPanel();
+        JPanel rightSide = new JPanel();
+        leftSide.setLayout(new BoxLayout(leftSide, BoxLayout.Y_AXIS));
+        rightSide.setLayout(new BoxLayout(rightSide, BoxLayout.Y_AXIS));
 
         GraphicalMap map = new GraphicalMap(game);
         JTextArea activeInfo = new JTextArea("", 10, 20);
         JTextArea targetInfo = new JTextArea("", 10, 20);
-        JTextArea actionLogText = new JTextArea("", 10, 20);
+        JTextArea actionLogText = new JTextArea("", 10, 20);        
+        commandPanel = commandBuilder(game, map,
+                activeInfo, targetInfo, actionLogText);
+        JScrollPane actionLog = new JScrollPane(actionLogText,
+                JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
+                JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+
         activeInfo.setEditable(false);
         targetInfo.setEditable(false);
         actionLogText.setEditable(false);
         actionLogText.setAutoscrolls(true);
 
-        container.add(map);
-        container.add(activeInfo);
-        commandPanel = commandBuilder(game, map,
-                activeInfo, targetInfo, actionLogText);
-        container.add(commandPanel);
-        game.setCommandList(commandPanel);
-        container.add(targetInfo);
-        JScrollPane actionLog = new JScrollPane(actionLogText,
-                JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, 
-                JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        container.add(actionLog);
+        container.add(leftSide);
+        container.add(rightSide);
+
+        leftSide.add(map);
+        leftSide.add(commandPanel);
+        rightSide.add(activeInfo);
+        rightSide.add(new JSeparator(SwingConstants.HORIZONTAL));
+        rightSide.add(targetInfo);
+        rightSide.add(actionLog);
+
+        map.setPreferredSize(new Dimension(800, 800));
+        rightSide.setMaximumSize(new Dimension(200, Integer.MAX_VALUE));
+        commandPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 100));
         
+        game.setCommandList(commandPanel);
         if (game.getCurrentPlayer().isAi()) {
             actions.aiCommands();
         } else {
             actions.playerCommands();
         }
-
         game.rollForInitiative();
-
         actions.checkLegitActions();
-        actions.updateInfo();
-
+        actions.updateUnitDisplays();
     }
 
     private JPanel commandBuilder(Game game, GraphicalMap map,
@@ -87,10 +97,13 @@ public class UiView {
         JButton attack = new JButton("Attack");
         JButton delay = new JButton("Delay turn");
         JButton endTurn = new JButton("End turn");
+        JButton takeTurn = new JButton("Take turn");
+        JButton autoTurn = new JButton("Auto turn");
+        
 
         actions = new ActionController(game, map,
                 nextUnit, previousUnit, move, attack, delay, endTurn,
-                active, target, log);
+                takeTurn, autoTurn, active, target, log);
 
         game.setActions(actions);
 
@@ -104,6 +117,8 @@ public class UiView {
         attack.addActionListener(actions);
         delay.addActionListener(actions);
         endTurn.addActionListener(actions);
+        takeTurn.addActionListener(actions);
+        autoTurn.addActionListener(actions);
 
         return commandPanel;
     }

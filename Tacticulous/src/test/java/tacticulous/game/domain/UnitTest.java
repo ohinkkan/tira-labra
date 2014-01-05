@@ -42,7 +42,7 @@ public class UnitTest {
 
     @Test
     public void doneForTheRoundAndNewRoundWork() {
-        Player player = new Player("A");
+        Player player = new Player("A", null);
         player.testUnits();
         player.newRound();
         unit = player.activeUnit();

@@ -1,5 +1,6 @@
 package tacticulous.game.domain;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collections;
 import tacticulous.tira.ai.ArtificialIntelligence;
@@ -17,9 +18,23 @@ public class Player {
     private ArrayList<Unit> units;
     private String name;
     private ArtificialIntelligence ai;
+    private Game game;
+    private Color color;
+
+    public Color getColor() {
+        return color;
+    }
+
+    public void setGame(Game game) {
+        this.game = game;
+    }
 
     public String getName() {
         return name;
+    }
+
+    public ArtificialIntelligence getAi() {
+        return ai;
     }
 
     /**
@@ -28,6 +43,7 @@ public class Player {
      * @see tacticulous.game.domain.Unit#newRound()
      */
     public void newRound() {
+        activeUnitIndex = 0;
         unitsWithActions.clear();
         unitsWithActions.addAll(units);
         for (Unit unit : units) {
@@ -40,13 +56,14 @@ public class Player {
      *
      * @param name name of the player.
      */
-    public Player(String name) {
+    public Player(String name, Color color) {
         this.name = name;
         this.isAi = false;
         units = new ArrayList();
         unitsWithActions = new ArrayList();
         Collections.copy(units, unitsWithActions);
         activeUnitIndex = 0;
+        this.color = color;
     }
 
     public ArrayList<Unit> getUnits() {
@@ -117,9 +134,9 @@ public class Player {
      * Creates a few units for testing purposes.
      */
     public void testUnits() {
-        units.add(new Unit(6, 5, 3, 3, 2, "Sharpshooter", this));
-        units.add(new Unit(4, 3, 0, 5, 2, "Artillery", this));
-        units.add(new Unit(9, 7, 0, 2, 1, "Fast", this));
+        units.add(new Unit(6, 2, 3, 3, 2, "Sharpshooter", this));
+        units.add(new Unit(4, 0, 0, 5, 2, "Artillery", this));
+        units.add(new Unit(9, 4, 0, 2, 1, "Fast", this));
     }
 
     /**
@@ -127,9 +144,7 @@ public class Player {
      */
     public void testUnits2(int multiplier) {
         for (int i = 0; i < multiplier; i++) {
-            units.add(new Unit(6, 5, 3, 3, 2, "Sharpshooter", this));
-            units.add(new Unit(4, 3, 0, 5, 2, "Artillery", this));
-            units.add(new Unit(9, 7, 0, 2, 1, "Fast", this));
+            testUnits();
         }
     }
 
@@ -150,6 +165,9 @@ public class Player {
     public void kill(Unit unit) {
         units.remove(unit);
         unitsWithActions.remove(unit);
+        if (game != null) {
+            game.getMap().getTile(unit.getX(), unit.getY()).putCorpse(unit);
+        }
     }
 
     private void checkActiveUnitIndex() {
@@ -158,6 +176,4 @@ public class Player {
         }
     }
 
-//    this was used by the old text UI.    
-//    private UserInterface textUi;
 }

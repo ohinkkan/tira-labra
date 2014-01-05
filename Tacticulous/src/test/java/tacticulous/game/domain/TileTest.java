@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package tacticulous.game.domain;
 
 import org.junit.After;
@@ -42,7 +38,7 @@ public class TileTest {
     public void tileToStringWorksOrAtLeastDoesNotCauseErrors() {
         tile = new Tile(1, 2, 3);
         tile.toString();
-        unit = new Unit(1,1,1,1,1,"A",new Player("A"));
+        unit = new Unit(1, 1, 1, 1, 1, "A", new Player("A", null));
         tile.setUnit(unit);
         tile.toString();
     }

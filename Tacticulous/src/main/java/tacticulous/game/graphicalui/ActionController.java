@@ -1,12 +1,14 @@
 package tacticulous.game.graphicalui;
 
 import java.awt.Component;
-import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JTextArea;
-import tacticulous.game.commands.Command;
+import tacticulous.game.commands.UnitCommand;
 import tacticulous.game.domain.Game;
 import tacticulous.game.domain.Player;
 import tacticulous.game.domain.Tile;
@@ -21,14 +23,11 @@ import tacticulous.game.domain.Unit;
 public class ActionController implements ActionListener {
 
     private Game game;
-    private Component map;
-    private Container container;
-    private JButton nextUnit, previousUnit, delay, endTurn, attack, move;
+    private JComponent map;
+    private JButton nextUnit, previousUnit, delay, endTurn, attack, move, takeTurn, autoTurn;
     private JTextArea displayActive, displayTarget, log;
-    private boolean lockUnit;
+
     private boolean aiControls;
-    private String logText;
-    private Unit activeUnit;
 
     /**
      * Reacts to player's button clicks.
@@ -38,28 +37,32 @@ public class ActionController implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent ae) {
 
-        checkIfGameOver();
+        if (game.command().checkIfGameOver()) {
+            disableAll();
+            return;
+        }
 
         Player player = game.getCurrentPlayer();
-        activeUnit = game.getActiveUnit();
 
         if (ae.getSource() == nextUnit) {
             player.nextUnit(game);
         } else if (ae.getSource() == previousUnit) {
             player.prevUnit(game);
         } else if (ae.getSource() == move) {
-            move();
+            game.command().move();
         } else if (ae.getSource() == attack) {
-            attack();
+            game.command().attack();
         } else if (ae.getSource() == endTurn) {
-            endTurn();
+            game.command().endTurn();
         } else if (ae.getSource() == delay) {
-            delay();
+            game.command().delay();
+        } else if (ae.getSource() == takeTurn) {
+            game.command().takeAITurn();
+        } else if (ae.getSource() == autoTurn) {
+            game.command().autoTurn();
         }
 
-        map.repaint();
-        checkLegitActions();
-        updateInfo();
+        updateUI();
     }
 
     /**
@@ -72,13 +75,16 @@ public class ActionController implements ActionListener {
      * @param attack attack target button
      * @param delay delay acting for now button
      * @param endTurn end current unit's turn button
+     * @param takeTurn AI player takes turn
+     * @param autoTurn AI player will forevermore take turn automatically
      * @param active displays current unit's description
      * @param target displays current target tile's and unit's description
      * @param log displays game events.
      */
-    public ActionController(Game game, Component map,
+    public ActionController(Game game, JComponent map,
             JButton nextUnit, JButton previousUnit, JButton move,
             JButton attack, JButton delay, JButton endTurn,
+            JButton takeTurn, JButton autoTurn,
             JTextArea active, JTextArea target, JTextArea log) {
         this.game = game;
         this.map = map;
@@ -88,11 +94,19 @@ public class ActionController implements ActionListener {
         this.attack = attack;
         this.delay = delay;
         this.endTurn = endTurn;
+        this.takeTurn = takeTurn;
+        this.autoTurn = autoTurn;
         this.displayActive = active;
         this.displayTarget = target;
         this.log = log;
-        logText = "";
         aiControls = false;
+    }
+
+    public void updateUI() {
+        map.paintImmediately(0,0,map.getHeight(),map.getWidth());
+        checkLegitActions();
+        updateUnitDisplays();
+        updateLogDisplay();
     }
 
     /**
@@ -110,14 +124,14 @@ public class ActionController implements ActionListener {
     /**
      * Updates active unit and target tile displays.
      */
-    public void updateInfo() {
+    public void updateUnitDisplays() {
         Unit unit = game.getActiveUnit();
         Tile tile = game.getTargetTile();
         displayActive.setText("active unit:\n" + unit);
         if (tile != null) {
             String targetTile = "target tile:\n" + tile;
             if (notTargetingSelf() && tile.getUnit() != null) {
-                targetTile = targetTile + "\nchange to hit:" + Command.chanceToHit(unit, tile.getUnit()) + "%";
+                targetTile = targetTile + "\nchange to hit:" + UnitCommand.chanceToHit(unit, tile.getUnit()) + "%";
             }
             displayTarget.setText(targetTile);
         } else {
@@ -126,13 +140,10 @@ public class ActionController implements ActionListener {
     }
 
     /**
-     * Maintains game log and prints new events.
-     *
-     * @param update text to print
+     * Updates game log display, printing new events.
      */
-    public void updateLog(String update) {
-        logText = logText + "\n" + update;
-        log.setText(logText);
+    public void updateLogDisplay() {
+        log.setText(game.getGameLog());
     }
 
     /**
@@ -158,6 +169,7 @@ public class ActionController implements ActionListener {
         game.getCommandList().add(attack);
         game.getCommandList().add(delay);
         game.getCommandList().add(endTurn);
+        game.getCommandList().repaint();
     }
 
     /**
@@ -165,33 +177,17 @@ public class ActionController implements ActionListener {
      */
     public void aiCommands() {
         game.getCommandList().removeAll();
-        game.getCommandList().add(previousUnit);
-        game.getCommandList().add(move);
-        game.getCommandList().add(endTurn);
+        game.getCommandList().add(takeTurn);
+//        game.getCommandList().add(autoTurn);
+        game.getCommandList().repaint();
     }
 
-    private void checkIfUnitDoneForTheRound(Unit unit) {
-        if (unit.doneForTheRound()) {
-            game.nextPlayer();
-            updateLog(GameText.nextPlayer(game.getCurrentPlayer().getName()));
-            lockUnit = false;
-        } else {
-            lockUnit = true;
-        }
+    public boolean canAttack() {
+        return attack.isEnabled();
     }
 
-    private void checkIfGameOver() {
-        if (game.checkIfGameOver()) {
-            disableAll();
-            updateLog(GameText.gameOver());
-        }
-    }
-
-    private boolean notTargetingSelf() {
-        if (game.getTargetTile() == null) {
-            return true;
-        }
-        return game.getActiveUnit() != game.getTargetTile().getUnit();
+    public boolean canMove() {
+        return move.isEnabled();
     }
 
     private void checkIfPlayerIsAi() {
@@ -205,45 +201,8 @@ public class ActionController implements ActionListener {
         }
     }
 
-    private String unitAttacks() {
-        Unit attacker = game.getActiveUnit();
-        String defender = game.getTargetTile().getUnit().getName();
-        int result = Command.attack(game.getDie(), attacker, game.getTargetTile());
-        if (result == -1) {
-            return GameText.attackMisses(attacker.getName(), defender);
-        } else if (result == 0) {
-            return GameText.attackHits(attacker.getName(), defender);
-        } else {
-            return GameText.attackKills(attacker.getName(), defender);
-        }
-    }
-
-    private void move() {
-        Command.move(game.getMap(), activeUnit, game.getTargetTile());
-        game.setTargetTile(null);
-        checkIfUnitDoneForTheRound(activeUnit);
-    }
-
-    private void attack() {
-        updateLog(unitAttacks());
-        checkIfUnitDoneForTheRound(activeUnit);
-    }
-
-    private void endTurn() {
-        activeUnit.attacks();
-        activeUnit.moves();
-        checkIfUnitDoneForTheRound(activeUnit);
-    }
-
-    private void delay() {
-        game.getActiveUnit().delays();
-        game.nextPlayer();
-        updateLog(GameText.nextPlayer(game.getCurrentPlayer().getName()));
-        lockUnit = false;
-    }
-
     private void checkUnitCyclingEnabled() {
-        if (game.getCurrentPlayer().getUnitsWithActions().size() < 2 || lockUnit) {
+        if (game.getCurrentPlayer().getUnitsWithActions().size() < 2 || game.command().unitLocked()) {
             nextUnit.setEnabled(false);
             previousUnit.setEnabled(false);
         } else {
@@ -254,7 +213,9 @@ public class ActionController implements ActionListener {
 
     private void checkMoveEnabled() {
         if (game.getTargetTile() != null) {
-            if (Command.checkMove(game.getMap(), game.getActiveUnit(), game.getTargetTile().getX(), game.getTargetTile().getY(), game.getMoveCosts())) {
+            if (UnitCommand.checkMove(game.getMap(), game.getActiveUnit(),
+                    game.getTargetTile().getX(), game.getTargetTile().getY(),
+                    game.getMoveCosts())) {
                 move.setEnabled(true);
             } else {
                 move.setEnabled(false);
@@ -266,7 +227,9 @@ public class ActionController implements ActionListener {
 
     private void checkAttackEnabled() {
         if (game.getActiveUnit().hasNotAttacked()) {
-            if (game.getTargetTile() != null && Command.checkAttack(game.getMap(), game.getActiveUnit(), game.getTargetTile().getX(), game.getTargetTile().getY())) {
+            if (game.getTargetTile() != null
+                    && UnitCommand.checkAttack(game.getMap(), game.getActiveUnit(),
+                            game.getTargetTile().getX(), game.getTargetTile().getY())) {
                 attack.setEnabled(true);
             } else {
                 attack.setEnabled(false);
@@ -277,10 +240,13 @@ public class ActionController implements ActionListener {
     }
 
     private void checkDelayEnabled() {
-        if (game.getActiveUnit().hasNotDelayed()) {
-            delay.setEnabled(true);
-        } else {
-            delay.setEnabled(false);
+        delay.setEnabled(game.getActiveUnit().hasNotDelayed());
+    }
+
+    private boolean notTargetingSelf() {
+        if (game.getTargetTile() == null) {
+            return true;
         }
+        return game.getActiveUnit() != game.getTargetTile().getUnit();
     }
 }

@@ -6,9 +6,10 @@ package tacticulous.tira.algorithms;
 
 /**
  * Utility class, used by PathFind.
- * 
+ * HeapIndex is used by MinHeap.update(Node)
+ *
  * @author O
- * 
+ *
  */
 public class Node implements Comparable<Node>{
 
@@ -59,6 +60,6 @@ public class Node implements Comparable<Node>{
     public int compareTo(Node t) {
        return this.distance-t.getDistance();
     }
-    
-    
+
+
 }

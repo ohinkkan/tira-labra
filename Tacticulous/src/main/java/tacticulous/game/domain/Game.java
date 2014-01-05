@@ -1,12 +1,18 @@
 package tacticulous.game.domain;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JPanel;
+import tacticulous.game.commands.GameCommand;
 import tacticulous.game.graphicalui.ActionController;
 import tacticulous.game.graphicalui.GameText;
+import tacticulous.game.graphicalui.StartupUI;
 import tacticulous.game.graphicalui.UiView;
 import tacticulous.game.utility.*;
+import tacticulous.tira.ai.ArtificialIntelligence;
 import tacticulous.tira.algorithms.GameUsage;
 
 /**
@@ -28,9 +34,15 @@ public class Game {
     private JPanel commandList;
     private ActionController actions;
     private int round;
+    private String gameLog;
+    private GameCommand command;
 
     public ActionController getActions() {
         return actions;
+    }
+
+    public GameCommand command() {
+        return command;
     }
 
     public void setActions(ActionController commands) {
@@ -81,22 +93,15 @@ public class Game {
         this.die = new DieRoller(10);
         players = new ArrayList();
         round = 0;
+        gameLog = "";
     }
 
     public int getRound() {
         return round;
     }
 
-    public ArrayList<Player> getPlayers() {
-        return players;
-    }
-
-    public Die getDie() {
-        return die;
-    }
-
-    public BattleMap getMap() {
-        return map;
+    public void updateLog(String update) {
+        gameLog = gameLog + "\n" + update;
     }
 
     /**
@@ -104,11 +109,18 @@ public class Game {
      *
      */
     public void run() {
+//        useGraphicalStartupUI();
+        runMore();
+    }
 
+    public void runMore() {
+        command = new GameCommand(this);
         startup();
-
         useGraphicalInterface();
+    }
 
+    public void setCommand(GameCommand command) {
+        this.command = command;
     }
 
     /**
@@ -126,10 +138,11 @@ public class Game {
         for (Player player : players) {
             player.newRound();
         }
-        this.setActiveUnit(getCurrentPlayer().activeUnit());
-        if (actions != null) {
-            actions.updateLog(GameText.newRound(round));
+        if (getCurrentPlayer().getUnitsWithActions().isEmpty()) {
+            nextPlayer();
         }
+        this.setActiveUnit(getCurrentPlayer().activeUnit());
+        updateLog(GameText.newRound(round));
     }
 
     public boolean isGameOver() {
@@ -145,6 +158,7 @@ public class Game {
      */
     public void nextPlayer() {
         if (endRoundCheck()) {
+            rollForInitiative();
             return;
         }
         currentPlayerIndex++;
@@ -154,12 +168,19 @@ public class Game {
         if (getCurrentPlayer().getUnitsWithActions().isEmpty()) {
             nextPlayer();
         }
+        updateLog(GameText.nextPlayer(getCurrentPlayer().getName()));
         setActiveUnit(getCurrentPlayer().activeUnit());
+
     }
 
     private void useGraphicalInterface() {
         UiView graphicalInterface = new UiView();
         graphicalInterface.spawn(this);
+    }
+
+    private void useGraphicalStartupUI() {
+        StartupUI startup = new StartupUI();
+        startup.spawn(this);
     }
 
     /**
@@ -174,7 +195,6 @@ public class Game {
                 return false;
             }
         }
-        rollForInitiative();
         return true;
     }
 
@@ -194,20 +214,42 @@ public class Game {
         return false;
     }
 
+    public String getGameLog() {
+        return gameLog;
+    }
+
+    public ArrayList<Player> getPlayers() {
+        return players;
+    }
+
+    public Die getDie() {
+        return die;
+    }
+
+    public BattleMap getMap() {
+        return map;
+    }
+
     /**
      * Placeholder until game startup customization interface is implemented.
      */
     public void startup() {
-        players.add(new Player("Player 1"));
-        players.add(new Player("Player 2"));
+        players.add(new Player("Player 1", Color.BLUE));
+        players.add(new Player("Player 2", Color.RED));
         players.get(0).testUnits();
         players.get(1).testUnits();
-//        players.get(0).testUnits2(30);
-//        players.get(1).testUnits2(30);
-//        players.get(1).setAI(null);
-        this.map = new BattleMap(20, 4);
+        players.get(0).setGame(this);
+        players.get(1).setGame(this);
+        players.get(0).testUnits2(2);
+        players.get(1).testUnits2(2);
+        players.get(1).setAI(new ArtificialIntelligence(this, players.get(1), 1, 5, 10, 1));
+        this.map = new BattleMap(16, 4);
         placeUnits(players.get(0).getUnits());
         placeUnits(players.get(1).getUnits());
+    }
+
+    public void setMap(BattleMap map) {
+        this.map = map;
     }
 
     /**
@@ -220,10 +262,14 @@ public class Game {
         if (units.size() > map.size()) {
             return false;
         }
+        int border = 0;
+        if (map.size() > 10) {
+            border = map.size() / 10;
+        }
         int y = (map.size() - units.size()) / 2;
-        int x = map.size() - 1;
-        if (map.getTile(0, y).getUnit() == null) {
-            x = 0;
+        int x = map.size() - 1 - border;
+        if (map.getTile(border, y).getUnit() == null) {
+            x = 0 + border;
         }
         for (Unit unit : units) {
             map.getTile(x, y).setUnit(unit);
@@ -233,7 +279,7 @@ public class Game {
     }
 
 //    this text interface is obsolete and not up to date.
-//    
+//
 //    private void useTextInterface() {
 //        boolean gameNotOver = true;
 //        ArrayList<UserInterface> playerUIs = new ArrayList();
@@ -247,7 +293,7 @@ public class Game {
 //        while (gameNotOver) {
 //            for (UserInterface current : playerUIs) {
 //                if (!current.getPlayer().getUnitsWithActions().isEmpty()) {
-//                    current.takeTurn();
+//                    current.takeAITurn();
 //                } else {
 //                    System.out.println("game ends, " + current.getPlayer().getName() + " has no units left");
 //                    gameNotOver = false;

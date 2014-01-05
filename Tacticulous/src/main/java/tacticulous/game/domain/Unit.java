@@ -92,11 +92,7 @@ public class Unit {
      * @return true is unit has moved and attacked (or ended turn).
      */
     public boolean doneForTheRound() {
-        if (this.notAttacked || this.notMoved) {
-            return false;
-        }
-        player.getUnitsWithActions().remove(this);
-        return true;
+        return !this.notAttacked && !this.notMoved;
     }
 
     /**
@@ -205,5 +201,6 @@ public class Unit {
                 + "\nhas not moved=" + notMoved
                 + "\nhas not delayed=" + notDelayed;
     }
+
 
 }

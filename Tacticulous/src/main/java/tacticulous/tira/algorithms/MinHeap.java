@@ -1,8 +1,8 @@
 package tacticulous.tira.algorithms;
 
 /**
- * Minimum heap.
- * 
+ * Minimum heap data structure. Stores nodes, using distance as key.
+ *
  * @author O
  */
 public class MinHeap {
@@ -10,27 +10,64 @@ public class MinHeap {
     private int heapSize;
     private Node[] heap;
 
+    /**
+     * Checks if heap is empty.
+     *
+     * @return true if heapSize = 0
+     */
     public boolean isEmpty() {
         return heapSize == 0;
     }
-    
+
+    public int size() {
+        return heapSize;
+    }
+
+    /**
+     * Creates a new heap just large enough to contain all nodes from a map
+     *
+     * @param mapSize
+     */
     public MinHeap(int mapSize) {
         heap = new Node[mapSize * mapSize + 1];
         heapSize = 0;
     }
 
+    /**
+     * Returns the parent of a node
+     *
+     * @param i
+     * @return
+     */
     private int parent(int i) {
         return i / 2;
     }
 
+    /**
+     * Returns the left child of a node
+     *
+     * @param i
+     * @return
+     */
     private int left(int i) {
         return 2 * i;
     }
 
+    /**
+     * Returns the right child of a node
+     *
+     * @param i
+     * @return
+     */
     private int right(int i) {
         return 2 * i + 1;
     }
 
+    /**
+     * Makes sure the heap condition is maintained at index i
+     *
+     * @param i
+     */
     private void heapify(int i) {
         int l = left(i);
         int r = right(i);
@@ -52,6 +89,12 @@ public class MinHeap {
         }
     }
 
+    /**
+     * swaps the locations of two nodes; support method, does not heapify!
+     *
+     * @param i
+     * @param j
+     */
     private void swap(int i, int j) {
         heap[i].setHeapIndex(j);
         heap[j].setHeapIndex(i);
@@ -60,6 +103,11 @@ public class MinHeap {
         heap[j] = aid;
     }
 
+    /**
+     * returns the minimum distance node and removes it from heap
+     *
+     * @return
+     */
     public Node delMin() {
         Node min = heap[1];
         heap[1] = heap[heapSize];
@@ -69,6 +117,11 @@ public class MinHeap {
         return min;
     }
 
+    /**
+     * inserts node into the heap. does not check if there is room in the table!
+     *
+     * @param node
+     */
     public void insert(Node node) {
         heapSize++;
         int i = heapSize;
@@ -81,6 +134,12 @@ public class MinHeap {
         node.setHeapIndex(i);
     }
 
+    /**
+     * updates the location of a node if its distance has decreased.
+     * does not work if distance has increased!
+     *
+     * @param u
+     */
     public void update(Node u) {
         int i = u.getHeapIndex();
         while (i > 1 && heap[parent(i)].getDistance() > heap[i].getDistance()) {

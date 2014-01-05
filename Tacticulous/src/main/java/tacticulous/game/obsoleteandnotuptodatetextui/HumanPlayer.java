@@ -6,7 +6,7 @@ package tacticulous.game.obsoleteandnotuptodatetextui;
 
 import java.util.Arrays;
 import java.util.Scanner;
-import tacticulous.game.commands.Command;
+import tacticulous.game.commands.UnitCommand;
 import tacticulous.game.domain.Game;
 import tacticulous.game.domain.Player;
 import tacticulous.game.domain.Unit;
@@ -38,12 +38,12 @@ public class HumanPlayer implements UserInterface {
                 unitIndex--;
             } else if (selectedCommand == 3) {
                 int[] xy = getXY();
-//                if (Command.move(game.getMap(), active, xy[1], xy[0], costs)) {
+//                if (UnitCommand.move(game.getMap(), active, xy[1], xy[0], costs)) {
 //                    break;
 //                }
             } else if (selectedCommand == 4) {
                 int[] xy = getXY();
-//                int result = Command.attack(game.getMap(), active, xy[1], xy[0]);
+//                int result = UnitCommand.attack(game.getMap(), active, xy[1], xy[0]);
                 int result = 0;
                 if (result != -2) {
                     break;

@@ -13,7 +13,7 @@ public class PlayerTest {
 
     @Test
     public void newPlayerHasCorrectUnitList() {
-        player = new Player("A");
+        player = new Player("A", null);
         player.testUnits();
         assertTrue(player.getUnitsWithActions().isEmpty());
         assertTrue(!player.getUnits().isEmpty());
@@ -21,7 +21,7 @@ public class PlayerTest {
 
     @Test
     public void newRoundWorks() {
-        player = new Player("A");
+        player = new Player("A", null);
         player.testUnits();
         assertTrue(player.getUnitsWithActions().isEmpty());
         player.newRound();
@@ -30,7 +30,7 @@ public class PlayerTest {
 
     @Test
     public void activeUnitWorks() {
-        player = new Player("A");
+        player = new Player("A", null);
         player.testUnits();
         assertNull(player.activeUnit());
         player.newRound();
@@ -40,7 +40,13 @@ public class PlayerTest {
     @Test
     public void cycleUnitsForwardWorks() {
         Game game = new Game();
-        game.startup();
+        game.getPlayers().add(new Player("Player 1", null));
+        game.getPlayers().add(new Player("Player 2", null));
+        game.getPlayers().get(0).testUnits();
+        game.getPlayers().get(1).testUnits();
+        game.setMap(new BattleMap(10, 1));
+        game.placeUnits(game.getPlayers().get(0).getUnits());
+        game.placeUnits(game.getPlayers().get(1).getUnits());
         game.rollForInitiative();
         player = game.getCurrentPlayer();
         assertEquals(player.getUnits().get(0), player.activeUnit());
@@ -54,7 +60,13 @@ public class PlayerTest {
     @Test
     public void cycleUnitsBackwardsWorks() {
         Game game = new Game();
-        game.startup();
+        game.getPlayers().add(new Player("Player 1", null));
+        game.getPlayers().add(new Player("Player 2", null));
+        game.getPlayers().get(0).testUnits();
+        game.getPlayers().get(1).testUnits();
+        game.setMap(new BattleMap(10, 1));
+        game.placeUnits(game.getPlayers().get(0).getUnits());
+        game.placeUnits(game.getPlayers().get(1).getUnits());
         game.rollForInitiative();
         player = game.getCurrentPlayer();
         player.prevUnit(game);
