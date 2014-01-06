@@ -49,7 +49,7 @@ public class UiView {
         GraphicalMap map = new GraphicalMap(game);
         JTextArea activeInfo = new JTextArea("", 10, 20);
         JTextArea targetInfo = new JTextArea("", 10, 20);
-        JTextArea actionLogText = new JTextArea("", 10, 20);        
+        JTextArea actionLogText = new JTextArea("", 10, 20);
         commandPanel = commandBuilder(game, map,
                 activeInfo, targetInfo, actionLogText);
         JScrollPane actionLog = new JScrollPane(actionLogText,
@@ -74,16 +74,13 @@ public class UiView {
         map.setPreferredSize(new Dimension(800, 800));
         rightSide.setMaximumSize(new Dimension(200, Integer.MAX_VALUE));
         commandPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 100));
-        
+
         game.setCommandList(commandPanel);
         if (game.getCurrentPlayer().isAi()) {
             actions.aiCommands();
         } else {
             actions.playerCommands();
         }
-        game.rollForInitiative();
-        actions.checkLegitActions();
-        actions.updateUnitDisplays();
     }
 
     private JPanel commandBuilder(Game game, GraphicalMap map,
@@ -99,7 +96,7 @@ public class UiView {
         JButton endTurn = new JButton("End turn");
         JButton takeTurn = new JButton("Take turn");
         JButton autoTurn = new JButton("Auto turn");
-        
+
 
         actions = new ActionController(game, map,
                 nextUnit, previousUnit, move, attack, delay, endTurn,

@@ -65,7 +65,7 @@ public class ArtificialIntelligenceTest {
         game.placeUnits(game.getPlayers().get(0).getUnits());
         game.placeUnits(game.getPlayers().get(1).getUnits());
         game.rollForInitiative();
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 1; i++) {
             if (game.checkIfGameOver()) {
                 break;
             }

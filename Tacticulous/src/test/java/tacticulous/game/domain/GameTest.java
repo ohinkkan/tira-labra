@@ -11,6 +11,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import tacticulous.game.commands.GameCommand;
 import tacticulous.game.utility.Die;
 import tacticulous.game.utility.DieRoller;
 
@@ -69,11 +70,13 @@ public class GameTest {
     public void nextPlayerWorks() {
         game = new Game();
         game.startup();
+        GameCommand command = new GameCommand(game);
+        game.setCommand(command);
         game.rollForInitiative();
         Player player1 = game.getCurrentPlayer();
-        game.nextPlayer();
+        game.nextTurn();
         assertNotSame(player1, game.getCurrentPlayer());
-        game.nextPlayer();
+        game.nextTurn();
         assertEquals(player1, game.getCurrentPlayer());
     }
 
@@ -82,11 +85,8 @@ public class GameTest {
         game = new Game();
         game.startup();
         game.rollForInitiative();
-        game.getCurrentPlayer().getUnitsWithActions().clear();
-        game.nextPlayer();
-        game.getCurrentPlayer().getUnitsWithActions().clear();
         assertEquals(1, game.getRound());
-        game.nextPlayer();
+        game.rollForInitiative();
         assertEquals(2, game.getRound());
     }
 
@@ -94,7 +94,7 @@ public class GameTest {
     public void endRoundCheckWorks() {
         game = new Game();
         game.startup();
-        assertTrue(game.endRoundCheck());
+        assertTrue(!game.endRoundCheck());
     }
 
     @Test

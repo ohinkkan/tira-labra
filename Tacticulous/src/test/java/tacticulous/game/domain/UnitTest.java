@@ -44,7 +44,7 @@ public class UnitTest {
     public void doneForTheRoundAndNewRoundWork() {
         Player player = new Player("A", null);
         player.testUnits();
-        player.newRound();
+        player.newRoundUnitReset();
         unit = player.activeUnit();
         assertTrue(!unit.doneForTheRound());
         unit.attacks();

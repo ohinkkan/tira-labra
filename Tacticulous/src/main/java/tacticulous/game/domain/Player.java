@@ -42,7 +42,7 @@ public class Player {
      *
      * @see tacticulous.game.domain.Unit#newRound()
      */
-    public void newRound() {
+    public void newRoundUnitReset() {
         activeUnitIndex = 0;
         unitsWithActions.clear();
         unitsWithActions.addAll(units);
@@ -55,13 +55,13 @@ public class Player {
      * Basic constructor.
      *
      * @param name name of the player.
+     * @param color color of player units on map
      */
     public Player(String name, Color color) {
         this.name = name;
         this.isAi = false;
         units = new ArrayList();
         unitsWithActions = new ArrayList();
-        Collections.copy(units, unitsWithActions);
         activeUnitIndex = 0;
         this.color = color;
     }

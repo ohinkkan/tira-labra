@@ -103,7 +103,7 @@ public class ActionController implements ActionListener {
     }
 
     public void updateUI() {
-        map.paintImmediately(0,0,map.getHeight(),map.getWidth());
+        map.paintImmediately(0, 0, map.getHeight(), map.getWidth());
         checkLegitActions();
         updateUnitDisplays();
         updateLogDisplay();
@@ -178,7 +178,7 @@ public class ActionController implements ActionListener {
     public void aiCommands() {
         game.getCommandList().removeAll();
         game.getCommandList().add(takeTurn);
-//        game.getCommandList().add(autoTurn);
+        game.getCommandList().add(autoTurn);
         game.getCommandList().repaint();
     }
 

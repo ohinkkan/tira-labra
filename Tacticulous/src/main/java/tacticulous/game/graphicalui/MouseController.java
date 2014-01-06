@@ -40,7 +40,7 @@ public class MouseController implements MouseListener {
         map.repaint();
         int x = me.getX() / map.getScale();
         int y = me.getY() / map.getScale();
-        if (game.getMap().legit(x, y)) {
+        if (game.getMap().legit(x, y) && !game.getCurrentPlayer().isAi()) {
             game.setTargetTile(game.getMap().getTile(y, x));
             game.getActions().checkLegitActions();
             game.getActions().updateUnitDisplays();

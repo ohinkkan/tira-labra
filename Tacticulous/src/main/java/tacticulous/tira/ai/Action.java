@@ -34,6 +34,10 @@ public class Action {
         return value;
     }
 
+    public ActionType getType() {
+        return type;
+    }
+
     /**
      * Used for increasing or decreasing the value of an action from another
      * action.
@@ -62,7 +66,7 @@ public class Action {
      * @return The action with highest value.
      */
     public static Action getBetter(Action... actions) {
-        Action best = new Action(Integer.MIN_VALUE / 2);
+        Action best = new Action(Integer.MIN_VALUE);
         for (Action action : actions) {
             if (action.getValue() > best.getValue()) {
                 best = action;
@@ -124,7 +128,7 @@ public class Action {
      */
     public void takeAction(Game game) {
         if (type == null) {
-            game.rollForInitiative();
+            game.nextTurn();
             return;
         }
         Unit unit = game.getMap().getTile(unitX, unitY).getUnit();
@@ -156,6 +160,7 @@ public class Action {
         } else if (type == ActionType.DELAY) {
             game.command().delay();
         } else if (type == ActionType.ENDTURN) {
+//            System.out.println(game.getActiveUnit());
             game.command().endTurn();
         }
     }

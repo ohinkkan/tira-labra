@@ -24,7 +24,7 @@ public class PlayerTest {
         player = new Player("A", null);
         player.testUnits();
         assertTrue(player.getUnitsWithActions().isEmpty());
-        player.newRound();
+        player.newRoundUnitReset();
         assertTrue(!player.getUnitsWithActions().isEmpty());
     }
 
@@ -33,7 +33,7 @@ public class PlayerTest {
         player = new Player("A", null);
         player.testUnits();
         assertNull(player.activeUnit());
-        player.newRound();
+        player.newRoundUnitReset();
         assertEquals(player.getUnits().get(0), player.activeUnit());
     }
 

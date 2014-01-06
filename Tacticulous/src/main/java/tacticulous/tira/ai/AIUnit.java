@@ -73,7 +73,7 @@ public class AIUnit extends Unit {
 
     @Override
     public boolean doneForTheRound() {
-        return !(this.notAttacked && this.notMoved);
+        return !(notAttacked || notMoved);
     }
 
     @Override

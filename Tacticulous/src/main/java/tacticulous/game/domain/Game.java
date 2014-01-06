@@ -109,14 +109,14 @@ public class Game {
      *
      */
     public void run() {
-//        useGraphicalStartupUI();
-        runMore();
+        useGraphicalStartupUI();
+
     }
 
     public void runMore() {
-        command = new GameCommand(this);
-        startup();
         useGraphicalInterface();
+        rollForInitiative();
+        actions.updateUI();
     }
 
     public void setCommand(GameCommand command) {
@@ -136,10 +136,11 @@ public class Game {
         Collections.shuffle(players);
         currentPlayerIndex = 0;
         for (Player player : players) {
-            player.newRound();
+            player.newRoundUnitReset();
         }
         if (getCurrentPlayer().getUnitsWithActions().isEmpty()) {
             nextPlayer();
+            return;
         }
         this.setActiveUnit(getCurrentPlayer().activeUnit());
         updateLog(GameText.newRound(round));
@@ -167,10 +168,25 @@ public class Game {
         }
         if (getCurrentPlayer().getUnitsWithActions().isEmpty()) {
             nextPlayer();
+            return;
         }
         updateLog(GameText.nextPlayer(getCurrentPlayer().getName()));
         setActiveUnit(getCurrentPlayer().activeUnit());
+    }
 
+    /**
+     *
+     */
+    public void nextTurn() {
+        nextPlayer();
+        command.aiCheck();
+        updateUI();
+    }
+
+    public void updateUI() {
+        if (!(actions == null)) {
+            getActions().updateUI();
+        }
     }
 
     private void useGraphicalInterface() {
@@ -191,8 +207,10 @@ public class Game {
      */
     public boolean endRoundCheck() {
         for (Player player : players) {
-            if (!player.getUnitsWithActions().isEmpty()) {
-                return false;
+            for (Unit unit : player.getUnits()) {
+                if (!unit.doneForTheRound()) {
+                    return false;
+                }
             }
         }
         return true;
@@ -242,7 +260,28 @@ public class Game {
         players.get(1).setGame(this);
         players.get(0).testUnits2(2);
         players.get(1).testUnits2(2);
+//        players.get(0).setAI(new ArtificialIntelligence(this, players.get(0), 1, 5, 10, 1));
         players.get(1).setAI(new ArtificialIntelligence(this, players.get(1), 1, 5, 10, 1));
+        this.map = new BattleMap(12, 4);
+        placeUnits(players.get(0).getUnits());
+        placeUnits(players.get(1).getUnits());
+    }
+
+    /**
+     * Placeholder until game startup customization interface is implemented.
+     */
+
+    public void startup2() {
+        players.add(new Player("Player 1", Color.BLUE));
+        players.add(new Player("Player 2", Color.RED));
+        players.get(0).testUnits();
+        players.get(1).testUnits();
+        players.get(0).setGame(this);
+        players.get(1).setGame(this);
+        players.get(0).testUnits2(2);
+        players.get(1).testUnits2(2);
+        players.get(0).setAI(new ArtificialIntelligence(this, players.get(0), 1, 10, 10, 10));
+        players.get(1).setAI(new ArtificialIntelligence(this, players.get(1), 1, 5, 12, 1));
         this.map = new BattleMap(16, 4);
         placeUnits(players.get(0).getUnits());
         placeUnits(players.get(1).getUnits());

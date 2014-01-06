@@ -31,45 +31,53 @@ public class GameCommand {
     public void move() {
         UnitCommand.move(game.getMap(), game.getActiveUnit(), game.getTargetTile());
         game.setTargetTile(null);
-        checkIfUnitDoneForTheRound(game.getActiveUnit());
+        nextPlayerIfUnitDoneForTheRound(game.getActiveUnit());
     }
 
     public void attack() {
         game.updateLog(unitAttacks());
-        checkIfUnitDoneForTheRound(game.getActiveUnit());
+        nextPlayerIfUnitDoneForTheRound(game.getActiveUnit());
     }
 
     public void endTurn() {
         game.getActiveUnit().attacks();
         game.getActiveUnit().moves();
-        checkIfUnitDoneForTheRound(game.getActiveUnit());
+        nextPlayerIfUnitDoneForTheRound(game.getActiveUnit());
     }
 
     public void delay() {
         game.getActiveUnit().delays();
-        game.nextPlayer();
+        game.nextTurn();
         lockUnit = false;
     }
 
     public void takeAITurn() {
-         System.out.println(game.getCurrentPlayer().getName());
         game.getCurrentPlayer().getAi().takeTurn();
-
     }
 
     public void autoTurn() {
         game.getCurrentPlayer().getAi().autoOn();
-        if (!allAICheck()) {
-            takeAITurn();
-        } else {
-            autoRun();
+        takeAITurn();
+//        if (!allAICheck()) {
+//            takeAITurn();
+//        } else {
+//            autoRun();
+//        }
+    }
+
+    public void aiCheck() {
+        if (game.getCurrentPlayer().isAi()) {
+            if (game.getCurrentPlayer().getAi().autoIsOn()) {
+                game.updateUI();
+                takeAITurn();
+            }
         }
     }
 
     private void autoRun() {
         while (!checkIfGameOver()) {
             takeAITurn();
-            game.getActions().updateUI();
+            game.updateUI();
         }
     }
 
@@ -87,10 +95,10 @@ public class GameCommand {
         return true;
     }
 
-    private void checkIfUnitDoneForTheRound(Unit unit) {
+    private void nextPlayerIfUnitDoneForTheRound(Unit unit) {
         if (unit.doneForTheRound()) {
             game.getCurrentPlayer().getUnitsWithActions().remove(unit);
-            game.nextPlayer();
+            game.nextTurn();
             lockUnit = false;
         } else {
             lockUnit = true;

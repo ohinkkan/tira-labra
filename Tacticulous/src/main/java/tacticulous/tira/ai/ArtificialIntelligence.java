@@ -79,27 +79,36 @@ public class ArtificialIntelligence {
     public Action simulateTurn(SimulatedRound round) {
         Action optimal = new Action(Integer.MIN_VALUE / 2);
         for (AIUnit unit : round.getActiveUnits()) {
-            if (unit.hasNotMoved() && unit.hasNotAttacked()) {
-                optimal = moveAndAttack(unit, round, optimal);
+
+            if (!unit.doneForTheRound()) {
+                if (unit.hasNotMoved() && unit.hasNotAttacked()) {
+                    optimal = moveAndAttack(unit, round, optimal);
+                }
+                if (unit.hasNotMoved() && unit.hasNotAttacked()) {
+                    optimal = attackAndMove(unit, round, optimal);
+                }
+                if (unit.hasNotMoved() && unit.hasNotDelayed()) {
+                    optimal = moveAndDelay(unit, round, optimal);
+                }
+                if (unit.hasNotAttacked() && unit.hasNotDelayed()) {
+                    optimal = attackAndDelay(unit, round, optimal);
+                }
+                if (unit.hasNotMoved() && !unit.hasNotDelayed()) {
+                    optimal = moveAndEndTurn(unit, round, optimal);
+                }
+                if (unit.hasNotAttacked() && !unit.hasNotDelayed()) {
+                    optimal = attackAndEndTurn(unit, round, optimal);
+                }
+                if (unit.hasNotDelayed()) {
+                    optimal = delay(unit, round, optimal);
+                }
+                if (!unit.hasNotDelayed()) {
+                    optimal = endTurn(unit, optimal);
+
+                }
+
             }
-            if (unit.hasNotMoved() && unit.hasNotAttacked()) {
-                optimal = attackAndMove(unit, round, optimal);
-            }
-            if (unit.hasNotMoved() && unit.hasNotDelayed()) {
-                optimal = moveAndDelay(unit, round, optimal);
-            }
-            if (unit.hasNotAttacked() && unit.hasNotDelayed()) {
-                optimal = attackAndDelay(unit, round, optimal);
-            }
-            if (unit.hasNotMoved() && !unit.hasNotDelayed()) {
-                optimal = moveAndEndTurn(unit, round, optimal);
-            }
-            if (unit.hasNotAttacked() && !unit.hasNotDelayed()) {
-                optimal = attackAndEndTurn(unit, round, optimal);
-            }
-            if (unit.hasNotDelayed() && (!unit.doneForTheRound())) {
-                optimal = delay(unit, round, optimal);
-            }
+
         }
         return optimal;
     }
@@ -238,6 +247,16 @@ public class ArtificialIntelligence {
         return optimal;
     }
 
+    private Action endTurn(AIUnit unit, Action optimal) {
+        Action currentAction = new Action(Integer.MIN_VALUE / 2, unit);
+        currentAction.setType(ActionType.ENDTURN);
+        if (optimal.getType() == null) {
+            return currentAction;
+        }
+        optimal = Action.getBetter(optimal, currentAction);
+        return optimal;
+    }
+
     /**
      * Converts the nodes from the pathfinding algorithm to tiles
      *
@@ -259,12 +278,14 @@ public class ArtificialIntelligence {
     private ArrayList<AIUnit> enterTheMatrix(Player player) {
         ArrayList<AIUnit> temporaryUnits = new ArrayList();
         for (Unit unit : player.getUnits()) {
+
             AIUnit edi = new AIUnit(unit.getSpeed(), unit.getDefense(),
                     unit.getAttack(), unit.getRange(), unit.getHitPoints(),
                     "", player, unit.getX(), unit.getY(), unit.hasNotMoved(),
                     unit.hasNotAttacked(), unit.hasNotDelayed(), 0);
             temporaryUnits.add(edi);
             theMatrix.getTile(edi.getX(), edi.getY()).setUnit(edi);
+
         }
         return temporaryUnits;
     }

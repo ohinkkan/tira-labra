@@ -53,10 +53,14 @@ public class GraphicalMap extends JComponent {
                     }
                 } else if (tile == game.getTargetTile()) {
                     drawUnit(Color.YELLOW, i, j, graphics);
-                } else if (game.getActiveUnit().hasNotMoved() && game.getActiveUnit().getSpeed() >= game.getMoveCosts()[i][j]) {
-                    drawMovement(i, j, graphics);
                 } else if (!tile.getCorpses().isEmpty()) {
                     drawUnit(Color.getHSBColor(100F, 0.5F, 0.5F), i, j, graphics);
+                } else if (game.getActiveUnit() != null) {
+                    if (game.getActiveUnit().hasNotMoved() && game.getActiveUnit().getSpeed() >= game.getMoveCosts()[i][j]) {
+                        drawMovement(i, j, graphics);
+                    } else {
+                        drawTile(tile.getMoveCost(), i, j, graphics);
+                    }
                 } else {
                     drawTile(tile.getMoveCost(), i, j, graphics);
                 }
