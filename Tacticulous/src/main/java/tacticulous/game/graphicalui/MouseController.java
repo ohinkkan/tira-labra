@@ -6,6 +6,7 @@ import tacticulous.game.domain.Game;
 
 /**
  * Control and logic class for using mouse in graphical map display.
+ * Is its own mainly to make future UI improvement easier.
  *
  * @author O
  * @see tacticulous.game.graphicalui.ActionController
@@ -13,7 +14,6 @@ import tacticulous.game.domain.Game;
 public class MouseController implements MouseListener {
 
     private Game game;
-
     private GraphicalMap map;
 
     /**
@@ -34,14 +34,14 @@ public class MouseController implements MouseListener {
      */
     @Override
     public void mouseClicked(MouseEvent me) {
-        if (game.checkIfGameOver()) {
+        if (game.command().isGameOver()) {
             return;
         }
         map.repaint();
         int x = me.getX() / map.getScale();
         int y = me.getY() / map.getScale();
-        if (game.getMap().legit(x, y) && !game.getCurrentPlayer().isAi()) {
-            game.setTargetTile(game.getMap().getTile(y, x));
+        if (game.getMap().legit(x, y) && !game.command().getCurrentPlayer().isAi()) {
+            game.command().setTargetTile(game.getMap().getTile(y, x));
             game.getActions().checkLegitActions();
             game.getActions().updateUnitDisplays();
             map.repaint();
@@ -54,7 +54,7 @@ public class MouseController implements MouseListener {
                     map.repaint();
                 }
                 game.getActions().checkLegitActions();
-                game.getActions().updateUnitDisplays();
+                game.updateUI();
             }
         }
 

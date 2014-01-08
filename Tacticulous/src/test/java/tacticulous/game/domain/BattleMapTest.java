@@ -1,6 +1,4 @@
-
 package tacticulous.game.domain;
-
 
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -19,13 +17,17 @@ public class BattleMapTest {
     Die die;
 
     @Test(expected = IllegalArgumentException.class)
-    public void legalSizeForMap() {
+    public void illegalSizeForMap() {
         map = new BattleMap(0, 0);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void legalRandomTerrainForMap() {
-        die = new FixedDie(5);
+    public void illegalSizeAndTerrainForMap() {
+        map = new BattleMap(2, -1);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void illegalRandomTerrainForMap() {
         map = new BattleMap(0, -1);
     }
 
@@ -43,7 +45,7 @@ public class BattleMapTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void legalFixedTerrainForMap2() {
+    public void illegalFixedTerrainForMap2() {
         int[][] intMap = new int[][]{
             {3, 4, 1, 5, 2},
             {1, 3, 4, 7, 8},
@@ -51,13 +53,20 @@ public class BattleMapTest {
             {1, 2, 1, 4, 0},
             {3, 4, 3, 1, 4}
         };
-        die = new FixedDie(5);
+        map = new BattleMap(intMap);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void illegalFixedTerrainForMap3() {
+        int[][] intMap = new int[][]{
+            {3, 4},
+            {1},
+        };
         map = new BattleMap(intMap);
     }
 
     @Test
     public void unitPlacingWorks() {
-        die = new FixedDie(5);
         map = new BattleMap(10, 0);
         unit = new Unit(1, 1, 1, 1, "A");
         map.getTile(0, 0).setUnit(unit);
@@ -66,9 +75,7 @@ public class BattleMapTest {
 
     @Test
     public void legitCheckWorks() {
-        die = new FixedDie(5);
         map = new BattleMap(10, 1);
         assertTrue(map.legit(0, 5, 9) && !map.legit(-1) && !map.legit(10));
-
     }
 }

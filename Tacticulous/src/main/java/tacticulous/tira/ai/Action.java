@@ -1,5 +1,6 @@
 package tacticulous.tira.ai;
 
+import tacticulous.game.commands.GameCommand;
 import tacticulous.game.domain.Game;
 import tacticulous.game.domain.Unit;
 
@@ -124,44 +125,44 @@ public class Action {
     /**
      * The AI actually (finally) takes this action in real game (irg).
      *
-     * @param game
+     * @param game access to game in question
      */
     public void takeAction(Game game) {
+        GameCommand command = game.command();
         if (type == null) {
-            game.nextTurn();
+            command.nextTurn();
             return;
         }
         Unit unit = game.getMap().getTile(unitX, unitY).getUnit();
-        game.setActiveUnit(unit);
+        command.setActiveUnit(unit);
         if (type == ActionType.ATTACKANDDELAY) {
-            game.setTargetTile(game.getMap().getTile(attackX, attackY));
-            game.command().attack();
-            game.command().delay();
+            command.setTargetTile(game.getMap().getTile(attackX, attackY));
+            command.attack();
+            command.delay();
         } else if (type == ActionType.ATTACKANDENDTURN) {
-            game.setTargetTile(game.getMap().getTile(attackX, attackY));
-            game.command().attack();
+            command.setTargetTile(game.getMap().getTile(attackX, attackY));
+            command.attack();
         } else if (type == ActionType.ATTACKANDMOVE) {
-            game.setTargetTile(game.getMap().getTile(attackX, attackY));
-            game.command().attack();
-            game.setTargetTile(game.getMap().getTile(movementX, movementY));
-            game.command().move();
+            command.setTargetTile(game.getMap().getTile(attackX, attackY));
+            command.attack();
+            command.setTargetTile(game.getMap().getTile(movementX, movementY));
+            command.move();
         } else if (type == ActionType.MOVEANDATTACK) {
-            game.setTargetTile(game.getMap().getTile(movementX, movementY));
-            game.command().move();
-            game.setTargetTile(game.getMap().getTile(attackX, attackY));
-            game.command().attack();
+            command.setTargetTile(game.getMap().getTile(movementX, movementY));
+            command.move();
+            command.setTargetTile(game.getMap().getTile(attackX, attackY));
+            command.attack();
         } else if (type == ActionType.MOVEANDDELAY) {
-            game.setTargetTile(game.getMap().getTile(movementX, movementY));
-            game.command().move();
-            game.command().delay();
+            command.setTargetTile(game.getMap().getTile(movementX, movementY));
+            command.move();
+            command.delay();
         } else if (type == ActionType.MOVEANDENDTURN) {
-            game.setTargetTile(game.getMap().getTile(movementX, movementY));
-            game.command().move();
+            command.setTargetTile(game.getMap().getTile(movementX, movementY));
+            command.move();
         } else if (type == ActionType.DELAY) {
-            game.command().delay();
+            command.delay();
         } else if (type == ActionType.ENDTURN) {
-//            System.out.println(game.getActiveUnit());
-            game.command().endTurn();
+            command.endTurn();
         }
     }
 

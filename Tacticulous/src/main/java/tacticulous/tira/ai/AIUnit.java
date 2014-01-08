@@ -10,33 +10,32 @@ import tacticulous.game.domain.Unit;
  */
 public class AIUnit extends Unit {
 
-    private int speed;
-    private int defense;
-    private int attack;
-    private int range;
-    private int hitPoints;
     private int attackedCount;
-    private boolean notAttacked;
-    private boolean notMoved;
-    private boolean notDelayed;
 
     /**
+     * @param speed how fast unit can move.
+     * @param defense defense modifier
+     * @param attack attack modifier
+     * @param range attack range
+     * @param hitPoints how much damage unit can survive
+     * @param name name of the unit
+     * @param player owner of unit
      * @param attackedCount this is used for target value evaluation
+     * @param x
+     * @param y
+     * @param notMoved
+     * @param notAttacked
+     * @param notDelayed
      */
     public AIUnit(int speed, int defense, int attack, int range, int hitPoints,
             String name, Player player, int x, int y, boolean notMoved,
             boolean notAttacked, boolean notDelayed, int attackedCount) {
         super(speed, defense, attack, range, hitPoints, name, player);
+        super.notAttacked = notAttacked;
+        super.notMoved = notMoved;
+        super.notDelayed = notDelayed;
         this.setXY(x, y);
-        this.notAttacked = notAttacked;
-        this.notDelayed = notDelayed;
-        this.notMoved = notMoved;
         this.attackedCount = attackedCount;
-        this.speed = speed;
-        this.attack = attack;
-        this.defense = defense;
-        this.range = range;
-        this.hitPoints = hitPoints;
     }
 
     /**
@@ -69,26 +68,6 @@ public class AIUnit extends Unit {
 
     public void undoAttacked() {
         attackedCount--;
-    }
-
-    @Override
-    public boolean doneForTheRound() {
-        return !(notAttacked || notMoved);
-    }
-
-    @Override
-    public boolean hasNotMoved() {
-        return notMoved;
-    }
-
-    @Override
-    public boolean hasNotAttacked() {
-        return notAttacked;
-    }
-
-    @Override
-    public boolean hasNotDelayed() {
-        return notDelayed;
     }
 
     @Override

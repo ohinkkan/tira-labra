@@ -21,6 +21,16 @@ public class UnitTest {
         unit = new Unit(1, 1, 1, 0, "A");
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void negativeSpeedNotAllowed2() {
+        unit = new Unit(-1, 1, 1, 1, 1, "A", null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void zeroStartingHitpointsNotAllowed2() {
+        unit = new Unit(1, 1, 1, 1, 0, "A", null);
+    }
+
     @Test
     public void hitRemovesHealth() {
         unit = new Unit(1, 1, 1, 2, "A");
@@ -45,7 +55,7 @@ public class UnitTest {
         Player player = new Player("A", null);
         player.testUnits();
         player.newRoundUnitReset();
-        unit = player.activeUnit();
+        unit = player.getUnits().get(0);
         assertTrue(!unit.doneForTheRound());
         unit.attacks();
         assertTrue(!unit.doneForTheRound());

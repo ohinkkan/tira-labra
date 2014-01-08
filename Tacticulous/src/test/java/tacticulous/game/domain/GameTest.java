@@ -1,19 +1,9 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package tacticulous.game.domain;
 
 import java.util.ArrayList;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import tacticulous.game.commands.GameCommand;
-import tacticulous.game.utility.Die;
-import tacticulous.game.utility.DieRoller;
 
 /**
  *
@@ -27,6 +17,16 @@ public class GameTest {
     public void newGameNoNullAssets() {
         game = new Game();
         game.startup();
+        game.startup2();
+        assertNotNull(game.getDie());
+        assertNotNull(game.getMap());
+        assertNotNull(game.getPlayers());
+    }
+
+    @Test
+    public void newGameNoNullAssets2() {
+        game = new Game();
+        game.startup2();
         assertNotNull(game.getDie());
         assertNotNull(game.getMap());
         assertNotNull(game.getPlayers());
@@ -55,56 +55,6 @@ public class GameTest {
             units.add(new Unit(1, 1, 1, 1, "A"));
         }
         assertEquals(false, game.placeUnits(units));
-    }
-
-    @Test
-    public void rollForInitiativeWorks() {
-        game = new Game();
-        game.startup();
-        game.rollForInitiative();
-        assertNotNull(game.getCurrentPlayer());
-        assertNotNull(game.getActiveUnit());
-    }
-
-    @Test
-    public void nextPlayerWorks() {
-        game = new Game();
-        game.startup();
-        GameCommand command = new GameCommand(game);
-        game.setCommand(command);
-        game.rollForInitiative();
-        Player player1 = game.getCurrentPlayer();
-        game.nextTurn();
-        assertNotSame(player1, game.getCurrentPlayer());
-        game.nextTurn();
-        assertEquals(player1, game.getCurrentPlayer());
-    }
-
-    @Test
-    public void newRoundWorks() {
-        game = new Game();
-        game.startup();
-        game.rollForInitiative();
-        assertEquals(1, game.getRound());
-        game.rollForInitiative();
-        assertEquals(2, game.getRound());
-    }
-
-    @Test
-    public void endRoundCheckWorks() {
-        game = new Game();
-        game.startup();
-        assertTrue(!game.endRoundCheck());
-    }
-
-    @Test
-    public void gameOverWorks() {
-        game = new Game();
-        game.startup();
-        game.rollForInitiative();
-        assertTrue(!game.checkIfGameOver());
-        game.getCurrentPlayer().getUnits().clear();
-        assertTrue(game.checkIfGameOver());
     }
 
 }

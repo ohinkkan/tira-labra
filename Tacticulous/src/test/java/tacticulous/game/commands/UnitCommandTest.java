@@ -13,7 +13,7 @@ import tacticulous.game.utility.FixedDie;
  *
  * @author O
  */
-public class CommandTest {
+public class UnitCommandTest {
 
     BattleMap map;
     Tile tile;
@@ -21,11 +21,13 @@ public class CommandTest {
     Die die;
 
     @Test
-    public void legalMoveWorks() {
+    public void legalMoveAndCheckWorks() {
         die = new FixedDie(5);
         map = new BattleMap(10, 0);
-        unit = new Unit(1, 1, 1, 1, "A");
+        unit = new Unit(10, 1, 1, 1, "A");
         map.getTile(0, 0).setUnit(unit);
+        int[][] costs = new int[10][10];
+        assertTrue(UnitCommand.checkMove(map, unit, 5, 5, costs));
         UnitCommand.move(map, unit, map.getTile(5, 5));
         assertEquals(null, map.getTile(0, 0).getUnit());
         assertEquals(unit, map.getTile(5, 5).getUnit());
@@ -37,7 +39,7 @@ public class CommandTest {
         map = new BattleMap(10, 0);
         unit = new Unit(1, 1, 1, 1, "A");
         map.getTile(0, 0).setUnit(unit);
-        assertEquals(false, UnitCommand.checkMove(map, unit, 5, 11, costs));
+        assertTrue(!UnitCommand.checkMove(map, unit, 5, 11, costs));
 
     }
 
@@ -48,7 +50,7 @@ public class CommandTest {
         map = new BattleMap(10, 0);
         unit = new Unit(1, 1, 1, 1, "A");
         map.getTile(0, 0).setUnit(unit);
-        assertEquals(false, UnitCommand.checkMove(map, unit, 5, 5, costs));
+        assertTrue(!UnitCommand.checkMove(map, unit, 5, 5, costs));
     }
 
     @Test
@@ -59,7 +61,17 @@ public class CommandTest {
         Unit unit2 = new Unit(1, 1, 1, 1, "B");
         map.getTile(0, 0).setUnit(unit);
         map.getTile(1, 1).setUnit(unit2);
-        assertEquals(false, UnitCommand.checkMove(map, unit, 1, 1, costs));
+        assertTrue(!UnitCommand.checkMove(map, unit, 1, 1, costs));
+    }
+
+    @Test
+    public void legalAttackCheckWorks() {
+        map = new BattleMap(10, 0);
+        unit = new Unit(1, 1, 1, 1, "A");
+        Unit unit2 = new Unit(1, 1, 1, 1, "A");
+        map.getTile(0, 0).setUnit(unit);
+        map.getTile(0, 1).setUnit(unit2);
+        assertTrue(UnitCommand.checkAttack(map, unit, 0, 1));
     }
 
     @Test
@@ -68,7 +80,7 @@ public class CommandTest {
         map = new BattleMap(10, 0);
         unit = new Unit(1, 1, 1, 1, "A");
         map.getTile(0, 0).setUnit(unit);
-        assertEquals(false, UnitCommand.checkAttack(map, unit, 1, 11));
+        assertTrue(!UnitCommand.checkAttack(map, unit, 1, 11));
     }
 
     @Test
@@ -76,7 +88,7 @@ public class CommandTest {
         map = new BattleMap(10, 0);
         unit = new Unit(1, 1, 1, 1, "A");
         map.getTile(0, 0).setUnit(unit);
-        assertEquals(false, UnitCommand.checkAttack(map, unit, 1, 1));
+        assertTrue(!UnitCommand.checkAttack(map, unit, 1, 1));
     }
 
     @Test
@@ -84,7 +96,7 @@ public class CommandTest {
         map = new BattleMap(10, 0);
         unit = new Unit(1, 1, 1, 1, "A");
         map.getTile(0, 0).setUnit(unit);
-        assertEquals(false, UnitCommand.checkAttack(map, unit, 0, 0));
+        assertTrue(!UnitCommand.checkAttack(map, unit, 0, 0));
     }
 
     @Test
@@ -94,7 +106,7 @@ public class CommandTest {
         Unit unit2 = new Unit(1, 1, 1, 1, "A");
         map.getTile(0, 0).setUnit(unit);
         map.getTile(0, 2).setUnit(unit2);
-        assertEquals(false, UnitCommand.checkAttack(map, unit, 0, 2));
+        assertTrue(!UnitCommand.checkAttack(map, unit, 0, 2));
     }
 
     @Test
@@ -191,5 +203,9 @@ public class CommandTest {
         unit2 = new Unit(1, -2, 1, 1, "B");
         map.getTile(1, 5).setUnit(unit2);
         assertEquals(70, UnitCommand.chanceToHit(unit, unit2));
+
+        unit2 = new Unit(1, -10, 1, 1, "B");
+        map.getTile(1, 5).setUnit(unit2);
+        assertEquals(100, UnitCommand.chanceToHit(unit, unit2));
     }
 }

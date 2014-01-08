@@ -81,10 +81,20 @@ public abstract class UnitCommand {
      * @return true if not in attack range.
      */
     public static boolean checkNotInRange(Unit unit, int toX, int toY) {
-        return  checkDistance(unit, toX, toY) > unit.getRange();
+        return  calculateDistance(unit, toX, toY) > unit.getRange();
     }
 
-    public static int checkDistance(Unit unit, int toX, int toY) {
+
+    /**
+     * Calculates the Chebychev distance between the coordinates of provided
+     * unit and target coordinates.
+     *
+     * @param unit
+     * @param toX
+     * @param toY
+     * @return Chebychev distance
+     */
+    public static int calculateDistance(Unit unit, int toX, int toY) {
         return Math.max(Math.abs(unit.getX() - toX), Math.abs(unit.getY() - toY));
     }
 
@@ -117,7 +127,7 @@ public abstract class UnitCommand {
      */
     public static int attackRoll(Unit attacker, Unit defender, int dieRoll) {
         int result = attacker.getAttack() + dieRoll - defender.getDefense()
-                -checkDistance(attacker, defender.getX(), defender.getY());
+                -calculateDistance(attacker, defender.getX(), defender.getY());
         if (result > 0) {
             if (defender.isHitAndDies()) {
                 return 1;
@@ -136,7 +146,7 @@ public abstract class UnitCommand {
      */
     public static int chanceToHit(Unit attacker, Unit defender) {
         int result = 100 + (10 * (attacker.getAttack() - defender.getDefense()
-                -checkDistance(attacker, defender.getX(), defender.getY())));
+                -calculateDistance(attacker, defender.getX(), defender.getY())));
         if (result < 0) {
             return 0;
         } else if (result > 100) {

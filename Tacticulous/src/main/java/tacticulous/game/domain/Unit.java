@@ -7,19 +7,19 @@ package tacticulous.game.domain;
  */
 public class Unit {
 
-    private int speed;
-    private int defense;
-    private int attack;
-    private int range;
-    private int startHitPoints;
-    private int hitPoints;
-    private String name;
-    private int x;
-    private int y;
-    private boolean notAttacked;
-    private boolean notMoved;
-    private boolean notDelayed;
-    private Player player;
+    protected int speed;
+    protected int defense;
+    protected int attack;
+    protected int range;
+    protected int startHitPoints;
+    protected int hitPoints;
+    protected String name;
+    protected int x;
+    protected int y;
+    protected boolean notAttacked;
+    protected boolean notMoved;
+    protected boolean notDelayed;
+    protected Player player;
 
     /**
      * Basic constructor.
@@ -184,7 +184,7 @@ public class Unit {
     }
 
     /**
-     * Surprisingly, returns unit information in a string.
+     * Surprisingly, returns unit information in a string. Used by unit displays.
      *
      * @return
      */

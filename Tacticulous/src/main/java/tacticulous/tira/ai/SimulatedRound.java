@@ -5,6 +5,8 @@ import tacticulous.game.commands.UnitCommand;
 import tacticulous.game.domain.BattleMap;
 import tacticulous.game.domain.Tile;
 import tacticulous.game.domain.Unit;
+import tacticulous.tira.algorithms.GameUsage;
+import tacticulous.tira.algorithms.Node;
 
 /**
  *
@@ -16,8 +18,8 @@ public class SimulatedRound {
 
     private ArrayList<AIUnit> activeUnits;
     private ArrayList<AIUnit> hostiles;
-    private ArtificialIntelligence superiorIntellect;
-    private BattleMap theMatrix;
+    private final ArtificialIntelligence superiorIntellect;
+    private final BattleMap theMatrix;
 
     public SimulatedRound(ArrayList<AIUnit> activeUnits, ArrayList<AIUnit> hostiles,
             ArtificialIntelligence mind, BattleMap theMatrix) {
@@ -27,17 +29,54 @@ public class SimulatedRound {
         this.theMatrix = theMatrix;
     }
 
-    private SimulatedRound(ArtificialIntelligence mind, BattleMap theMatrix) {
-        this.superiorIntellect = mind;
-        this.theMatrix = theMatrix;
+    /**
+     * Goes through all the possible action combinations for all units in
+     * current game state. May recursively call itself to simulater multiple
+     * successive turns.
+     *
+     * @return null if all units done for the round, otherwise the bestest of
+     * all the actions in the whole world (that the AI knows about...
+     * hopefully.)
+     */
+    public Action simulateTurn() {
+        Action optimal = new Action(Integer.MIN_VALUE / 2);
+        for (AIUnit unit : this.getActiveUnits()) {
+            if (!unit.doneForTheRound()) {
+                if (unit.hasNotMoved() && unit.hasNotAttacked()) {
+                    optimal = allMovesAndAttacks(unit, optimal);
+                }
+                if (unit.hasNotMoved() && unit.hasNotAttacked()) {
+                    optimal = allAttacksAndMoves(unit, optimal);
+                }
+                if (unit.hasNotMoved() && unit.hasNotDelayed()) {
+                    optimal = allMovesAndDelay(unit, optimal);
+                }
+                if (unit.hasNotAttacked() && unit.hasNotDelayed()) {
+                    optimal = allAttacksAndDelay(unit, optimal);
+                }
+                if (unit.hasNotMoved() && !unit.hasNotDelayed()) {
+                    optimal = allMovesAndEndTurn(unit, optimal);
+                }
+                if (unit.hasNotAttacked() && !unit.hasNotDelayed()) {
+                    optimal = allAttacksAndEndTurn(unit, optimal);
+                }
+                if (unit.hasNotDelayed()) {
+                    optimal = onlyDelay(unit, optimal);
+                }
+                if (!unit.hasNotDelayed()) {
+                    optimal = endTurn(unit, optimal);
+                }
+            }
+        }
+        return optimal;
     }
 
     /**
-     * returns all enemiee in unit's range
+     * Checks which enemiee are in unit's range
      *
      * @param terminator
      * @param potentials
-     * @return
+     * @return list of all enemiee in unit's range
      */
     public ArrayList<AIUnit> getTargetsInRange(Unit terminator, ArrayList<AIUnit> potentials) {
         ArrayList<AIUnit> targets = new ArrayList();
@@ -50,19 +89,38 @@ public class SimulatedRound {
     }
 
     /**
-     * @see
-     * tacticulous.tira.ai.ArtificialIntelligence#moveAndAttack(tacticulous.tira.ai.AIUnit,
-     * tacticulous.tira.ai.SimulatedRound, tacticulous.tira.ai.Action)
+     * Simulates both moving and attacking during the same turn
+     *
+     * @param unit unit taking the simulated action
+     * @param current optimal action
+     * @return the action with highest value, possibly original optimal action
      */
-    public Action moveAndAttack(AIUnit unit, Tile tile) {
+    private Action allMovesAndAttacks(AIUnit unit, Action optimal) {
+        Action currentAction;
+        for (Node node : GameUsage.getTilesToMoveTo(unit, theMatrix)) {
+            currentAction = singleMoveAndAllAttacks(unit, nodeToTile(node));
+            currentAction.setType(ActionType.MOVEANDATTACK);
+            optimal = Action.getBetter(optimal, currentAction);
+        }
+        return optimal;
+    }
+
+    /**
+     *
+     * @param unit
+     * @param tile
+     * @return
+     */
+    public Action singleMoveAndAllAttacks(AIUnit unit, Tile tile) {
         Action action = new Action(0, unit);
-        Tile undo = tileFromUnit(unit);
+        Tile undoMovement = tileFromUnit(unit);
         if (tile.getUnit() == null) {
-            action = move(unit, tile, false);
+            action = singleMove(unit, tile);
             if (!getTargetsInRange(unit, hostiles).isEmpty()) {
                 Action bestAttack = new Action(Integer.MIN_VALUE / 2);
                 for (AIUnit target : getTargetsInRange(unit, hostiles)) {
-                    bestAttack = Action.getBetter(bestAttack, attack(unit, target, true));
+                    bestAttack = Action.getBetter(bestAttack, singleAttack(unit, target));
+                    bestAttack.updateValue(checkIfShouldSimulateNextTurn());
                     target.undoAttacked();
                     unit.undoAttack();
                 }
@@ -70,7 +128,8 @@ public class SimulatedRound {
             } else {
                 action.negate();
             }
-            move(unit, undo, false);
+            singleMove(unit, undoMovement);
+            unit.undoMove();
         } else {
             action.negate();
         }
@@ -78,42 +137,115 @@ public class SimulatedRound {
     }
 
     /**
-     * @see
-     * tacticulous.tira.ai.ArtificialIntelligence#attackAndMove(tacticulous.tira.ai.AIUnit,
-     * tacticulous.tira.ai.SimulatedRound, tacticulous.tira.ai.Action)
+     * Simulates both attacking and moving during the same turn
+     *
+     * @param unit unit taking the simulated action
+     * @param current optimal action
+     * @return the action with highest value, possibly original optimal action
      */
-    public Action attackAndMove(AIUnit unit, Tile tile) {
-        Tile undo = tileFromUnit(unit);
-        Action best = new Action(Integer.MIN_VALUE / 2);
+    private Action allAttacksAndMoves(AIUnit unit, Action optimal) {
+        Action currentAction;
+        for (Node node : GameUsage.getTilesToMoveTo(unit, theMatrix)) {
+            if (!getTargetsInRange(unit, getHostiles()).isEmpty()) {
+                currentAction = allAttacksAndSingleMove(unit, nodeToTile(node));
+                currentAction.setType(ActionType.ATTACKANDMOVE);
+                optimal = Action.getBetter(optimal, currentAction);
+            }
+        }
+        return optimal;
+    }
+
+    /**
+     *
+     * @param unit
+     * @param tile
+     * @return
+     */
+    public Action allAttacksAndSingleMove(AIUnit unit, Tile tile) {
+        Tile undoMovement = tileFromUnit(unit);
+        Action currentOptimal = new Action(Integer.MIN_VALUE / 2);
         if (tile.getUnit() == null) {
             for (AIUnit target : getTargetsInRange(unit, hostiles)) {
-                Action action = attack(unit, target, false);
-                action.updateValue(move(unit, tile, true));
+                Action action = singleAttack(unit, target);
+                action.updateValue(singleMove(unit, tile));
+                action.updateValue(checkIfShouldSimulateNextTurn());
                 action.setMovementCoordinates(tile.getX(), tile.getY());
                 target.undoAttacked();
                 unit.undoAttack();
-                move(unit, undo, false);
-                best = Action.getBetter(best, action);
+                singleMove(unit, undoMovement);
+                unit.undoMove();
+                currentOptimal = Action.getBetter(currentOptimal, action);
             }
         } else {
-            best.negate();
+            currentOptimal.negate();
         }
-        return best;
+        return currentOptimal;
     }
 
     /**
-     * @see
-     * tacticulous.tira.ai.ArtificialIntelligence#moveAndDelay(tacticulous.tira.ai.AIUnit,
-     * tacticulous.tira.ai.SimulatedRound, tacticulous.tira.ai.Action)
+     * Simulates only moving and then delaying
+     *
+     * @param unit unit taking the simulated action
+     * @param current optimal action
+     * @return the action with highest value, possibly original optimal action
      */
-    public Action moveAndDelay(AIUnit unit, Tile tile) {
+    private Action allMovesAndDelay(AIUnit unit, Action optimal) {
+        Action currentAction;
+        for (Node node : GameUsage.getTilesToMoveTo(unit, theMatrix)) {
+            currentAction = singleMoveAndDelay(unit, nodeToTile(node));
+            currentAction.setType(ActionType.MOVEANDDELAY);
+            optimal = Action.getBetter(optimal, currentAction);
+        }
+        return optimal;
+    }
+
+    /**
+     *
+     * @param unit
+     * @param tile
+     * @return
+     */
+    public Action singleMoveAndDelay(AIUnit unit, Tile tile) {
         Tile undo = tileFromUnit(unit);
+        Action currentAction = new Action(0, unit);
+        if (tile.getUnit() == null) {
+            currentAction = singleMove(unit, tile);
+            currentAction.updateValue(delay(unit));
+            currentAction.updateValue(checkIfShouldSimulateNextTurn());
+            singleMove(unit, undo);
+            unit.undoMove();
+            unit.undoDelay();
+        } else {
+            currentAction.negate();
+        }
+        return currentAction;
+    }
+
+    /**
+     * Simulates moving and then ending turn
+     *
+     * @param unit unit taking the simulated action
+     * @param current optimal action
+     * @return the action with highest value, possibly original optimal action
+     */
+    private Action allMovesAndEndTurn(AIUnit unit, Action optimal) {
+        Action currentAction;
+        for (Node node : GameUsage.getTilesToMoveTo(unit, theMatrix)) {
+            currentAction = singleMoveAndEndTurn(unit, nodeToTile(node));
+            currentAction.setType(ActionType.MOVEANDENDTURN);
+            optimal = Action.getBetter(optimal, currentAction);
+        }
+        return optimal;
+    }
+
+    public Action singleMoveAndEndTurn(AIUnit unit, Tile tile) {
+        Tile undoMovement = tileFromUnit(unit);
         Action action = new Action(0, unit);
         if (tile.getUnit() == null) {
-            action = move(unit, tile, false);
-            action.updateValue(delay(unit));
-            move(unit, undo, false);
-            unit.undoDelay();
+            action = (singleMove(unit, tile));
+            checkIfShouldSimulateNextTurn();
+            singleMove(unit, undoMovement);
+            unit.undoMove();
         } else {
             action.negate();
         }
@@ -121,62 +253,74 @@ public class SimulatedRound {
     }
 
     /**
-     * @see
-     * tacticulous.tira.ai.ArtificialIntelligence#moveAndEndTurn(tacticulous.tira.ai.AIUnit,
-     * tacticulous.tira.ai.SimulatedRound, tacticulous.tira.ai.Action)
+     * Simulates only attacking and then delaying
+     *
+     * @param unit unit taking the simulated action
+     * @param current optimal action
+     * @return the action with highest value, possibly original optimal action
      */
-    public Action moveAndEndTurn(AIUnit unit, Tile tile) {
-        Tile undo = tileFromUnit(unit);
-        Action action = new Action(0, unit);
-        if (tile.getUnit() == null) {
-            action = (move(unit, tile, false));
-            endTurn();
-            move(unit, undo, false);
-        } else {
-            action.negate();
+    private Action allAttacksAndDelay(AIUnit unit, Action optimal) {
+        if (!getTargetsInRange(unit, hostiles).isEmpty()) {
+            Action currentAction = new Action(Integer.MIN_VALUE / 2);
+            for (AIUnit target : getTargetsInRange(unit, hostiles)) {
+                Action action = singleAttack(unit, target);
+                action.updateValue(delay(unit));
+                action.updateValue(checkIfShouldSimulateNextTurn());
+                target.undoAttacked();
+                unit.undoAttack();
+                unit.undoDelay();
+                currentAction = Action.getBetter(currentAction, action);
+            }
+            currentAction.setType(ActionType.ATTACKANDDELAY);
+            optimal = Action.getBetter(optimal, currentAction);
         }
-        return action;
+        return optimal;
     }
 
     /**
-     * @see
-     * tacticulous.tira.ai.ArtificialIntelligence#attackAndDelay(tacticulous.tira.ai.AIUnit,
-     * tacticulous.tira.ai.SimulatedRound, tacticulous.tira.ai.Action)
+     * Simulates attacking and then ending turn
+     *
+     * @param unit unit taking the simulated action
+     * @param current optimal action
+     * @return the action with highest value, possibly original optimal action
      */
-    public Action attackAndDelay(AIUnit unit) {
-        Action best = new Action(Integer.MIN_VALUE / 2);
-        for (AIUnit target : getTargetsInRange(unit, hostiles)) {
-            Action action = attack(unit, target, false);
-            action.updateValue(delay(unit));
-            target.undoAttacked();
-            unit.undoAttack();
-            unit.undoDelay();
-            best = Action.getBetter(best, action);
+    private Action allAttacksAndEndTurn(AIUnit unit, Action optimal) {
+        if (!getTargetsInRange(unit, hostiles).isEmpty()) {
+            Action currentAction = new Action(Integer.MIN_VALUE / 2);
+            for (AIUnit target : getTargetsInRange(unit, hostiles)) {
+                Action action = (singleAttack(unit, target));
+                action.updateValue(checkIfShouldSimulateNextTurn());
+                target.undoAttacked();
+                unit.undoAttack();
+                currentAction = Action.getBetter(currentAction, action);
+            }
+            currentAction.setType(ActionType.ATTACKANDENDTURN);
+            optimal = Action.getBetter(optimal, currentAction);
         }
-        return best;
+        return optimal;
     }
 
     /**
-     * @see
-     * tacticulous.tira.ai.ArtificialIntelligence#attackAndEndTurn(tacticulous.tira.ai.AIUnit,
-     * tacticulous.tira.ai.SimulatedRound, tacticulous.tira.ai.Action)
+     * Simulates only delaying this turn
+     *
+     * @param unit unit taking the simulated action
+     * @param current optimal action
+     * @return the action with highest value, possibly original optimal action
      */
-    public Action attackAndEndTurn(AIUnit unit) {
-        Action best = new Action(Integer.MIN_VALUE / 2);
-        for (AIUnit target : getTargetsInRange(unit, hostiles)) {
-            Action action = (attack(unit, target, false));
-            action.updateValue(endTurn());
-            target.undoAttacked();
-            unit.undoAttack();
-            best = Action.getBetter(best, action);
-        }
-        return best;
+    private Action onlyDelay(AIUnit unit, Action optimal) {
+        Action currentAction;
+        currentAction = delay(unit);
+        currentAction.updateValue(checkIfShouldSimulateNextTurn());
+        unit.undoDelay();
+        currentAction.setType(ActionType.DELAY);
+        optimal = Action.getBetter(optimal, currentAction);
+        return optimal;
     }
 
     /**
-     * @see
-     * tacticulous.tira.ai.ArtificialIntelligence#delay(tacticulous.tira.ai.AIUnit,
-     * tacticulous.tira.ai.SimulatedRound, tacticulous.tira.ai.Action)
+     *
+     * @param unit
+     * @return
      */
     public Action delay(AIUnit unit) {
         Action action = new Action(superiorIntellect.getValueLogic().delayValue(unit, this), unit);
@@ -187,41 +331,52 @@ public class SimulatedRound {
     /**
      * performs the actual simulated move
      */
-    public Action move(AIUnit unit, Tile tile, boolean turnEnds) {
+    public Action singleMove(AIUnit unit, Tile tile) {
         Action action = new Action(superiorIntellect.getValueLogic().movementValue(unit, tile, this), unit);
-        UnitCommand.move(superiorIntellect.connectToTheMatrix(), unit, tile);
+        UnitCommand.move(theMatrix, unit, tile);
         action.setMovementCoordinates(unit.getX(), unit.getY());
-        if (turnEnds) {
-            action.updateValue(endTurn());
-        }
         return action;
     }
 
     /**
      * performs the actual simulated attack
      */
-    public Action attack(AIUnit unit, AIUnit target, boolean turnEnds) {
+    public Action singleAttack(AIUnit unit, AIUnit target) {
         Action action = new Action(pseudoAttack(unit, target), unit);
         action.setAttackCoordinates(target.getX(), target.getY());
-        if (turnEnds) {
-            action.updateValue(endTurn());
-        }
         return action;
+    }
+
+    /**
+     * ends current turn, only if no other action is available.
+     */
+    private Action endTurn(AIUnit unit, Action optimal) {
+        Action currentAction = new Action(Integer.MIN_VALUE / 2, unit);
+        currentAction.setType(ActionType.ENDTURN);
+        if (optimal.getType() == null) {
+            return currentAction;
+        }
+        optimal = Action.getBetter(optimal, currentAction);
+        return optimal;
     }
 
     /**
      * simulated end of turn; may recursively call for a new simulated turn or
      * even new round
+     *
+     * @return Action with a flipped value of next turn's optimal action, value
+     * = 0 if not simulated
      */
-    public Action endTurn() {
+    public Action checkIfShouldSimulateNextTurn() {
         if (superiorIntellect.layer() < superiorIntellect.depth()) {
             superiorIntellect.diveDeeper();
             Action opponentAction;
             swapSides();
-            if (checkIfRoundOver()) {
-                opponentAction = superiorIntellect.simulateTurn(newRound());
+            if (checkIfSimulatedRoundOver()) {
+                SimulatedRound next = newRound();
+                opponentAction = next.simulateTurn();
             } else {
-                opponentAction = superiorIntellect.simulateTurn(this);
+                opponentAction = this.simulateTurn();
             }
             opponentAction.swapValue();
             swapSides();
@@ -233,8 +388,10 @@ public class SimulatedRound {
 
     /**
      * checks if simulated round is over
+     *
+     * @return true if no active or hostile units have actions remaining
      */
-    public boolean checkIfRoundOver() {
+    public boolean checkIfSimulatedRoundOver() {
         for (Unit unit : activeUnits) {
             if (!unit.doneForTheRound()) {
                 return false;
@@ -253,18 +410,20 @@ public class SimulatedRound {
      */
     private SimulatedRound newRound() {
         BattleMap newMatrix = theMatrix.copy();
-        SimulatedRound round = new SimulatedRound(superiorIntellect, newMatrix);
-        round.activeUnits = resetedCopy(activeUnits, newMatrix);
-        round.hostiles = resetedCopy(hostiles, newMatrix);
-        return round;
-    }
-
-    private Tile tileFromUnit(Unit unit) {
-        return superiorIntellect.connectToTheMatrix().getTile(unit.getX(), unit.getY());
+        return new SimulatedRound(resetedCopy(activeUnits, newMatrix),
+                resetedCopy(hostiles, newMatrix), superiorIntellect, newMatrix);
     }
 
     /**
      *
+     * @param unit
+     * @return
+     */
+    private Tile tileFromUnit(AIUnit unit) {
+        return theMatrix.getTile(unit.getX(), unit.getY());
+    }
+
+    /**
      * simulated attack roll
      */
     private int pseudoAttack(AIUnit attacker, AIUnit defender) {
@@ -275,7 +434,18 @@ public class SimulatedRound {
     }
 
     /**
-     * this is performed if the next turn is also simulated
+     * Converts the nodes from the pathfinding algorithm to tiles
+     *
+     * @param node coordinates from here
+     * @return tile with the same X and Y coordinates as the node.
+     */
+    private Tile nodeToTile(Node node) {
+        Tile tile = theMatrix.getTile(node.getX(), node.getY());
+        return tile;
+    }
+
+    /**
+     * swaps active and hostile unit lists if the next turn is also simulated
      */
     private void swapSides() {
         ArrayList temp = hostiles;
@@ -296,7 +466,8 @@ public class SimulatedRound {
     }
 
     /**
-     *  used if a completely new round is called by endTurn()
+     * resets unit acionts if a completely new round is called by
+     * checkIfShouldSimulateNextTurn()
      */
     private ArrayList<AIUnit> resetedCopy(ArrayList<AIUnit> units, BattleMap map) {
         ArrayList<AIUnit> copy = new ArrayList();

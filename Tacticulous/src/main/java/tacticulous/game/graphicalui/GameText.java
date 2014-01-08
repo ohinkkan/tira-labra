@@ -2,7 +2,7 @@ package tacticulous.game.graphicalui;
 
 /**
  * Contains almost all the text used by the game.
- * 
+ *
  * @author O
  */
 public abstract class GameText {

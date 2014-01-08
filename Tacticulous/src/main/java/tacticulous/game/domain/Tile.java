@@ -22,7 +22,10 @@ public class Tile {
      * @param x
      * @param y
      */
-    public Tile(int moveCost, int x, int y) {
+    public Tile(int moveCost, int x, int y) throws IllegalArgumentException {
+        if (moveCost < 0 || x < 0 || y < 0) {
+            throw new IllegalArgumentException();
+        }
         this.moveCost = moveCost;
         this.x = x;
         this.y = y;
@@ -81,14 +84,33 @@ public class Tile {
         return unit;
     }
 
+    /**
+     * Adds the specified unit to the corpse list of this tile.
+     *
+     * @param unit sucker.
+     */
     public void putCorpse(Unit unit) {
         corpses.add(unit);
     }
 
+    /**
+     * Calculates the Chebychev distance between the coordinates of provided
+     * tile and this tile.
+     *
+     * @param tile
+     * @return Chebychev distance
+     */
     public int distanceTo(Tile tile) {
         return Math.max(Math.abs(this.x - tile.x), Math.abs(this.y - tile.y));
     }
 
+    /**
+     * Calculates the Chebychev distance between the coordinates of provided
+     * unit and this tile.
+     *
+     * @param unit
+     * @return Chebychev distance
+     */
     public int distanceTo(Unit unit) {
         return Math.max(Math.abs(this.x - unit.getX()), Math.abs(this.y - unit.getY()));
     }

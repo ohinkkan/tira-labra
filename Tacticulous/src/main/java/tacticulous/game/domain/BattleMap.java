@@ -4,7 +4,7 @@ import tacticulous.game.utility.Die;
 import tacticulous.game.utility.DieRoller;
 
 /**
- * Basically a container grid for tiles.
+ * Basically a square container grid for tiles.
  *
  * @author O
  */
@@ -59,7 +59,7 @@ public class BattleMap {
     }
 
     /**
-     * Returns the width and height (in tiles) of battlemap.
+     * Returns the width and height (in tiles) of the battlemap.
      *
      * @return
      */
@@ -82,49 +82,25 @@ public class BattleMap {
         return true;
     }
 
+    /**
+     * Returns the tile located in give coordinates.
+     *
+     * @param x
+     * @param y
+     * @return tile located in give coordinates.
+     */
     public Tile getTile(int x, int y) {
         return battlemap[x][y];
     }
 
+    /**
+     * Makes a copy of the battlemap. Does not copy units in tiles, only
+     * terrain. Used by AI round simulator.
+     *
+     * @return a copy of the battlemap.
+     */
     public BattleMap copy() {
         return new BattleMap(difficultyMap);
     }
 
-//    these are used by the obsolete text UI.
-//
-    public void drawMap() {
-        System.out.println("");
-        for (int i = 0; i < this.size(); i++) {
-            for (int j = 0; j < this.size(); j++) {
-                Tile tile = battlemap[i][j];
-                if (tile.getUnit() == null) {
-                    System.out.print(".");
-                } else {
-                    System.out.print(tile.getUnit());
-                }
-            }
-            System.out.println("");
-        }
-    }
-//
-//    public void drawMapWithMoveRange(int[][] range, int speed) {
-//        System.out.print("    ");
-//        for (int i = 0; i < this.size(); i++) {
-//            System.out.format("%4s", i);
-//        }
-//        System.out.println("");
-//        for (int i = 0; i < this.size(); i++) {
-//            System.out.format("%4s", i);
-//            for (int j = 0; j < this.size(); j++) {
-//
-//                if (range[i][j] > speed || battlemap[i][j].getUnit() != null) {
-//                    System.out.format("%4s", battlemap[i][j]);
-//                } else {
-//                    System.out.format("%4s", range[i][j]);
-//
-//                }
-//            }
-//            System.out.println("");
-//        }
-//    }
 }

@@ -24,11 +24,11 @@ public class HumanPlayer implements UserInterface {
 
     @Override
     public void takeTurn() {
-        
+
         int unitIndex = 0;
-        while (true) {                     
-            Unit active = player.getUnitsWithActions().get(unitIndex);
-            int[][] costs = GameUsage.speedRange(active, game.getMap());
+        while (true) {
+//            Unit active = player.getUnitsWithActions().get(unitIndex);
+//            int[][] costs = GameUsage.speedRange(active, game.getMap());
 //            game.getMap().drawMapWithMoveRange(costs, active.getSpeed());
             System.out.println("1 = next unit; 2 = previous unit; 3 = move unit; 4 = attack; 5 = end turn");
             int selectedCommand = scanner.nextInt();
@@ -52,8 +52,8 @@ public class HumanPlayer implements UserInterface {
                 break;
             }
             if (unitIndex < 0) {
-                unitIndex = player.getUnitsWithActions().size() - 1;
-            } else if (unitIndex > player.getUnitsWithActions().size() - 1) {
+//                unitIndex = player.getUnitsWithActions().size() - 1;
+//            } else if (unitIndex > player.getUnitsWithActions().size() - 1) {
                 unitIndex = 0;
             }
 

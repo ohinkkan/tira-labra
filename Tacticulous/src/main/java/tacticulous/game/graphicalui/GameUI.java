@@ -4,7 +4,6 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -19,7 +18,7 @@ import tacticulous.game.domain.Game;
  *
  * @author O
  */
-public class UiView {
+public class GameUI {
 
     private JFrame frame;
     private JPanel commandPanel;
@@ -39,6 +38,12 @@ public class UiView {
         frame.setVisible(true);
     }
 
+    /**
+     * Creates most of the game UI components.
+     *
+     * @param container
+     * @param game
+     */
     private void createComponents(Container container, Game game) {
         container.setLayout(new BoxLayout(container, BoxLayout.X_AXIS));
         JPanel leftSide = new JPanel();
@@ -75,48 +80,31 @@ public class UiView {
         rightSide.setMaximumSize(new Dimension(200, Integer.MAX_VALUE));
         commandPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 100));
 
-        game.setCommandList(commandPanel);
-        if (game.getCurrentPlayer().isAi()) {
+        if (game.command().getCurrentPlayer().isAi()) {
             actions.aiCommands();
         } else {
             actions.playerCommands();
         }
     }
 
-    private JPanel commandBuilder(Game game, GraphicalMap map,
-            JTextArea active, JTextArea target, JTextArea log) {
-
+    /**
+     * Construcs the game command component.
+     *
+     * @param game
+     * @param mapDisplay
+     * @param activeUnitDisplay
+     * @param targetTileDisplay
+     * @param gameLog
+     * @return
+     */
+    private JPanel commandBuilder(Game game, GraphicalMap mapDisplay,
+            JTextArea activeUnitDisplay, JTextArea targetTileDisplay, JTextArea gameLog) {
         commandPanel = new JPanel(new GridLayout(2, 1));
-
-        JButton nextUnit = new JButton("Next unit");
-        JButton previousUnit = new JButton("Previous unit");
-        JButton move = new JButton("Move");
-        JButton attack = new JButton("Attack");
-        JButton delay = new JButton("Delay turn");
-        JButton endTurn = new JButton("End turn");
-        JButton takeTurn = new JButton("Take turn");
-        JButton autoTurn = new JButton("Auto turn");
-
-
-        actions = new ActionController(game, map,
-                nextUnit, previousUnit, move, attack, delay, endTurn,
-                takeTurn, autoTurn, active, target, log);
-
+        actions = new ActionController(game, mapDisplay, activeUnitDisplay, targetTileDisplay, gameLog);
+        actions.addButtonListeners();
         game.setActions(actions);
-
-        mouse = new MouseController(game, map);
-
-        map.addMouseListener(mouse);
-
-        nextUnit.addActionListener(actions);
-        previousUnit.addActionListener(actions);
-        move.addActionListener(actions);
-        attack.addActionListener(actions);
-        delay.addActionListener(actions);
-        endTurn.addActionListener(actions);
-        takeTurn.addActionListener(actions);
-        autoTurn.addActionListener(actions);
-
+        mouse = new MouseController(game, mapDisplay);
+        mapDisplay.addMouseListener(mouse);
         return commandPanel;
     }
 }

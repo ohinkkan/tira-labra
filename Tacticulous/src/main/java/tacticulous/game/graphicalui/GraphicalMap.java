@@ -14,7 +14,7 @@ import tacticulous.game.domain.Unit;
  */
 public class GraphicalMap extends JComponent {
 
-    private Game game;
+    private final Game game;
     private int scale;
     private Tile tile;
 
@@ -44,19 +44,20 @@ public class GraphicalMap extends JComponent {
                 tile = game.getMap().getTile(i, j);
                 Unit unit = tile.getUnit();
                 if (unit != null) {
-                    if (tile == game.getTargetTile()) {
+                    if (tile == game.command().getTargetTile()) {
                         drawUnit(Color.PINK, i, j, graphics);
-                    } else if (unit == game.getActiveUnit()) {
+                    } else if (unit == game.command().getActiveUnit()) {
                         drawUnit(Color.CYAN, i, j, graphics);
                     } else {
                         drawUnit(unit.getPlayer().getColor(), i, j, graphics);
                     }
-                } else if (tile == game.getTargetTile()) {
+                } else if (tile == game.command().getTargetTile()) {
                     drawUnit(Color.YELLOW, i, j, graphics);
                 } else if (!tile.getCorpses().isEmpty()) {
                     drawUnit(Color.getHSBColor(100F, 0.5F, 0.5F), i, j, graphics);
-                } else if (game.getActiveUnit() != null) {
-                    if (game.getActiveUnit().hasNotMoved() && game.getActiveUnit().getSpeed() >= game.getMoveCosts()[i][j]) {
+                } else if (game.command().getActiveUnit() != null) {
+                    if (game.command().getActiveUnit().hasNotMoved()
+                            && game.command().getActiveUnit().getSpeed() >= game.command().getMoveCosts()[i][j]) {
                         drawMovement(i, j, graphics);
                     } else {
                         drawTile(tile.getMoveCost(), i, j, graphics);
@@ -68,18 +69,41 @@ public class GraphicalMap extends JComponent {
         }
     }
 
+    /**
+     * Draws a single unit.
+     *
+     * @param color Unit's color
+     * @param i
+     * @param j
+     * @param graphics
+     */
     private void drawUnit(Color color, int i, int j, Graphics graphics) {
         drawTile(tile.getMoveCost(), i, j, graphics);
         graphics.setColor(color);
         drawSquare(i, j, Math.max(1, scale / 2), graphics);
     }
 
+    /**
+     * Draws a small movement indicator square.
+     *
+     * @param i
+     * @param j
+     * @param graphics
+     */
     private void drawMovement(int i, int j, Graphics graphics) {
         drawTile(tile.getMoveCost(), i, j, graphics);
         graphics.setColor(Color.GREEN);
         drawSquare(i, j, Math.max(1, scale / 4), graphics);
     }
 
+    /**
+     * Draws a single terrain tile.
+     *
+     * @param terrain
+     * @param i
+     * @param j
+     * @param graphics
+     */
     private void drawTile(int terrain, int i, int j, Graphics graphics) {
         if (terrain == 1) {
             graphics.setColor(Color.WHITE);
@@ -103,6 +127,14 @@ public class GraphicalMap extends JComponent {
         return scale;
     }
 
+    /**
+     * Draws a single square.
+     *
+     * @param i
+     * @param j
+     * @param size
+     * @param graphics
+     */
     private void drawSquare(int i, int j, int size, Graphics graphics) {
         int diff = (scale - size) / 2;
         graphics.fill3DRect(j * scale + diff, i * scale + diff, size, size, true);

@@ -2,7 +2,6 @@ package tacticulous.game.domain;
 
 import java.awt.Color;
 import java.util.ArrayList;
-import java.util.Collections;
 import tacticulous.tira.ai.ArtificialIntelligence;
 
 /**
@@ -13,8 +12,6 @@ import tacticulous.tira.ai.ArtificialIntelligence;
 public class Player {
 
     private boolean isAi;
-    private int activeUnitIndex;
-    private ArrayList<Unit> unitsWithActions;
     private ArrayList<Unit> units;
     private String name;
     private ArtificialIntelligence ai;
@@ -43,9 +40,6 @@ public class Player {
      * @see tacticulous.game.domain.Unit#newRound()
      */
     public void newRoundUnitReset() {
-        activeUnitIndex = 0;
-        unitsWithActions.clear();
-        unitsWithActions.addAll(units);
         for (Unit unit : units) {
             unit.newRound();
         }
@@ -61,13 +55,41 @@ public class Player {
         this.name = name;
         this.isAi = false;
         units = new ArrayList();
-        unitsWithActions = new ArrayList();
-        activeUnitIndex = 0;
         this.color = color;
+    }
+
+    /**
+     * Goes through all the player's units and checks if any have not moved
+     * or attacked.
+     *
+     * @return true if no units have move or attack actions remaining, false
+     * otherwise.
+     */
+    public boolean isDoneForTheRound() {
+        for (Unit unit: units) {
+            if (!unit.doneForTheRound()) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public ArrayList<Unit> getUnits() {
         return units;
+    }
+
+    /**
+     * Finds the first unit in the unit list with unused move or attack action.
+     *
+     * @return null if no units have actions remaining.
+     */
+    public Unit getFirstUnitWithActions() {
+        for (Unit unit : units) {
+            if (!unit.doneForTheRound()) {
+                return unit;
+            }
+        }
+        return null;
     }
 
     /**
@@ -80,58 +102,18 @@ public class Player {
     }
 
     /**
-     * ROBOT APOCALYPSE (not yet implemented.)
+     * ROBOT APOCALYPSE (apocalypse not yet fully implemented). Makes the player
+     * AI-controlled.
      *
-     * @param ai type of ROBOT APOCALYPSE.
+     * @param ai Artifical Intelligence of ROBOT APOCALYPSE.
      */
     public void setAI(ArtificialIntelligence ai) {
         isAi = true;
         this.ai = ai;
     }
 
-    public ArrayList<Unit> getUnitsWithActions() {
-        return unitsWithActions;
-    }
-
     /**
-     * Cycles unit list forwards.
-     *
-     * @param game provides access to necessary data
-     */
-    public void nextUnit(Game game) {
-        activeUnitIndex++;
-        checkActiveUnitIndex();
-        game.setActiveUnit(activeUnit());
-    }
-
-    /**
-     * Cycles unit list backwards.
-     *
-     * @param game provides access to necessary data
-     */
-    public void prevUnit(Game game) {
-        activeUnitIndex--;
-        if (activeUnitIndex < 0) {
-            activeUnitIndex = unitsWithActions.size() - 1;
-        }
-        game.setActiveUnit(activeUnit());
-    }
-
-    /**
-     * Returns currently selected unit.
-     *
-     * @return null if no units with actions remain.
-     */
-    public Unit activeUnit() {
-        if (unitsWithActions.isEmpty()) {
-            return null;
-        }
-        checkActiveUnitIndex();
-        return unitsWithActions.get(activeUnitIndex);
-    }
-
-    /**
-     * Creates a few units for testing purposes.
+     * Creates a few units for testing purposes. Will be moved to testing.
      */
     public void testUnits() {
         units.add(new Unit(6, 2, 3, 3, 2, "Sharpshooter", this));
@@ -140,7 +122,7 @@ public class Player {
     }
 
     /**
-     * Creates a lot of units for testing purposes.
+     * Creates a lot of units for testing purposes. Will be moved to testing.
      */
     public void testUnits2(int multiplier) {
         for (int i = 0; i < multiplier; i++) {
@@ -164,16 +146,8 @@ public class Player {
      */
     public void kill(Unit unit) {
         units.remove(unit);
-        unitsWithActions.remove(unit);
         if (game != null) {
             game.getMap().getTile(unit.getX(), unit.getY()).putCorpse(unit);
         }
     }
-
-    private void checkActiveUnitIndex() {
-        if (activeUnitIndex >= unitsWithActions.size()) {
-            activeUnitIndex = 0;
-        }
-    }
-
 }
