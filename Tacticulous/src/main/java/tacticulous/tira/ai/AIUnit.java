@@ -29,11 +29,12 @@ public class AIUnit extends Unit {
      */
     public AIUnit(int speed, int defense, int attack, int range, int hitPoints,
             String name, Player player, int x, int y, boolean notMoved,
-            boolean notAttacked, boolean notDelayed, int attackedCount) {
+            boolean notAttacked, boolean notDelayed, int attackedCount, boolean isLeader) {
         super(speed, defense, attack, range, hitPoints, name, player);
         super.notAttacked = notAttacked;
         super.notMoved = notMoved;
         super.notDelayed = notDelayed;
+        super.leader = isLeader;
         this.setXY(x, y);
         this.attackedCount = attackedCount;
     }
@@ -47,7 +48,11 @@ public class AIUnit extends Unit {
      * @see tacticulous.tira.ai.ArtificialIntelligence
      */
     public int targetValue() {
-        return (speed + attack + defense + range) / (hitPoints + attackedCount);
+        int leaderMultiplier = 1;
+        if (leader) {
+            leaderMultiplier = 8;
+        }
+        return leaderMultiplier * (speed + attack + defense + range) / (hitPoints + attackedCount);
     }
 
     public void undoMove() {

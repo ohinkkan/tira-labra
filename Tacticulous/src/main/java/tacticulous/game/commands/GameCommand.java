@@ -21,6 +21,7 @@ public class GameCommand {
     private int currentPlayerIndex;
     private int[][] moveCosts;
     private boolean gameOver;
+    private String loser;
 
     /**
      * Basic constructor
@@ -69,7 +70,7 @@ public class GameCommand {
      */
     public void nextPlayerTurn() {
         if (checkIfGameOver()) {
-            game.updateLog(GameText.gameOver());
+            game.updateLog(GameText.gameOver(loser));
             game.updateUI();
             return;
         }
@@ -115,7 +116,15 @@ public class GameCommand {
         for (Player player : game.getPlayers()) {
             if (player.getUnits().isEmpty()) {
                 gameOver = true;
+                loser = player.getName();
                 return true;
+            }
+            if (game.isKillLeader()) {
+                if (player.leaderIsDead()){
+                    gameOver = true;
+                    loser = player.getName();
+                    return true;
+                }
             }
         }
         return false;

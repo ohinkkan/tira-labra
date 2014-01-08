@@ -39,7 +39,7 @@ public class StartupUI implements ActionListener, ItemListener, ListSelectionLis
     private Game game;
     private JFrame frame;
     private JButton startGame;
-    private JButton startGame2;
+    private JButton quickStart;
     private JButton aiUnitSelect;
     private JButton addUnit;
     private JButton removeUnit;
@@ -63,7 +63,7 @@ public class StartupUI implements ActionListener, ItemListener, ListSelectionLis
 
     public void spawn(Game game) {
         this.game = game;
-//        game.startup3();
+        game.startup3();
         frame = new JFrame("Startup");
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setPreferredSize(new Dimension(800, 800));
@@ -75,73 +75,75 @@ public class StartupUI implements ActionListener, ItemListener, ListSelectionLis
 
     private void createComponents(Container container, Game game) {
         container.setLayout(new GridLayout(3, 1));
-//        JPanel top = new JPanel();
-//        JPanel middle = new JPanel();
-//        JPanel bottom = new JPanel();
-//
-//        top.setLayout(new GridLayout(2, 2));
-//
-//        String aiTypes[] = {"Aggressive", "Defensive", "Neutral", "Weird"};
-//
-//        player1typeToggle = new JToggleButton("Toggle Player1 AI");
-//        player2typeToggle = new JToggleButton("Toggle Player2 AI");
-//        player1AItype = new JComboBox(aiTypes);
-//        player2AItype = new JComboBox(aiTypes);
-//
-//        player1typeToggle.addItemListener(this);
-//        player1AItype.setSelectedIndex(0);
-//        player1AItype.addActionListener(this);
-//        player1AItype.setEnabled(false);
-//
-//        player2typeToggle.addItemListener(this);
-//        player2AItype.setSelectedIndex(0);
-//        player2AItype.addActionListener(this);
-//        player2AItype.setEnabled(false);
-//
-//        middle.setLayout(new GridLayout(2, 2));
-//
-//        String gameTypes[] = {"Kill everything", "Kill leader (not implemented)"};
-//        String maps[] = {"Small and smooth", "Small and rough",
-//            "Medium and smooth", "Medium and rough",
-//            "Large and smooth", "Large and rough",
-//            "Huegermousser"};
-//
-//        gameType = new JLabel("Select game type");
-//        map = new JLabel("Select map");
-//        gameTypeList = new JComboBox(gameTypes);
-//        mapList = new JComboBox(maps);
-//
-//        gameTypeList.setSelectedIndex(0);
-//        gameTypeList.addActionListener(this);
-//        mapList.setSelectedIndex(0);
-//        mapList.addActionListener(this);
-//
-//        container.add(top);
-//        container.add(middle);
-//        container.add(bottom);
-//        top.add(player1typeToggle);
-//        top.add(player1AItype);
-//        top.add(player2typeToggle);
-//        top.add(player2AItype);
-//        middle.add(gameType);
-//        middle.add(gameTypeList);
-//        middle.add(map);
-//        middle.add(mapList);
-//        bottom.add(unitSelectorBuilder());
-//        startGame = new JButton("Start game");
-//        bottom.add(startGame2);
-//        startGame.setEnabled(false);
-        startGame = new JButton("Human vs AI");
-        startGame.addActionListener(this);
-        startGame.setBackground(Color.red);
-        startGame.setForeground(Color.yellow);
-        startGame2 = new JButton("AI vs AI");
-        startGame2.addActionListener(this);
-        startGame2.setBackground(Color.white);
-        startGame2.setForeground(Color.blue);
-        container.add(startGame);
-        container.add(startGame2);
+        JPanel top = new JPanel();
+        JPanel middle = new JPanel();
+        JPanel bottom = new JPanel();
 
+        top.setLayout(new GridLayout(2, 2));
+
+        String aiTypes[] = {"Aggressive", "Defensive", "Neutral", "Weird"};
+
+        player1typeToggle = new JToggleButton("Toggle Player1 AI");
+        player2typeToggle = new JToggleButton("Toggle Player2 AI");
+        player1AItype = new JComboBox(aiTypes);
+        player2AItype = new JComboBox(aiTypes);
+
+        player1typeToggle.addItemListener(this);
+        player1AItype.setSelectedIndex(0);
+        player1AItype.addActionListener(this);
+        player1AItype.setEnabled(false);
+
+        player2typeToggle.addItemListener(this);
+        player2AItype.setSelectedIndex(0);
+        player2AItype.addActionListener(this);
+        player2AItype.setEnabled(false);
+
+        middle.setLayout(new GridLayout(2, 2));
+
+        String gameTypes[] = {"Kill everything", "Kill leader (not implemented)"};
+        String maps[] = {"Small and smooth", "Small and rough",
+            "Medium and smooth", "Medium and rough",
+            "Large and smooth", "Large and rough",
+            "Huegermousser"};
+
+        gameType = new JLabel("Select game type");
+        map = new JLabel("Select map");
+        gameTypeList = new JComboBox(gameTypes);
+        mapList = new JComboBox(maps);
+
+        gameTypeList.setSelectedIndex(0);
+        gameTypeList.addActionListener(this);
+        mapList.setSelectedIndex(0);
+        mapList.addActionListener(this);
+
+        container.add(top);
+        container.add(middle);
+        container.add(bottom);
+        top.add(player1typeToggle);
+        top.add(player1AItype);
+        top.add(player2typeToggle);
+        top.add(player2AItype);
+        middle.add(gameType);
+        middle.add(gameTypeList);
+        middle.add(map);
+        middle.add(mapList);
+        bottom.add(unitSelectorBuilder());
+        startGame = new JButton("Start game");
+        quickStart = new JButton("Quick start");
+        bottom.add(startGame);
+        bottom.add(quickStart);
+        startGame.setEnabled(false);
+        startGame.addActionListener(this);
+        quickStart.addActionListener(this);
+//        startGame = new JButton("Human vs AI");
+//        startGame.setBackground(Color.red);
+//        startGame.setForeground(Color.yellow);
+//        startGame2 = new JButton("AI vs AI");
+//        startGame2.addActionListener(this);
+//        startGame2.setBackground(Color.white);
+//        startGame2.setForeground(Color.blue);
+//        container.add(startGame2);
+//        container.add(startGame);
     }
 
     private JPanel unitSelectorBuilder() {
@@ -195,10 +197,18 @@ public class StartupUI implements ActionListener, ItemListener, ListSelectionLis
     private Unit gimmeUnit(int j, Player player) {
         if (j == 0) {
             return new Unit(6, 2, 3, 3, 2, "Sharpshooter", player);
-        } else if (j == 0) {
+        } else if (j == 1) {
             return new Unit(9, 4, 0, 2, 1, "Scout", player);
         } else {
             return new Unit(4, 0, 0, 5, 2, "Artillery", player);
+        }
+    }
+
+    private void addLeadersIfNecessary() {
+        if (game.isKillLeader()) {
+            for (Player player: game.getPlayers()) {
+                player.getUnits().add(new Unit(player));
+            }
         }
     }
 
@@ -244,13 +254,13 @@ public class StartupUI implements ActionListener, ItemListener, ListSelectionLis
         if (selectedIndex == -1) {
             game.getPlayers().get(i).setAI(null);
         } else if (selectedIndex == 0) {
-            game.getPlayers().get(i).setAI(new ArtificialIntelligence(game, game.getPlayers().get(i), 1, 10, 20, 10));
+            game.getPlayers().get(i).setAI(new ArtificialIntelligence(game, game.getPlayers().get(i), 1, 10, 10, 1));
         } else if (selectedIndex == 1) {
-            game.getPlayers().get(i).setAI(new ArtificialIntelligence(game, game.getPlayers().get(i), 1, 10, 10, 20));
+            game.getPlayers().get(i).setAI(new ArtificialIntelligence(game, game.getPlayers().get(i), 1, 10, 5, 10));
         } else if (selectedIndex == 2) {
-            game.getPlayers().get(i).setAI(new ArtificialIntelligence(game, game.getPlayers().get(i), 1, 10, 15, 15));
+            game.getPlayers().get(i).setAI(new ArtificialIntelligence(game, game.getPlayers().get(i), 1, 10, 7, 7));
         } else if (selectedIndex == 3) {
-            game.getPlayers().get(i).setAI(new ArtificialIntelligence(game, game.getPlayers().get(i), 1, 100, 10, 10));
+            game.getPlayers().get(i).setAI(new ArtificialIntelligence(game, game.getPlayers().get(i), 1, 100, 5, 5));
         }
     }
 
@@ -278,35 +288,42 @@ public class StartupUI implements ActionListener, ItemListener, ListSelectionLis
         for (Player player : game.getPlayers()) {
             int[] unitCounter = getCorrectUnitCounter();
             for (int i = 0; i < unitCounter.length; i++) {
-                for (int j = 0; j < unitCounter[j]; j++) {
-                    player.getUnits().add(gimmeUnit(j, player));
+                for (int j = 0; j < unitCounter[i]; j++) {
+                    player.getUnits().add(gimmeUnit(i, player));
                 }
             }
             currentlySelectedPlayer = 1;
         }
+        addLeadersIfNecessary();
     }
 
     @Override
     public void actionPerformed(ActionEvent ae) {
         if (ae.getSource() == startGame) {
-
-            frame.dispose();
             game.setCommand(new GameCommand(game));
-//            game.getPlayers().get(0).setGame(game);
-//            game.getPlayers().get(1).setGame(game);
-//            addUnitsToPlayers();
-//            game.placeUnits(game.getPlayers().get(0).getUnits());
-//            game.placeUnits(game.getPlayers().get(1).getUnits());
-            game.startup();
+            game.getPlayers().get(0).setGame(game);
+            game.getPlayers().get(1).setGame(game);
+            addUnitsToPlayers();
+            game.placeUnits(game.getPlayers().get(0).getUnits());
+            game.placeUnits(game.getPlayers().get(1).getUnits());
+//            game.startup();
+            frame.dispose();
             game.runUI();
-        } else if (ae.getSource() == startGame2) {
-            frame.dispose();
+        } else if (ae.getSource() == quickStart) {
             game.setCommand(new GameCommand(game));
-            game.startup2();
+            game.getPlayers().get(0).setGame(game);
+            game.getPlayers().get(1).setGame(game);
+            game.getPlayers().get(0).quickStartUnits(game.getMap().size() / 3);
+            game.getPlayers().get(1).quickStartUnits(game.getMap().size() / 3);
+            addLeadersIfNecessary();
+            game.placeUnits(game.getPlayers().get(0).getUnits());
+            game.placeUnits(game.getPlayers().get(1).getUnits());
+//            game.startup();
+            frame.dispose();
             game.runUI();
         } else if (ae.getSource() == addUnit) {
             int[] unitCounter = getCorrectUnitCounter();
-            if (unitCount(unitCounter) < game.getMap().size()) {
+            if (unitCount(unitCounter) < game.getMap().size()-1) {
                 unitCounter[selectedUnit]++;
                 selectedUnitDisplay.setText(updateDisplay());
             }
@@ -335,6 +352,7 @@ public class StartupUI implements ActionListener, ItemListener, ListSelectionLis
         if (ie.getSource() == player1typeToggle) {
             if (ie.getStateChange() == ItemEvent.SELECTED) {
                 player1AItype.setEnabled(true);
+                setPlayerAI(player1AItype.getSelectedIndex(), 0);
             } else {
                 player1AItype.setEnabled(false);
                 setPlayerAI(-1, 0);
@@ -342,6 +360,7 @@ public class StartupUI implements ActionListener, ItemListener, ListSelectionLis
         } else if (ie.getSource() == player2typeToggle) {
             if (ie.getStateChange() == ItemEvent.SELECTED) {
                 player2AItype.setEnabled(true);
+                setPlayerAI(player1AItype.getSelectedIndex(), 1);
             } else {
                 player2AItype.setEnabled(false);
                 setPlayerAI(-1, 1);
@@ -356,13 +375,15 @@ public class StartupUI implements ActionListener, ItemListener, ListSelectionLis
             selectedUnit = 0;
             addUnit.setEnabled(true);
             removeUnit.setEnabled(true);
-        }
-        if (selection == 1) {
+        } else if (selection == 1) {
             selectedUnit = 1;
             addUnit.setEnabled(true);
             removeUnit.setEnabled(true);
-        }
-        if (selection == -1) {
+        } else if (selection == 2) {
+            selectedUnit = 2;
+            addUnit.setEnabled(true);
+            removeUnit.setEnabled(true);
+        } else if (selection == -1) {
             addUnit.setEnabled(false);
             removeUnit.setEnabled(false);
         }

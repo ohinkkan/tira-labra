@@ -474,7 +474,8 @@ public class SimulatedRound {
         for (AIUnit unit : units) {
             AIUnit edi = new AIUnit(unit.getSpeed(), unit.getDefense(),
                     unit.getAttack(), unit.getRange(), unit.getHitPoints(),
-                    "", null, unit.getX(), unit.getY(), true, true, true, unit.getAttackedCount());
+                    "", null, unit.getX(), unit.getY(), true, true, true,
+                    unit.getAttackedCount(), unit.isLeader());
             copy.add(edi);
             map.getTile(edi.getX(), edi.getY()).setUnit(edi);
         }

@@ -11,8 +11,8 @@ public abstract class GameText {
         return "round "+round+" begins";
     }
 
-    public static String gameOver() {
-        return "game over";
+    public static String gameOver(String loser) {
+        return "game over, "+loser+" has fallen";
     }
 
     public static String nextPlayer(String player) {

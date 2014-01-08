@@ -34,6 +34,7 @@ public class GameUI {
     public void spawn(Game game) {
         frame = new JFrame("Tacticulous");
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.setMinimumSize(new Dimension(800, 400));
         createComponents(frame.getContentPane(), game);
         frame.pack();
         frame.setVisible(true);

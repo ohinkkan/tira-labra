@@ -1,9 +1,12 @@
 package tacticulous.game.graphicalui;
 
 import java.awt.Container;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
@@ -86,7 +89,7 @@ public class ActionController implements ActionListener {
         this.activeUnitDisplay = activeUnitDisplay;
         this.targetTileDisplay = targetTileDisplay;
         this.gameLog = gameLog;
-        commandList = new JPanel();
+        commandList = new JPanel(new FlowLayout());
         container.add(commandList);
         aiControls = false;
         unitsWithActions = new ArrayList();

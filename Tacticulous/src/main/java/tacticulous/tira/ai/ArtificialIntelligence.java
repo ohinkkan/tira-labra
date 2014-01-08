@@ -85,7 +85,7 @@ public class ArtificialIntelligence {
             AIUnit edi = new AIUnit(unit.getSpeed(), unit.getDefense(),
                     unit.getAttack(), unit.getRange(), unit.getHitPoints(),
                     "", player, unit.getX(), unit.getY(), unit.hasNotMoved(),
-                    unit.hasNotAttacked(), unit.hasNotDelayed(), 0);
+                    unit.hasNotAttacked(), unit.hasNotDelayed(), 0, unit.isLeader());
             temporaryUnits.add(edi);
             theMatrix.getTile(edi.getX(), edi.getY()).setUnit(edi);
 

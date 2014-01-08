@@ -179,8 +179,8 @@ public class Game {
         players.get(1).testUnits();
         players.get(0).setGame(this);
         players.get(1).setGame(this);
-        players.get(0).testUnits2(2);
-        players.get(1).testUnits2(2);
+        players.get(0).quickStartUnits(2);
+        players.get(1).quickStartUnits(2);
 //        players.get(0).setAI(new ArtificialIntelligence(this, players.get(0), 1, 5, 10, 1));
         players.get(1).setAI(new ArtificialIntelligence(this, players.get(1), 1, 5, 10, 1));
         this.map = new BattleMap(12, 4);
@@ -191,7 +191,7 @@ public class Game {
     public void startup3() {
         players.add(new Player("Player 1", Color.BLUE));
         players.add(new Player("Player 2", Color.RED));
-        this.map = new BattleMap(10, 4);
+        this.map = new BattleMap(5, 2);
     }
 
     /**
@@ -204,8 +204,8 @@ public class Game {
         players.get(1).testUnits();
         players.get(0).setGame(this);
         players.get(1).setGame(this);
-        players.get(0).testUnits2(2);
-        players.get(1).testUnits2(2);
+        players.get(0).quickStartUnits(2);
+        players.get(1).quickStartUnits(2);
         players.get(0).setAI(new ArtificialIntelligence(this, players.get(0), 1, 10, 10, 10));
         players.get(1).setAI(new ArtificialIntelligence(this, players.get(1), 1, 5, 12, 1));
         this.map = new BattleMap(16, 4);

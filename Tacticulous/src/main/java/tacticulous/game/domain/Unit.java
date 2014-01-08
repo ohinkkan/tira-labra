@@ -20,6 +20,7 @@ public class Unit {
     protected boolean notMoved;
     protected boolean notDelayed;
     protected Player player;
+    protected boolean leader = false;
 
     /**
      * Basic constructor.
@@ -73,6 +74,30 @@ public class Unit {
         this.notMoved = true;
         this.notDelayed = true;
         this.player = null;
+    }
+
+    /**
+     * Basic constructor for Commander unit in kill commander game type.
+     *
+     * @param player owner of unit
+     */
+    public Unit(Player player) {
+        this.speed = 4;
+        this.defense = 5;
+        this.attack = 1;
+        this.startHitPoints = 3;
+        this.hitPoints = 3;
+        this.name = "Commander";
+        this.range = 3;
+        this.notAttacked = true;
+        this.notMoved = true;
+        this.notDelayed = true;
+        this.player = player;
+        this.leader = true;
+    }
+
+    public boolean isLeader() {
+        return leader;
     }
 
     /**
@@ -184,7 +209,8 @@ public class Unit {
     }
 
     /**
-     * Surprisingly, returns unit information in a string. Used by unit displays.
+     * Surprisingly, returns unit information in a string. Used by unit
+     * displays.
      *
      * @return
      */
@@ -201,6 +227,5 @@ public class Unit {
                 + "\nhas not moved=" + notMoved
                 + "\nhas not delayed=" + notDelayed;
     }
-
 
 }

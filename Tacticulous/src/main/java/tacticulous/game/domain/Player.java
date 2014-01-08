@@ -59,14 +59,14 @@ public class Player {
     }
 
     /**
-     * Goes through all the player's units and checks if any have not moved
-     * or attacked.
+     * Goes through all the player's units and checks if any have not moved or
+     * attacked.
      *
      * @return true if no units have move or attack actions remaining, false
      * otherwise.
      */
     public boolean isDoneForTheRound() {
-        for (Unit unit: units) {
+        for (Unit unit : units) {
             if (!unit.doneForTheRound()) {
                 return false;
             }
@@ -124,7 +124,7 @@ public class Player {
     /**
      * Creates a lot of units for testing purposes. Will be moved to testing.
      */
-    public void testUnits2(int multiplier) {
+    public void quickStartUnits(int multiplier) {
         for (int i = 0; i < multiplier; i++) {
             testUnits();
         }
@@ -149,5 +149,14 @@ public class Player {
         if (game != null) {
             game.getMap().getTile(unit.getX(), unit.getY()).putCorpse(unit);
         }
+    }
+
+    public boolean leaderIsDead() {
+        for (Unit unit : units) {
+            if (unit.isLeader()) {
+                return false;
+            }
+        }
+        return true;
     }
 }
