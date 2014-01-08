@@ -1,5 +1,6 @@
 package tacticulous.game.graphicalui;
 
+import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -68,7 +69,7 @@ public class ActionController implements ActionListener {
      * description
      * @param gameLog displays game events.
      */
-    public ActionController(Game game, JComponent mapDisplay,
+    public ActionController(Container container, Game game, JComponent mapDisplay,
             JTextArea activeUnitDisplay, JTextArea targetTileDisplay,
             JTextArea gameLog) {
         this.game = game;
@@ -85,6 +86,8 @@ public class ActionController implements ActionListener {
         this.activeUnitDisplay = activeUnitDisplay;
         this.targetTileDisplay = targetTileDisplay;
         this.gameLog = gameLog;
+        commandList = new JPanel();
+        container.add(commandList);
         aiControls = false;
         unitsWithActions = new ArrayList();
     }

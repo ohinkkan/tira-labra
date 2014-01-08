@@ -63,7 +63,7 @@ public class StartupUI implements ActionListener, ItemListener, ListSelectionLis
 
     public void spawn(Game game) {
         this.game = game;
-        game.startup3();
+//        game.startup3();
         frame = new JFrame("Startup");
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setPreferredSize(new Dimension(800, 800));
@@ -75,72 +75,73 @@ public class StartupUI implements ActionListener, ItemListener, ListSelectionLis
 
     private void createComponents(Container container, Game game) {
         container.setLayout(new GridLayout(3, 1));
-        JPanel top = new JPanel();
-        JPanel middle = new JPanel();
-        JPanel bottom = new JPanel();
-
-        top.setLayout(new GridLayout(2, 2));
-
-        String aiTypes[] = {"Aggressive", "Defensive", "Neutral", "Weird"};
-
-        player1typeToggle = new JToggleButton("Toggle Player1 AI");
-        player2typeToggle = new JToggleButton("Toggle Player2 AI");
-        player1AItype = new JComboBox(aiTypes);
-        player2AItype = new JComboBox(aiTypes);
-
-        player1typeToggle.addItemListener(this);
-        player1AItype.setSelectedIndex(0);
-        player1AItype.addActionListener(this);
-        player1AItype.setEnabled(false);
-
-        player2typeToggle.addItemListener(this);
-        player2AItype.setSelectedIndex(0);
-        player2AItype.addActionListener(this);
-        player2AItype.setEnabled(false);
-
-        middle.setLayout(new GridLayout(2, 2));
-
-        String gameTypes[] = {"Kill everything", "Kill leader (not implemented)"};
-        String maps[] = {"Small and smooth", "Small and rough",
-            "Medium and smooth", "Medium and rough",
-            "Large and smooth", "Large and rough",
-            "Huegermousser"};
-
-        gameType = new JLabel("Select game type");
-        map = new JLabel("Select map");
-        gameTypeList = new JComboBox(gameTypes);
-        mapList = new JComboBox(maps);
-
-        gameTypeList.setSelectedIndex(0);
-        gameTypeList.addActionListener(this);
-        mapList.setSelectedIndex(0);
-        mapList.addActionListener(this);
-
-        container.add(top);
-        container.add(middle);
-        container.add(bottom);
-        top.add(player1typeToggle);
-        top.add(player1AItype);
-        top.add(player2typeToggle);
-        top.add(player2AItype);
-        middle.add(gameType);
-        middle.add(gameTypeList);
-        middle.add(map);
-        middle.add(mapList);
-        bottom.add(unitSelectorBuilder());
-        startGame = new JButton("Start game");
+//        JPanel top = new JPanel();
+//        JPanel middle = new JPanel();
+//        JPanel bottom = new JPanel();
+//
+//        top.setLayout(new GridLayout(2, 2));
+//
+//        String aiTypes[] = {"Aggressive", "Defensive", "Neutral", "Weird"};
+//
+//        player1typeToggle = new JToggleButton("Toggle Player1 AI");
+//        player2typeToggle = new JToggleButton("Toggle Player2 AI");
+//        player1AItype = new JComboBox(aiTypes);
+//        player2AItype = new JComboBox(aiTypes);
+//
+//        player1typeToggle.addItemListener(this);
+//        player1AItype.setSelectedIndex(0);
+//        player1AItype.addActionListener(this);
+//        player1AItype.setEnabled(false);
+//
+//        player2typeToggle.addItemListener(this);
+//        player2AItype.setSelectedIndex(0);
+//        player2AItype.addActionListener(this);
+//        player2AItype.setEnabled(false);
+//
+//        middle.setLayout(new GridLayout(2, 2));
+//
+//        String gameTypes[] = {"Kill everything", "Kill leader (not implemented)"};
+//        String maps[] = {"Small and smooth", "Small and rough",
+//            "Medium and smooth", "Medium and rough",
+//            "Large and smooth", "Large and rough",
+//            "Huegermousser"};
+//
+//        gameType = new JLabel("Select game type");
+//        map = new JLabel("Select map");
+//        gameTypeList = new JComboBox(gameTypes);
+//        mapList = new JComboBox(maps);
+//
+//        gameTypeList.setSelectedIndex(0);
+//        gameTypeList.addActionListener(this);
+//        mapList.setSelectedIndex(0);
+//        mapList.addActionListener(this);
+//
+//        container.add(top);
+//        container.add(middle);
+//        container.add(bottom);
+//        top.add(player1typeToggle);
+//        top.add(player1AItype);
+//        top.add(player2typeToggle);
+//        top.add(player2AItype);
+//        middle.add(gameType);
+//        middle.add(gameTypeList);
+//        middle.add(map);
+//        middle.add(mapList);
+//        bottom.add(unitSelectorBuilder());
+//        startGame = new JButton("Start game");
 //        bottom.add(startGame2);
-        startGame.setEnabled(false);
-//        startGame = new JButton("Human vs AI");
+//        startGame.setEnabled(false);
+        startGame = new JButton("Human vs AI");
         startGame.addActionListener(this);
-//        startGame.setBackground(Color.red);
-//        startGame.setForeground(Color.yellow);
-//        startGame2 = new JButton("AI vs AI");
-//        startGame2.addActionListener(this);
-//        startGame2.setBackground(Color.white);
-//        startGame2.setForeground(Color.blue);
-        bottom.add(startGame);
-//        bottom.add(startGame2);
+        startGame.setBackground(Color.red);
+        startGame.setForeground(Color.yellow);
+        startGame2 = new JButton("AI vs AI");
+        startGame2.addActionListener(this);
+        startGame2.setBackground(Color.white);
+        startGame2.setForeground(Color.blue);
+        container.add(startGame);
+        container.add(startGame2);
+
     }
 
     private JPanel unitSelectorBuilder() {
@@ -288,10 +289,15 @@ public class StartupUI implements ActionListener, ItemListener, ListSelectionLis
     @Override
     public void actionPerformed(ActionEvent ae) {
         if (ae.getSource() == startGame) {
-            addUnitsToPlayers();
+
             frame.dispose();
             game.setCommand(new GameCommand(game));
-//            game.startup();
+//            game.getPlayers().get(0).setGame(game);
+//            game.getPlayers().get(1).setGame(game);
+//            addUnitsToPlayers();
+//            game.placeUnits(game.getPlayers().get(0).getUnits());
+//            game.placeUnits(game.getPlayers().get(1).getUnits());
+            game.startup();
             game.runUI();
         } else if (ae.getSource() == startGame2) {
             frame.dispose();

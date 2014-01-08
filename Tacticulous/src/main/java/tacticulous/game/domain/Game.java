@@ -46,19 +46,25 @@ public class Game {
     }
 
     /**
-     *  Statrs the main game interface
+     * Statrs the main game interface
      */
     public void runUI() {
         GameUI graphicalInterface = new GameUI();
         graphicalInterface.spawn(this);
+        if (command.getCurrentPlayer().isAi()) {
+            actions.aiCommands();
+        } else {
+            actions.playerCommands();
+        }
         command.rollForInitiative();
         actions.updateUI();
     }
 
     /**
-     * updates all main gaim ui elements if ui is initialized, otherwise does nothing.
+     * updates all main gaim ui elements if ui is initialized, otherwise does
+     * nothing.
      *
-     *@see tacticulous.game.graphicalui.ActionController#updateUI()
+     * @see tacticulous.game.graphicalui.ActionController#updateUI()
      */
     public void updateUI() {
         if (!(actions == null)) {
@@ -118,7 +124,7 @@ public class Game {
      *
      * @return GameCommand
      *
-     *@see tacticulous.game.commands.GameCommand
+     * @see tacticulous.game.commands.GameCommand
      */
     public GameCommand command() {
         return command;

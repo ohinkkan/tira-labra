@@ -11,6 +11,7 @@ import javax.swing.JSeparator;
 import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
+import tacticulous.game.commands.GameCommand;
 import tacticulous.game.domain.Game;
 
 /**
@@ -80,11 +81,7 @@ public class GameUI {
         rightSide.setMaximumSize(new Dimension(200, Integer.MAX_VALUE));
         commandPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 100));
 
-        if (game.command().getCurrentPlayer().isAi()) {
-            actions.aiCommands();
-        } else {
-            actions.playerCommands();
-        }
+
     }
 
     /**
@@ -100,7 +97,7 @@ public class GameUI {
     private JPanel commandBuilder(Game game, GraphicalMap mapDisplay,
             JTextArea activeUnitDisplay, JTextArea targetTileDisplay, JTextArea gameLog) {
         commandPanel = new JPanel(new GridLayout(2, 1));
-        actions = new ActionController(game, mapDisplay, activeUnitDisplay, targetTileDisplay, gameLog);
+        actions = new ActionController(commandPanel, game, mapDisplay, activeUnitDisplay, targetTileDisplay, gameLog);
         actions.addButtonListeners();
         game.setActions(actions);
         mouse = new MouseController(game, mapDisplay);
