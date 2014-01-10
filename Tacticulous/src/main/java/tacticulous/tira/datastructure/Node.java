@@ -1,8 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-package tacticulous.tira.algorithms;
+package tacticulous.tira.datastructure;
 
 /**
  * Utility class, used by PathFind.

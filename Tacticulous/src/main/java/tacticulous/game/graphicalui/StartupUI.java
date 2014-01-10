@@ -1,6 +1,5 @@
 package tacticulous.game.graphicalui;
 
-import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -8,15 +7,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import javax.lang.model.type.TypeKind;
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JToggleButton;
 import javax.swing.ListSelectionModel;
@@ -50,6 +46,8 @@ public class StartupUI implements ActionListener, ItemListener, ListSelectionLis
     private JComboBox gameTypeList;
     private JComboBox mapList;
     private JComboBox pickPlayer;
+    private JComboBox ai1LoadPicker;
+    private JComboBox ai2LoadPicker;
     private JLabel gameType;
     private JLabel map;
     private JPanel unitSelector;
@@ -57,13 +55,15 @@ public class StartupUI implements ActionListener, ItemListener, ListSelectionLis
     private JTextArea selectedUnitDisplay;
     private int selectedUnit;
     private int currentlySelectedPlayer;
+    private int aiLoad1;
+    private int aiLoad2;
     private int[] player1UnitCounter;
     private int[] player2UnitCounter;
     private String[] unitNames;
 
     public void spawn(Game game) {
         this.game = game;
-        game.startup3();
+        game.startup();
         frame = new JFrame("Startup");
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setPreferredSize(new Dimension(800, 800));
@@ -79,14 +79,15 @@ public class StartupUI implements ActionListener, ItemListener, ListSelectionLis
         JPanel middle = new JPanel();
         JPanel bottom = new JPanel();
 
-        top.setLayout(new GridLayout(2, 2));
-
         String aiTypes[] = {"Aggressive", "Defensive", "Neutral", "Weird"};
+        String aiLoads[] = {"Simulated turns: 1", "Simulated turns: 2", "Simulated turns: 3", "Simulated turns: 4", "Simulated turns: 5"};
 
         player1typeToggle = new JToggleButton("Toggle Player1 AI");
         player2typeToggle = new JToggleButton("Toggle Player2 AI");
         player1AItype = new JComboBox(aiTypes);
         player2AItype = new JComboBox(aiTypes);
+        ai1LoadPicker = new JComboBox(aiLoads);
+        ai2LoadPicker = new JComboBox(aiLoads);
 
         player1typeToggle.addItemListener(this);
         player1AItype.setSelectedIndex(0);
@@ -98,9 +99,14 @@ public class StartupUI implements ActionListener, ItemListener, ListSelectionLis
         player2AItype.addActionListener(this);
         player2AItype.setEnabled(false);
 
-        middle.setLayout(new GridLayout(2, 2));
-
-        String gameTypes[] = {"Kill everything", "Kill leader (not implemented)"};
+        ai1LoadPicker.setSelectedIndex(0);
+        ai1LoadPicker.addActionListener(this);
+        ai1LoadPicker.setEnabled(false);
+        ai2LoadPicker.setSelectedIndex(0);
+        ai2LoadPicker.addActionListener(this);
+        ai2LoadPicker.setEnabled(false);
+        
+        String gameTypes[] = {"Kill everything", "Kill leader"};
         String maps[] = {"Small and smooth", "Small and rough",
             "Medium and smooth", "Medium and rough",
             "Large and smooth", "Large and rough",
@@ -111,46 +117,44 @@ public class StartupUI implements ActionListener, ItemListener, ListSelectionLis
         gameTypeList = new JComboBox(gameTypes);
         mapList = new JComboBox(maps);
 
+        startGame = new JButton("Start game");
+        quickStart = new JButton("Quick start");
+
         gameTypeList.setSelectedIndex(0);
         gameTypeList.addActionListener(this);
         mapList.setSelectedIndex(0);
         mapList.addActionListener(this);
+
+        top.setLayout(new GridLayout(2, 3));
+        middle.setLayout(new GridLayout(2, 2));
+        bottom.setLayout(new GridLayout());
 
         container.add(top);
         container.add(middle);
         container.add(bottom);
         top.add(player1typeToggle);
         top.add(player1AItype);
+        top.add(ai1LoadPicker);
         top.add(player2typeToggle);
         top.add(player2AItype);
+        top.add(ai2LoadPicker);
         middle.add(gameType);
         middle.add(gameTypeList);
         middle.add(map);
         middle.add(mapList);
+
         bottom.add(unitSelectorBuilder());
-        startGame = new JButton("Start game");
-        quickStart = new JButton("Quick start");
-        bottom.add(startGame);
-        bottom.add(quickStart);
+
         startGame.setEnabled(false);
         startGame.addActionListener(this);
         quickStart.addActionListener(this);
-//        startGame = new JButton("Human vs AI");
-//        startGame.setBackground(Color.red);
-//        startGame.setForeground(Color.yellow);
-//        startGame2 = new JButton("AI vs AI");
-//        startGame2.addActionListener(this);
-//        startGame2.setBackground(Color.white);
-//        startGame2.setForeground(Color.blue);
-//        container.add(startGame2);
-//        container.add(startGame);
     }
 
     private JPanel unitSelectorBuilder() {
         unitSelector = new JPanel(new GridLayout(3, 2));
         String players[] = {"Player 1", "Player 2"};
         pickPlayer = new JComboBox(players);
-        aiUnitSelect = new JButton("AI unit pick - not implemented");
+        aiUnitSelect = new JButton("AI unit pick");
         aiUnitSelect.addActionListener(this);
         aiUnitSelect.setEnabled(false);
 
@@ -180,6 +184,8 @@ public class StartupUI implements ActionListener, ItemListener, ListSelectionLis
         unitSelector.add(addUnit);
         unitSelector.add(removeUnit);
         unitSelector.add(selectedUnitDisplay);
+        unitSelector.add(startGame);
+        unitSelector.add(quickStart);
         return unitSelector;
     }
 
@@ -206,7 +212,7 @@ public class StartupUI implements ActionListener, ItemListener, ListSelectionLis
 
     private void addLeadersIfNecessary() {
         if (game.isKillLeader()) {
-            for (Player player: game.getPlayers()) {
+            for (Player player : game.getPlayers()) {
                 player.getUnits().add(new Unit(player));
             }
         }
@@ -233,6 +239,14 @@ public class StartupUI implements ActionListener, ItemListener, ListSelectionLis
             return player1UnitCounter;
         } else {
             return player2UnitCounter;
+        }
+    }
+
+    private void setCorrectUnitCounter(int[] newUnits) {
+        if (currentlySelectedPlayer == 0) {
+            player1UnitCounter = newUnits;
+        } else {
+            player2UnitCounter = newUnits;
         }
     }
 
@@ -264,15 +278,32 @@ public class StartupUI implements ActionListener, ItemListener, ListSelectionLis
         }
     }
 
+    private void setAILoad(int selectedIndex, int player) {
+        if (player == 0) {
+            aiLoad1 = selectedIndex + 1;
+        } else if (player == 1) {
+            aiLoad2 = selectedIndex + 1;
+        }
+    }
+
+    private void updateAILoads() {
+        if (game.getPlayers().get(0).isAi()) {
+            game.getPlayers().get(0).getAi().setTurnsToSimulate(aiLoad1);
+        }
+        if (game.getPlayers().get(1).isAi()) {
+            game.getPlayers().get(1).getAi().setTurnsToSimulate(aiLoad2);
+        }
+    }
+
     private void setMap(int selectedIndex) {
         if (selectedIndex == 0) {
-            game.setMap(new BattleMap(5, 2));
+            game.setMap(new BattleMap(8, 2));
         } else if (selectedIndex == 1) {
-            game.setMap(new BattleMap(5, 4));
+            game.setMap(new BattleMap(8, 4));
         } else if (selectedIndex == 2) {
-            game.setMap(new BattleMap(10, 2));
+            game.setMap(new BattleMap(14, 2));
         } else if (selectedIndex == 3) {
-            game.setMap(new BattleMap(10, 4));
+            game.setMap(new BattleMap(14, 4));
         } else if (selectedIndex == 4) {
             game.setMap(new BattleMap(20, 2));
         } else if (selectedIndex == 5) {
@@ -281,6 +312,19 @@ public class StartupUI implements ActionListener, ItemListener, ListSelectionLis
             game.setMap(new BattleMap(100, 4));
         }
         gameCanStart();
+    }
+
+    private void updateAIUnitPickButton() {
+        if (game.getPlayers().get(pickPlayer.getSelectedIndex()).isAi()) {
+            aiUnitSelect.setEnabled(true);
+        } else {
+            aiUnitSelect.setEnabled(false);
+        }
+    }
+
+    private void haveAIPickUnits() {
+        setCorrectUnitCounter(game.getPlayers().get(currentlySelectedPlayer)
+                .getAi().pickUnits(3, game.getMap().size() - 1));
     }
 
     private void addUnitsToPlayers() {
@@ -306,7 +350,7 @@ public class StartupUI implements ActionListener, ItemListener, ListSelectionLis
             addUnitsToPlayers();
             game.placeUnits(game.getPlayers().get(0).getUnits());
             game.placeUnits(game.getPlayers().get(1).getUnits());
-//            game.startup();
+            updateAILoads();
             frame.dispose();
             game.runUI();
         } else if (ae.getSource() == quickStart) {
@@ -318,12 +362,12 @@ public class StartupUI implements ActionListener, ItemListener, ListSelectionLis
             addLeadersIfNecessary();
             game.placeUnits(game.getPlayers().get(0).getUnits());
             game.placeUnits(game.getPlayers().get(1).getUnits());
-//            game.startup();
+            updateAILoads();
             frame.dispose();
             game.runUI();
         } else if (ae.getSource() == addUnit) {
             int[] unitCounter = getCorrectUnitCounter();
-            if (unitCount(unitCounter) < game.getMap().size()-1) {
+            if (unitCount(unitCounter) < game.getMap().size() - 1) {
                 unitCounter[selectedUnit]++;
                 selectedUnitDisplay.setText(updateDisplay());
             }
@@ -344,6 +388,14 @@ public class StartupUI implements ActionListener, ItemListener, ListSelectionLis
         } else if (ae.getSource() == pickPlayer) {
             currentlySelectedPlayer = pickPlayer.getSelectedIndex();
             selectedUnitDisplay.setText(updateDisplay());
+            updateAIUnitPickButton();
+        } else if (ae.getSource() == ai1LoadPicker) {
+            setAILoad(ai1LoadPicker.getSelectedIndex(), 0);
+        } else if (ae.getSource() == ai2LoadPicker) {
+            setAILoad(ai2LoadPicker.getSelectedIndex(), 1);
+        } else if (ae.getSource() == aiUnitSelect) {
+            haveAIPickUnits();
+            selectedUnitDisplay.setText(updateDisplay());
         }
     }
 
@@ -352,18 +404,26 @@ public class StartupUI implements ActionListener, ItemListener, ListSelectionLis
         if (ie.getSource() == player1typeToggle) {
             if (ie.getStateChange() == ItemEvent.SELECTED) {
                 player1AItype.setEnabled(true);
+                ai1LoadPicker.setEnabled(true);
                 setPlayerAI(player1AItype.getSelectedIndex(), 0);
+                updateAIUnitPickButton();
             } else {
                 player1AItype.setEnabled(false);
+                ai1LoadPicker.setEnabled(false);
                 setPlayerAI(-1, 0);
+                updateAIUnitPickButton();
             }
         } else if (ie.getSource() == player2typeToggle) {
             if (ie.getStateChange() == ItemEvent.SELECTED) {
                 player2AItype.setEnabled(true);
+                ai2LoadPicker.setEnabled(true);
                 setPlayerAI(player1AItype.getSelectedIndex(), 1);
+                updateAIUnitPickButton();
             } else {
                 player2AItype.setEnabled(false);
+                ai2LoadPicker.setEnabled(false);
                 setPlayerAI(-1, 1);
+                updateAIUnitPickButton();
             }
         }
     }

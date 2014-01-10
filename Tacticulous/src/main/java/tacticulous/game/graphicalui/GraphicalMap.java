@@ -45,16 +45,16 @@ public class GraphicalMap extends JComponent {
                 Unit unit = tile.getUnit();
                 if (unit != null) {
                     if (tile == game.command().getTargetTile()) {
-                        drawUnit(Color.PINK, i, j, graphics);
+                        drawUnit(Color.PINK, i, j, graphics, unit.isLeader());
                     } else if (unit == game.command().getActiveUnit()) {
-                        drawUnit(Color.CYAN, i, j, graphics);
+                        drawUnit(Color.CYAN, i, j, graphics, unit.isLeader());
                     } else {
-                        drawUnit(unit.getPlayer().getColor(), i, j, graphics);
+                        drawUnit(unit.getPlayer().getColor(), i, j, graphics, unit.isLeader());
                     }
                 } else if (tile == game.command().getTargetTile()) {
-                    drawUnit(Color.YELLOW, i, j, graphics);
+                    drawUnit(Color.YELLOW, i, j, graphics, false);
                 } else if (!tile.getCorpses().isEmpty()) {
-                    drawUnit(Color.getHSBColor(100F, 0.5F, 0.5F), i, j, graphics);
+                    drawUnit(Color.getHSBColor(100F, 0.5F, 0.5F), i, j, graphics, false);
                 } else if (game.command().getActiveUnit() != null) {
                     if (game.command().getActiveUnit().hasNotMoved()
                             && game.command().getActiveUnit().getSpeed() >= game.command().getMoveCosts()[i][j]) {
@@ -77,10 +77,14 @@ public class GraphicalMap extends JComponent {
      * @param j
      * @param graphics
      */
-    private void drawUnit(Color color, int i, int j, Graphics graphics) {
+    private void drawUnit(Color color, int i, int j, Graphics graphics, boolean isLeader) {
         drawTile(tile.getMoveCost(), i, j, graphics);
         graphics.setColor(color);
         drawSquare(i, j, Math.max(1, scale / 2), graphics);
+        if (isLeader) {
+            graphics.setColor(Color.ORANGE);
+            drawSquare(i, j, Math.max(1, scale / 4), graphics);
+        }
     }
 
     /**

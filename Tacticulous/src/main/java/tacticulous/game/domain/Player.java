@@ -1,8 +1,9 @@
 package tacticulous.game.domain;
 
 import java.awt.Color;
-import java.util.ArrayList;
+//import java.util.ArrayList;
 import tacticulous.tira.ai.ArtificialIntelligence;
+import tacticulous.tira.datastructure.TacList;
 
 /**
  * Contains player-specific data, unit lists in particular.
@@ -12,7 +13,7 @@ import tacticulous.tira.ai.ArtificialIntelligence;
 public class Player {
 
     private boolean isAi;
-    private ArrayList<Unit> units;
+    private TacList<Unit> units;
     private String name;
     private ArtificialIntelligence ai;
     private Game game;
@@ -54,7 +55,7 @@ public class Player {
     public Player(String name, Color color) {
         this.name = name;
         this.isAi = false;
-        units = new ArrayList();
+        units = new TacList(10);
         this.color = color;
     }
 
@@ -74,7 +75,7 @@ public class Player {
         return true;
     }
 
-    public ArrayList<Unit> getUnits() {
+    public TacList<Unit> getUnits() {
         return units;
     }
 
@@ -108,7 +109,7 @@ public class Player {
      * @param ai Artifical Intelligence of ROBOT APOCALYPSE.
      */
     public void setAI(ArtificialIntelligence ai) {
-        isAi = true;
+        isAi = ai != null;
         this.ai = ai;
     }
 

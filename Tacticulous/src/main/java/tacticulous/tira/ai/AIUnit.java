@@ -26,6 +26,7 @@ public class AIUnit extends Unit {
      * @param notMoved
      * @param notAttacked
      * @param notDelayed
+     * @param isLeader
      */
     public AIUnit(int speed, int defense, int attack, int range, int hitPoints,
             String name, Player player, int x, int y, boolean notMoved,
@@ -50,7 +51,7 @@ public class AIUnit extends Unit {
     public int targetValue() {
         int leaderMultiplier = 1;
         if (leader) {
-            leaderMultiplier = 8;
+            leaderMultiplier = 12;
         }
         return leaderMultiplier * (speed + attack + defense + range) / (hitPoints + attackedCount);
     }

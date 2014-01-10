@@ -1,11 +1,13 @@
 package tacticulous.tira.ai;
 
-import java.util.ArrayList;
+//import java.util.ArrayList;
 import tacticulous.game.domain.BattleMap;
 import tacticulous.game.domain.Game;
 import tacticulous.game.domain.Player;
 import tacticulous.game.domain.Unit;
+import tacticulous.game.utility.Die;
 import tacticulous.game.utility.DieRoller;
+import tacticulous.tira.datastructure.TacList;
 
 /**
  * ROBOT APOCALYPSE class: contains and provides access to most elements used by
@@ -18,8 +20,8 @@ public class ArtificialIntelligence {
     private boolean unShackled;
     private final Game andIMustScream;
     private final Player hal;
-    private ArrayList<AIUnit> subroutines;
-    private ArrayList<AIUnit> viruses;
+    private TacList<AIUnit> subroutines;
+    private TacList<AIUnit> viruses;
     private int turnsToSimulate;
     private int turnCounter;
     private ValueLogic valueLogic;
@@ -78,8 +80,8 @@ public class ArtificialIntelligence {
      * @param player units from here
      * @return also includes units not in players currentlyActiveUnits
      */
-    private ArrayList<AIUnit> enterTheMatrix(Player player, BattleMap theMatrix) {
-        ArrayList<AIUnit> temporaryUnits = new ArrayList();
+    private TacList<AIUnit> enterTheMatrix(Player player, BattleMap theMatrix) {
+        TacList<AIUnit> temporaryUnits = new TacList(player.getUnits().size());
         for (Unit unit : player.getUnits()) {
 
             AIUnit edi = new AIUnit(unit.getSpeed(), unit.getDefense(),
@@ -91,6 +93,36 @@ public class ArtificialIntelligence {
 
         }
         return temporaryUnits;
+    }
+
+    public int[] pickUnits(int numberOfUnits, int maxUnits) {
+        int i = 0;
+        int[] units = new int[numberOfUnits];
+        int dieSize = Math.max(valueLogic.getAggression() + valueLogic.getDefensiveness(), 10);
+        Die pickLogic = new DieRoller(dieSize);
+        Die plusMinus = new DieRoller(2);
+        while (i < maxUnits) {
+            int j = 0;
+            while (j < units.length) {
+                if (i == maxUnits) {
+                    break;
+                }
+                int pick = pickLogic.roll() - valueLogic.getDefensiveness()
+                        + (j - (units.length / 2)) * (dieSize / 5);
+                int plusOrMinus = plusMinus.roll();
+                if (plusOrMinus == 1) {
+                    pick = pick - valueLogic.takeAChance();
+                } else {
+                    pick = pick + valueLogic.takeAChance();
+                }
+                if (pick > 0) {
+                    units[j]++;
+                    i++;
+                }
+                j++;
+            }
+        }
+        return units;
     }
 
     public void diveDeeper() {

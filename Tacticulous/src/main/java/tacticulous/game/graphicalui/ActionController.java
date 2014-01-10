@@ -2,11 +2,9 @@ package tacticulous.game.graphicalui;
 
 import java.awt.Container;
 import java.awt.FlowLayout;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import javax.swing.BoxLayout;
+//import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
@@ -16,6 +14,7 @@ import tacticulous.game.commands.UnitCommand;
 import tacticulous.game.domain.Game;
 import tacticulous.game.domain.Tile;
 import tacticulous.game.domain.Unit;
+import tacticulous.tira.datastructure.TacList;
 
 /**
  * Main control and logic class for graphical user interface.
@@ -30,7 +29,7 @@ public class ActionController implements ActionListener {
     private final JComponent mapDisplay;
     private final JButton nextUnit, previousUnit, delay, endTurn, attack, move, takeTurn, autoTurn;
     private final JTextArea activeUnitDisplay, targetTileDisplay, gameLog;
-    private final ArrayList<Unit> unitsWithActions;
+    private final TacList<Unit> unitsWithActions;
     private JPanel commandList;
     private int activeUnitIndex;
     private boolean aiControls;
@@ -92,7 +91,7 @@ public class ActionController implements ActionListener {
         commandList = new JPanel(new FlowLayout());
         container.add(commandList);
         aiControls = false;
-        unitsWithActions = new ArrayList();
+        unitsWithActions = new TacList(game.getMap().size());
     }
 
     /**

@@ -1,5 +1,6 @@
 package tacticulous.tira.algorithms;
 
+import tacticulous.tira.datastructure.Node;
 import java.util.ArrayList;
 import java.util.Arrays;
 import org.junit.Test;
@@ -8,6 +9,7 @@ import tacticulous.game.domain.BattleMap;
 import tacticulous.game.domain.Unit;
 import tacticulous.game.utility.Die;
 import tacticulous.game.utility.DieRoller;
+import tacticulous.tira.datastructure.TacList;
 
 /**
  *
@@ -54,14 +56,11 @@ public class GameUsageTest {
         BattleMap map = new BattleMap(intMap);
         map.getTile(2, 2).setUnit(unit);
         int[][] result = GameUsage.speedRange(unit, map);
-        for (int i = 0; i < result.length; i++) {
-            System.out.println(Arrays.toString(result[i]));
-        }
         assertArrayEquals(expected, result);
     }
-    
+
         @Test
-    public void getTilesToMoveToIsCorrect() {       
+    public void getTilesToMoveToIsCorrect() {
         int[][] intMap = new int[][]{
             {3, 4, 1, 5, 2},
             {1, 3, 4, 7, 8},
@@ -72,8 +71,8 @@ public class GameUsageTest {
         BattleMap map = new BattleMap(intMap);
         Unit unit = new Unit(7, 1, 1, 1, "A");
         map.getTile(2, 2).setUnit(unit);
-        ArrayList<Node> result = GameUsage.getTilesToMoveTo(unit, map);
-        assertEquals(12, result.size());      
+        TacList<Node> result = GameUsage.getTilesToMoveTo(unit, map);
+        assertEquals(12, result.size());
         unit = new Unit(4, 1, 1, 1, "A");
         map.getTile(2, 2).setUnit(unit);
         result = GameUsage.getTilesToMoveTo(unit, map);

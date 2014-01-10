@@ -5,8 +5,8 @@ import java.awt.event.MouseListener;
 import tacticulous.game.domain.Game;
 
 /**
- * Control and logic class for using mouse in graphical map display.
- * Is its own mainly to make future UI improvement easier.
+ * Control and logic class for using mouse in graphical map display. Is its own
+ * mainly to make future UI improvement easier.
  *
  * @author O
  * @see tacticulous.game.graphicalui.ActionController
@@ -46,9 +46,17 @@ public class MouseController implements MouseListener {
             game.getActions().updateUnitDisplays();
             map.repaint();
             if (me.getClickCount() > 1) {
-                if (game.getActions().canAttack()) {
-                    game.command().attack();
-                    map.repaint();
+                if (game.command().getTargetTile().getUnit() != null) {
+                    if (game.command().getTargetTile().getUnit().getPlayer()
+                            == game.command().getCurrentPlayer()
+                            && !game.command().getTargetTile().getUnit().doneForTheRound()) {
+                        game.command().setActiveUnit(game.command().getTargetTile().getUnit());
+                    } else if (game.getActions().canAttack()
+                            && game.command().getTargetTile().getUnit().getPlayer()
+                            != game.command().getCurrentPlayer()) {
+                        game.command().attack();
+                        map.repaint();
+                    }
                 } else if (game.getActions().canMove()) {
                     game.command().move();
                     map.repaint();

@@ -28,9 +28,9 @@ public class ValueLogic {
     public int movementValue(AIUnit terminator, Tile tile, SimulatedRound round) {
         int range = distanceToClosest(tile, round);
         int oldRange = distanceToClosest(round.getTheMatrix().getTile(terminator.getX(), terminator.getY()), round);
-        int value = oldRange - range;
+        int value = (oldRange - range) * aggression;
         if (range <= terminator.getRange() && terminator.hasNotAttacked()) {
-            value += (range * aggression);
+            value = value + (range * aggression);
         }
         int oldX = terminator.getX();
         int oldY = terminator.getY();
@@ -38,8 +38,20 @@ public class ValueLogic {
         terminator.setXY(tile.getX(), tile.getY());
         int newThreat = threatInRange(terminator, round);
         terminator.setXY(oldX, oldY);
-        value += (oldThreat - newThreat);
+        value = value + (oldThreat - newThreat);
         return value + takeAChance.roll();
+    }
+
+    public int getAggression() {
+        return aggression;
+    }
+
+    public int getDefensiveness() {
+        return defensiveness;
+    }
+
+    public int takeAChance() {
+        return takeAChance.roll();
     }
 
     public int delayValue(AIUnit terminator, SimulatedRound round) {
@@ -55,7 +67,11 @@ public class ValueLogic {
                         + UnitCommand.chanceToHit(threat, unit) / unit.getHitPoints();
             }
         }
-        return threatValue * defensiveness;
+        int leaderMultiplier = 1;
+        if (unit.isLeader()) {
+            leaderMultiplier = 20;
+        }
+        return leaderMultiplier * threatValue * defensiveness;
     }
 
     private int distanceToClosest(Tile tile, SimulatedRound round) {

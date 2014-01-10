@@ -1,14 +1,14 @@
 package tacticulous.game.domain;
 
 import java.awt.Color;
-import java.util.ArrayList;
-import javax.swing.JPanel;
+//import java.util.ArrayList;
 import tacticulous.game.commands.GameCommand;
 import tacticulous.game.graphicalui.ActionController;
 import tacticulous.game.graphicalui.StartupUI;
 import tacticulous.game.graphicalui.GameUI;
 import tacticulous.game.utility.*;
 import tacticulous.tira.ai.ArtificialIntelligence;
+import tacticulous.tira.datastructure.TacList;
 
 /**
  * The Supreme Ruler class; contains and provides access to most elements used
@@ -19,7 +19,7 @@ import tacticulous.tira.ai.ArtificialIntelligence;
 public class Game {
 
     private BattleMap map;
-    private ArrayList<Player> players;
+    private TacList<Player> players;
     private Die die;
     private ActionController actions;
     private int round;
@@ -32,13 +32,13 @@ public class Game {
      */
     public Game() {
         this.die = new DieRoller(10);
-        players = new ArrayList();
+        players = new TacList(2);
         round = 0;
         gameLog = "";
     }
 
     /**
-     * Starts the game startup interface.
+     * Starts the game oldstartup interface.
      */
     public void run() {
         StartupUI startup = new StartupUI();
@@ -57,6 +57,7 @@ public class Game {
             actions.playerCommands();
         }
         command.rollForInitiative();
+        command.nextTurn();
         actions.updateUI();
     }
 
@@ -86,7 +87,7 @@ public class Game {
      * @param update added at the bottom of the game log.
      */
     public void updateLog(String update) {
-        gameLog = gameLog + "\n" + update;
+        gameLog = gameLog + update + "\n";
     }
 
     /**
@@ -95,7 +96,7 @@ public class Game {
      * @param units units to be placed.
      * @return false if too many units for the map.
      */
-    public boolean placeUnits(ArrayList<Unit> units) {
+    public boolean placeUnits(TacList<Unit> units) {
         if (units.size() > map.size()) {
             return false;
         }
@@ -153,7 +154,7 @@ public class Game {
         round++;
     }
 
-    public ArrayList<Player> getPlayers() {
+    public TacList<Player> getPlayers() {
         return players;
     }
 
@@ -169,10 +170,27 @@ public class Game {
         return map;
     }
 
-    /**
-     * Placeholder until game startup customization interface is implemented.
-     */
+    public void randomizeFirstPlayer() {
+        Player first = players.get(0);
+        Player second = players.get(1);
+        int random = die.roll();
+        if (random % 2 == 1) {
+            players.clear();
+            players.add(second);
+            players.add(first);
+        }
+    }
+
     public void startup() {
+        players.add(new Player("Player 1", Color.BLUE));
+        players.add(new Player("Player 2", Color.RED));
+        this.map = new BattleMap(8, 2);
+    }
+
+    /**
+     * Placeholder until game oldstartup customization interface is implemented.
+     */
+    public void oldstartup() {
         players.add(new Player("Player 1", Color.BLUE));
         players.add(new Player("Player 2", Color.RED));
         players.get(0).testUnits();
@@ -188,16 +206,10 @@ public class Game {
         placeUnits(players.get(1).getUnits());
     }
 
-    public void startup3() {
-        players.add(new Player("Player 1", Color.BLUE));
-        players.add(new Player("Player 2", Color.RED));
-        this.map = new BattleMap(5, 2);
-    }
-
     /**
-     * Placeholder until game startup customization interface is implemented.
+     * Placeholder until game oldstartup customization interface is implemented.
      */
-    public void startup2() {
+    public void oldstartup2() {
         players.add(new Player("Player 1", Color.BLUE));
         players.add(new Player("Player 2", Color.RED));
         players.get(0).testUnits();

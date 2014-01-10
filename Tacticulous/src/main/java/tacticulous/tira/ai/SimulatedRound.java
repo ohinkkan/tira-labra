@@ -1,12 +1,13 @@
 package tacticulous.tira.ai;
 
-import java.util.ArrayList;
+//import java.util.ArrayList;
 import tacticulous.game.commands.UnitCommand;
 import tacticulous.game.domain.BattleMap;
 import tacticulous.game.domain.Tile;
 import tacticulous.game.domain.Unit;
 import tacticulous.tira.algorithms.GameUsage;
-import tacticulous.tira.algorithms.Node;
+import tacticulous.tira.datastructure.Node;
+import tacticulous.tira.datastructure.TacList;
 
 /**
  *
@@ -16,12 +17,12 @@ import tacticulous.tira.algorithms.Node;
  */
 public class SimulatedRound {
 
-    private ArrayList<AIUnit> activeUnits;
-    private ArrayList<AIUnit> hostiles;
+    private TacList<AIUnit> activeUnits;
+    private TacList<AIUnit> hostiles;
     private final ArtificialIntelligence superiorIntellect;
     private final BattleMap theMatrix;
 
-    public SimulatedRound(ArrayList<AIUnit> activeUnits, ArrayList<AIUnit> hostiles,
+    public SimulatedRound(TacList<AIUnit> activeUnits, TacList<AIUnit> hostiles,
             ArtificialIntelligence mind, BattleMap theMatrix) {
         this.activeUnits = activeUnits;
         this.hostiles = hostiles;
@@ -78,8 +79,8 @@ public class SimulatedRound {
      * @param potentials
      * @return list of all enemiee in unit's range
      */
-    public ArrayList<AIUnit> getTargetsInRange(Unit terminator, ArrayList<AIUnit> potentials) {
-        ArrayList<AIUnit> targets = new ArrayList();
+    public TacList<AIUnit> getTargetsInRange(Unit terminator, TacList<AIUnit> potentials) {
+        TacList<AIUnit> targets = new TacList(potentials.size());
         for (AIUnit unit : potentials) {
             if (!UnitCommand.checkNotInRange(terminator, unit.getX(), unit.getY())) {
                 targets.add(unit);
@@ -448,16 +449,16 @@ public class SimulatedRound {
      * swaps active and hostile unit lists if the next turn is also simulated
      */
     private void swapSides() {
-        ArrayList temp = hostiles;
+        TacList temp = hostiles;
         hostiles = activeUnits;
         activeUnits = temp;
     }
 
-    public ArrayList<AIUnit> getActiveUnits() {
+    public TacList<AIUnit> getActiveUnits() {
         return activeUnits;
     }
 
-    public ArrayList<AIUnit> getHostiles() {
+    public TacList<AIUnit> getHostiles() {
         return hostiles;
     }
 
@@ -469,8 +470,8 @@ public class SimulatedRound {
      * resets unit acionts if a completely new round is called by
      * checkIfShouldSimulateNextTurn()
      */
-    private ArrayList<AIUnit> resetedCopy(ArrayList<AIUnit> units, BattleMap map) {
-        ArrayList<AIUnit> copy = new ArrayList();
+    private TacList<AIUnit> resetedCopy(TacList<AIUnit> units, BattleMap map) {
+        TacList<AIUnit> copy = new TacList(units.size());
         for (AIUnit unit : units) {
             AIUnit edi = new AIUnit(unit.getSpeed(), unit.getDefense(),
                     unit.getAttack(), unit.getRange(), unit.getHitPoints(),

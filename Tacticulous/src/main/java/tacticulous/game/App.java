@@ -1,7 +1,6 @@
 package tacticulous.game;
 
 import tacticulous.game.domain.Game;
-import tacticulous.game.domain.Player;
 import tacticulous.tira.testing.Performance;
 
 /**
@@ -20,5 +19,6 @@ public class App {
         Game game = new Game();
         game.run();
 //        Performance.comparisons();
+//            Performance.listComparisons();
     }
 }

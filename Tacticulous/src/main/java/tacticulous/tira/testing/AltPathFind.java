@@ -8,7 +8,7 @@ package tacticulous.tira.testing;
 
 import java.util.PriorityQueue;
 import tacticulous.game.domain.BattleMap;
-import tacticulous.tira.algorithms.Node;
+import tacticulous.tira.datastructure.Node;
 import tacticulous.tira.algorithms.PathFind;
 
 /**

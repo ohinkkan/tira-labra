@@ -3,7 +3,10 @@ package tacticulous.game.graphicalui;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -11,7 +14,6 @@ import javax.swing.JSeparator;
 import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
-import tacticulous.game.commands.GameCommand;
 import tacticulous.game.domain.Game;
 
 /**
@@ -19,12 +21,13 @@ import tacticulous.game.domain.Game;
  *
  * @author O
  */
-public class GameUI {
+public class GameUI implements ActionListener {
 
     private JFrame frame;
     private JPanel commandPanel;
     private ActionController actions;
     private MouseController mouse;
+    private JButton quitToStartup;
 
     /**
      * Creates the main game window.
@@ -63,6 +66,10 @@ public class GameUI {
                 JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
                 JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
+        quitToStartup = new JButton("Quit to game startup menu");
+        quitToStartup.addActionListener(this);
+        quitToStartup.setMaximumSize(new Dimension(Integer.MAX_VALUE, 100));
+
         activeInfo.setEditable(false);
         targetInfo.setEditable(false);
         actionLogText.setEditable(false);
@@ -73,6 +80,7 @@ public class GameUI {
 
         leftSide.add(map);
         leftSide.add(commandPanel);
+        rightSide.add(quitToStartup);
         rightSide.add(activeInfo);
         rightSide.add(new JSeparator(SwingConstants.HORIZONTAL));
         rightSide.add(targetInfo);
@@ -81,7 +89,6 @@ public class GameUI {
         map.setPreferredSize(new Dimension(800, 800));
         rightSide.setMaximumSize(new Dimension(200, Integer.MAX_VALUE));
         commandPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 100));
-
 
     }
 
@@ -104,5 +111,14 @@ public class GameUI {
         mouse = new MouseController(game, mapDisplay);
         mapDisplay.addMouseListener(mouse);
         return commandPanel;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent ae) {
+        if (ae.getSource() == quitToStartup) {
+            Game newGame = new Game();
+            frame.dispose();
+            newGame.run();
+        }
     }
 }

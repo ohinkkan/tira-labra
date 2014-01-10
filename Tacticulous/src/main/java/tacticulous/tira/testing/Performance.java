@@ -1,11 +1,14 @@
 package tacticulous.tira.testing;
 
+import java.util.ArrayList;
 import tacticulous.game.domain.BattleMap;
+import tacticulous.game.domain.Game;
 import tacticulous.game.domain.Unit;
 import tacticulous.game.utility.Die;
 import tacticulous.game.utility.DieRoller;
 import tacticulous.tira.algorithms.GameUsage;
 import tacticulous.tira.algorithms.PathFind;
+import tacticulous.tira.datastructure.TacList;
 
 /**
  *
@@ -58,12 +61,77 @@ public class Performance {
         System.out.println("PriorityQueue:" + Performance.speedRangeMultipleRandoms(false, maxSize, howManyTimes) + "ms");
     }
 
-    public static void comparisons() {
-        compare(5,100000);
+    public static long compareLists(int size, int remove, boolean mine) {
+        long startTime = System.currentTimeMillis();
+        if (mine) {
+            TacList<String> list = new TacList(2);
+            for (int i = 0; i < size; i++) {
+                list.add("Test");
+            }
+            for (int i = 0; i < remove; i++) {
+                list.remove("Test");
+            }
+        } else {
+            ArrayList<String> list = new ArrayList(2);
+            for (int i = 0; i < size; i++) {
+                list.add("Test");
+            }
+            for (int i = 0; i < remove; i++) {
+                list.remove("Test");
+            }
+        }
+        long stopTime = System.currentTimeMillis();
+        return stopTime - startTime;
+    }
+
+    public static long compareListsSizeRight(int size, int remove, boolean mine) {
+        long startTime = System.currentTimeMillis();
+        if (mine) {
+            TacList<String> list = new TacList(size);
+            for (int i = 0; i < size; i++) {
+                list.add("Test");
+            }
+            for (int i = 0; i < remove; i++) {
+                list.remove("Test");
+            }
+        } else {
+            ArrayList<String> list = new ArrayList(size);
+            for (int i = 0; i < size; i++) {
+                list.add("Test");
+            }
+            for (int i = 0; i < remove; i++) {
+                list.remove("Test");
+            }
+        }
+        long stopTime = System.currentTimeMillis();
+        return stopTime - startTime;
+    }
+
+    public static void heapComparisons() {
+        compare(5, 100000);
         compareFixed(10, 10000);
         compare(10, 10000);
         compareFixed(100, 1000);
         compare(100, 1000);
         compareFixed(1000, 1);
+    }
+
+    public static void listComparisons() {
+        System.out.println("TacList, wrong size, add 1000000 no remove: "
+                + compareLists(1000000, 0, true) + "ms");
+        System.out.println("ArrayList, wrong size, add 1000000 no remove: "
+                + compareLists(1000000, 0, true) + "ms");
+        System.out.println("TacList, wrong size, add 100000 remove 90000: "
+                + compareLists(100000, 90000, true) + "ms");
+        System.out.println("ArrayList, wrong size, add 100000 remove 90000: "
+                + compareLists(100000, 90000, true) + "ms");
+        System.out.println("TacList, right size, add 1000000 no remove: "
+                + compareListsSizeRight(1000000, 0, true) + "ms");
+        System.out.println("ArrayList, right size, add 1000000 no remove: "
+                + compareListsSizeRight(1000000, 0, true) + "ms");
+        System.out.println("TacList, right size, add 100000 remove 90000: "
+                + compareListsSizeRight(100000, 90000, true) + "ms");
+        System.out.println("ArrayList, right size, add 100000 remove 90000: "
+                + compareListsSizeRight(100000, 90000, true) + "ms");
     }
 }

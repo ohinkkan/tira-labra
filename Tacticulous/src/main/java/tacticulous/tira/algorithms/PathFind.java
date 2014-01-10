@@ -1,6 +1,7 @@
 package tacticulous.tira.algorithms;
 
-import java.util.PriorityQueue;
+import tacticulous.tira.datastructure.Node;
+import tacticulous.tira.datastructure.MinHeap;
 import tacticulous.game.domain.BattleMap;
 
 /**

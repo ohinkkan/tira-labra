@@ -1,4 +1,5 @@
-package tacticulous.tira.algorithms;
+package tacticulous.tira.datastructure;
+
 
 /**
  * Minimum heap data structure. Stores nodes, using distance as key.

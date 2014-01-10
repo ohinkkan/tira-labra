@@ -9,6 +9,7 @@ import tacticulous.game.graphicalui.GameText;
 import tacticulous.tira.algorithms.GameUsage;
 
 /**
+ * Main game logic class.
  *
  * @author O
  */
@@ -40,7 +41,7 @@ public class GameCommand {
      */
     public void rollForInitiative() {
         game.increaseRoundCounter();
-        Collections.shuffle(game.getPlayers());
+        game.randomizeFirstPlayer();
         currentPlayerIndex = 0;
         for (Player player : game.getPlayers()) {
             player.newRoundUnitReset();
@@ -120,7 +121,7 @@ public class GameCommand {
                 return true;
             }
             if (game.isKillLeader()) {
-                if (player.leaderIsDead()){
+                if (player.leaderIsDead()) {
                     gameOver = true;
                     loser = player.getName();
                     return true;
@@ -136,6 +137,7 @@ public class GameCommand {
      */
     public void move() {
         UnitCommand.move(game.getMap(), activeUnit, targetTile);
+        game.updateLog(GameText.unitMoves(activeUnit.getName()));
         targetTile = null;
         game.updateUI();
         nextPlayerIfUnitDoneForTheRound(activeUnit);
@@ -155,6 +157,7 @@ public class GameCommand {
      * Current activeUnit ends its turn.
      */
     public void endTurn() {
+        game.updateLog(GameText.unitEndsTurn(activeUnit.getName()));
         activeUnit.attacks();
         activeUnit.moves();
         game.updateUI();
@@ -166,6 +169,7 @@ public class GameCommand {
      * check if action is legit.
      */
     public void delay() {
+        game.updateLog(GameText.unitDelays(activeUnit.getName()));
         activeUnit.delays();
         game.updateUI();
         nextTurn();
@@ -203,8 +207,8 @@ public class GameCommand {
     }
 
     /**
-     * Checks if provided unit has moved and attacked this turn, ending current
-     * player's turn if so.
+     * Checks if provided unit has unitMovesd and attacked this turn, ending
+     * current player's turn if so.
      *
      * @param unit this is checked
      */
@@ -237,7 +241,7 @@ public class GameCommand {
     }
 
     /**
-     * Sets active unit and calculates movement costs if unit is not null.
+     * Sets active unit and calculates unitMovesment costs if unit is not null.
      *
      * @param activeUnit
      */
@@ -258,7 +262,7 @@ public class GameCommand {
 
     /**
      * Used by graphical UI to see if activeUnit is in the middle of a turn,
-     * that is, has either moved or attacked but not both.
+     * that is, has either unitMovesd or attacked but not both.
      *
      * @return true if disabled
      */

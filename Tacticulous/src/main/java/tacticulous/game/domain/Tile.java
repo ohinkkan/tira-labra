@@ -1,6 +1,9 @@
 package tacticulous.game.domain;
 
-import java.util.ArrayList;
+//import java.util.ArrayList;
+
+import tacticulous.tira.datastructure.TacList;
+
 
 /**
  * Single tile of terrain. May be occupied by a single unit.
@@ -11,7 +14,7 @@ public class Tile {
 
     private int moveCost;
     private Unit unit = null;
-    private ArrayList<Unit> corpses;
+    private TacList<Unit> corpses;
     private int x;
     private int y;
 
@@ -29,7 +32,7 @@ public class Tile {
         this.moveCost = moveCost;
         this.x = x;
         this.y = y;
-        corpses = new ArrayList();
+        corpses = new TacList(10);
     }
 
     public int getX() {
@@ -49,7 +52,7 @@ public class Tile {
         return moveCost;
     }
 
-    public ArrayList<Unit> getCorpses() {
+    public TacList<Unit> getCorpses() {
         return corpses;
     }
 

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import tacticulous.game.commands.GameCommand;
+import tacticulous.tira.datastructure.TacList;
 
 /**
  *
@@ -16,8 +17,8 @@ public class GameTest {
     @Test
     public void newGameNoNullAssets() {
         game = new Game();
-        game.startup();
-        game.startup2();
+        game.oldstartup();
+        game.oldstartup2();
         assertNotNull(game.getDie());
         assertNotNull(game.getMap());
         assertNotNull(game.getPlayers());
@@ -26,7 +27,7 @@ public class GameTest {
     @Test
     public void newGameNoNullAssets2() {
         game = new Game();
-        game.startup2();
+        game.oldstartup2();
         assertNotNull(game.getDie());
         assertNotNull(game.getMap());
         assertNotNull(game.getPlayers());
@@ -49,8 +50,8 @@ public class GameTest {
     @Test
     public void unitPlacementReturnsFalseIfTooManyUnits() {
         game = new Game();
-        game.startup();
-        ArrayList<Unit> units = game.getPlayers().get(0).getUnits();
+        game.oldstartup();
+        TacList<Unit> units = game.getPlayers().get(0).getUnits();
         for (int i = 0; i < game.getMap().size(); i++) {
             units.add(new Unit(1, 1, 1, 1, "A"));
         }
