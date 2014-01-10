@@ -33,9 +33,8 @@ public class GameCommandTest {
         game.getPlayers().add(new Player("Player 1", null));
         game.getPlayers().add(new Player("Player 2", null));
         for (Player player : game.getPlayers()) {
-            player.testUnits();
+            player.quickStartUnits(2);
             player.setGame(game);
-            player.testUnits();
             game.placeUnits(player.getUnits());
         }
 
@@ -124,20 +123,6 @@ public class GameCommandTest {
         assertTrue(command.checkIfGameOver());
     }
 
-//    @Test
-//    public void aiAutoTurnCheckWorks() {
-//        command.rollForInitiative();
-//        Player player = command.getCurrentPlayer();
-//        command.aiAutoTurnCheck();
-//        assertEquals(player, command.getCurrentPlayer());
-//        player.setAI(new ArtificialIntelligence(game, command.getCurrentPlayer(), 1, 1, 1, 1));
-//        command.aiAutoTurnCheck();
-//        assertEquals(player, command.getCurrentPlayer());
-//        player.getAi().autoOn();
-//        command.aiAutoTurnCheck();
-//        assertNotSame(player, command.getCurrentPlayer());
-//    }
-
     @Test
     public void nextTurnWorks() {
         command.rollForInitiative();
@@ -146,15 +131,6 @@ public class GameCommandTest {
         assertNotSame(player, command.getCurrentPlayer());
 
     }
-
-//    @Test
-//    public void autoTurnWorks() {
-//        command.rollForInitiative();
-//        Player player = game.getPlayers().get(1);
-//        player.setAI(new ArtificialIntelligence(game, command.getCurrentPlayer(), 1, 1, 1, 1));
-//        command.nextTurn();
-//        assertEquals(player, command.getCurrentPlayer());
-//    }
 
     @Test
     public void attackCommandWorks() {
@@ -225,17 +201,6 @@ public class GameCommandTest {
         assertTrue(!unit.doneForTheRound());
     }
 
-//    @Test
-//    public void autoTurnToggleWorks() {
-//       command.rollForInitiative();
-//       command.getCurrentPlayer().setAI(new ArtificialIntelligence(game, command.getCurrentPlayer(), 1, 1, 1, 1));
-//       command.autoTurn();
-//       assertTrue(game.getPlayers().get(0).getAi().autoIsOn());
-//       assertEquals(command.getCurrentPlayer(),game.getPlayers().get(1));
-//       command.nextTurn();
-//       assertEquals(command.getCurrentPlayer(),game.getPlayers().get(1));
-//    }
-
     @Test
     public void attackCommandWorks3() {
         command.rollForInitiative();
@@ -256,5 +221,57 @@ public class GameCommandTest {
 
         tile.setUnit(unit4);
         assertEquals(GameText.attackMisses("A", "B"), command.unitAttacks());
+    }
+
+    @Test
+    public void killLeaderEndsGame() {
+        game.setKillLeader(true);
+        Unit leader1 = new Unit(null);
+        Unit leader2 = new Unit(null);
+        game.getPlayers().get(0).addUnit(leader1);
+        game.getPlayers().get(1).addUnit(leader2);
+        command.rollForInitiative();
+        assertTrue(!command.checkIfGameOver());
+        for (Player player: game.getPlayers()) {
+            if (player.getUnits().contains(leader2)) {
+                player.kill(leader2);
+            }
+        }
+
+        assertTrue(command.checkIfGameOver());
+    }
+
+    @Test
+    public void aiAutoTurnCheckWorks() {
+        command.rollForInitiative();
+        Player player = command.getCurrentPlayer();
+        command.aiAutoTurnCheck();
+        assertEquals(player, command.getCurrentPlayer());
+        player.setAI(new ArtificialIntelligence(game, command.getCurrentPlayer(), 1, 1, 1, 1));
+        command.aiAutoTurnCheck();
+        assertEquals(player, command.getCurrentPlayer());
+        player.getAi().autoOn();
+        command.aiAutoTurnCheck();
+        assertNotSame(player, command.getCurrentPlayer());
+    }
+
+    @Test
+    public void autoTurnToggleWorks() {
+        command.rollForInitiative();
+        command.getCurrentPlayer().setAI(new ArtificialIntelligence(game, command.getCurrentPlayer(), 1, 1, 1, 1));
+        command.autoTurn();
+        assertTrue(game.getPlayers().get(0).getAi().autoIsOn());
+        assertEquals(command.getCurrentPlayer(), game.getPlayers().get(1));
+        command.nextTurn();
+        assertEquals(command.getCurrentPlayer(), game.getPlayers().get(1));
+    }
+
+    @Test
+    public void autoTurnWorks() {
+        command.rollForInitiative();
+        Player player = game.getPlayers().get(1);
+        player.setAI(new ArtificialIntelligence(game, command.getCurrentPlayer(), 1, 1, 1, 1));
+        command.nextTurn();
+        assertEquals(player, command.getCurrentPlayer());
     }
 }

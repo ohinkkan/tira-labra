@@ -1,13 +1,11 @@
 package tacticulous.game.domain;
 
 import java.awt.Color;
-//import java.util.ArrayList;
 import tacticulous.game.commands.GameCommand;
 import tacticulous.game.graphicalui.ActionController;
 import tacticulous.game.graphicalui.StartupUI;
 import tacticulous.game.graphicalui.GameUI;
 import tacticulous.game.utility.*;
-import tacticulous.tira.ai.ArtificialIntelligence;
 import tacticulous.tira.datastructure.TacList;
 
 /**
@@ -73,6 +71,11 @@ public class Game {
         }
     }
 
+    /**
+     * Checks if game mode is Kill Leader
+     *
+     * @return true if leader is to be killed!!!
+     */
     public boolean isKillLeader() {
         return killLeader;
     }
@@ -170,6 +173,10 @@ public class Game {
         return map;
     }
 
+    /**
+     * At the start of a new round, randomly determines which player gets to go
+     * first.
+     */
     public void randomizeFirstPlayer() {
         Player first = players.get(0);
         Player second = players.get(1);
@@ -181,48 +188,14 @@ public class Game {
         }
     }
 
+    /**
+     * Initializes players and map. Map can later be changed in game startup
+     * menu.
+     */
     public void startup() {
         players.add(new Player("Player 1", Color.BLUE));
         players.add(new Player("Player 2", Color.RED));
         this.map = new BattleMap(8, 2);
-    }
-
-    /**
-     * Placeholder until game oldstartup customization interface is implemented.
-     */
-    public void oldstartup() {
-        players.add(new Player("Player 1", Color.BLUE));
-        players.add(new Player("Player 2", Color.RED));
-        players.get(0).testUnits();
-        players.get(1).testUnits();
-        players.get(0).setGame(this);
-        players.get(1).setGame(this);
-        players.get(0).quickStartUnits(2);
-        players.get(1).quickStartUnits(2);
-//        players.get(0).setAI(new ArtificialIntelligence(this, players.get(0), 1, 5, 10, 1));
-        players.get(1).setAI(new ArtificialIntelligence(this, players.get(1), 1, 5, 10, 1));
-        this.map = new BattleMap(12, 4);
-        placeUnits(players.get(0).getUnits());
-        placeUnits(players.get(1).getUnits());
-    }
-
-    /**
-     * Placeholder until game oldstartup customization interface is implemented.
-     */
-    public void oldstartup2() {
-        players.add(new Player("Player 1", Color.BLUE));
-        players.add(new Player("Player 2", Color.RED));
-        players.get(0).testUnits();
-        players.get(1).testUnits();
-        players.get(0).setGame(this);
-        players.get(1).setGame(this);
-        players.get(0).quickStartUnits(2);
-        players.get(1).quickStartUnits(2);
-        players.get(0).setAI(new ArtificialIntelligence(this, players.get(0), 1, 10, 10, 10));
-        players.get(1).setAI(new ArtificialIntelligence(this, players.get(1), 1, 5, 12, 1));
-        this.map = new BattleMap(16, 4);
-        placeUnits(players.get(0).getUnits());
-        placeUnits(players.get(1).getUnits());
     }
 
 }

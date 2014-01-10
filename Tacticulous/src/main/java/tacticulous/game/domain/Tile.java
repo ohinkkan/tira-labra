@@ -1,9 +1,6 @@
 package tacticulous.game.domain;
 
-//import java.util.ArrayList;
-
 import tacticulous.tira.datastructure.TacList;
-
 
 /**
  * Single tile of terrain. May be occupied by a single unit.
@@ -46,12 +43,18 @@ public class Tile {
     /**
      * How much unit speed it costs to move into this tile.
      *
-     * @return
+     * @return movement cost
      */
     public int getMoveCost() {
         return moveCost;
     }
 
+    /**
+     * List of units that have died in this tile. Currently only used for
+     * drawing kewl dead unit squares in map display.
+     *
+     * @return
+     */
     public TacList<Unit> getCorpses() {
         return corpses;
     }
@@ -59,7 +62,7 @@ public class Tile {
     /**
      * Shows movement cost and, if tile is occupied, unit description.
      *
-     * @return
+     * @return this is printed in target tile display
      */
     @Override
     public String toString() {
@@ -74,7 +77,7 @@ public class Tile {
     /**
      * Sets occupying unit. If not null, also updates unit's location.
      *
-     * @param unit
+     * @param unit new occupant
      */
     public void setUnit(Unit unit) {
         this.unit = unit;

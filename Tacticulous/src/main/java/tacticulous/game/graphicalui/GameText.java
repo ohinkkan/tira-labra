@@ -1,7 +1,7 @@
 package tacticulous.game.graphicalui;
 
 /**
- * Contains almost all the text used by the game.
+ * Contains msot of the text used by the game.
  *
  * @author O
  */

@@ -212,7 +212,7 @@ public class Unit {
      * Surprisingly, returns unit information in a string. Used by unit
      * displays.
      *
-     * @return
+     * @return information printed on active unit and target tile displays.
      */
     @Override
     public String toString() {

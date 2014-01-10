@@ -106,7 +106,6 @@ public class TacList<T> implements Iterable<T> {
 
         @Override
         public void remove() {
-            throw new UnsupportedOperationException("Not supported yet.");
         }
 
     }

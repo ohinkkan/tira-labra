@@ -1,6 +1,5 @@
 package tacticulous.game.commands;
 
-import java.util.Collections;
 import tacticulous.game.domain.Game;
 import tacticulous.game.domain.Player;
 import tacticulous.game.domain.Tile;
@@ -9,7 +8,7 @@ import tacticulous.game.graphicalui.GameText;
 import tacticulous.tira.algorithms.GameUsage;
 
 /**
- * Main game logic class.
+ * Main game logic class. Handles turn and round rotation, game over status, etc.
  *
  * @author O
  */
@@ -37,7 +36,6 @@ public class GameCommand {
     /**
      * Starts new round, if game is not over. Chooses randomly which player goes
      * first.
-     *
      */
     public void rollForInitiative() {
         game.increaseRoundCounter();
@@ -252,10 +250,21 @@ public class GameCommand {
         }
     }
 
+    /**
+     * Returns the currently active player, determined by currentPlayerIndex
+     *
+     * @return active player
+     */
+
     public Player getCurrentPlayer() {
         return game.getPlayers().get(currentPlayerIndex);
     }
 
+    /**
+     * Returns the currently active unit
+     *
+     * @return active unit
+     */
     public Unit getActiveUnit() {
         return activeUnit;
     }
@@ -270,6 +279,11 @@ public class GameCommand {
         return unitSelectionDisabled;
     }
 
+    /**
+     * Sets a tile to be the target tile for move, attack, etc.
+     *
+     * @param targetTile new targetTile
+     */
     public void setTargetTile(Tile targetTile) {
         this.targetTile = targetTile;
     }

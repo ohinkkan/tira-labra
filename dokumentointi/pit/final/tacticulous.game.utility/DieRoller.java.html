@@ -1,0 +1,665 @@
+<html>
+<head>
+<style type='text/css'>
+html, body, div, span, p, blockquote, pre {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	font-weight: inherit;
+	font-style: inherit;
+	font-size: 100%;
+	font-family: inherit;
+	vertical-align: baseline;
+}
+
+body{
+	line-height: 1;
+	color: black;
+	background: white;
+	margin-left: 20px;
+}
+
+.src { 
+border: 1px solid #dddddd;
+padding-top: 10px;
+padding-right: 5px;
+padding-left: 5px;
+}
+
+
+.covered {background-color: #ddffdd}
+.uncovered {background-color: #ffdddd}
+.killed {background-color: #aaffaa}
+.survived {background-color: #ffaaaa}
+.uncertain {background-color: #dde7ef}
+.run_error {background-color: #dde7ef}
+.na {background-color: #eeeeee}
+.timed_out {background-color: #dde7ef}
+.non_viable {background-color: #aaffaa}
+.memory_error {background-color: #dde7ef}
+.not_started {background-color: #dde7ef; color : red}
+.no_coverage {background-color: #ffaaaa}
+
+</style>
+
+</head>
+<body>
+
+
+<h1>DieRoller.java</h1>
+
+<table class="src">
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5d0ae8f4_1'/>
+1
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5d0ae8f4_1'></a>
+</td>
+<td class=''><pre><span  class=''>package tacticulous.game.utility;</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5d0ae8f4_2'/>
+2
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5d0ae8f4_2'></a>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5d0ae8f4_3'/>
+3
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5d0ae8f4_3'></a>
+</td>
+<td class=''><pre><span  class=''>import java.util.Random;</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5d0ae8f4_4'/>
+4
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5d0ae8f4_4'></a>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5d0ae8f4_5'/>
+5
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5d0ae8f4_5'></a>
+</td>
+<td class=''><pre><span  class=''>/**</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5d0ae8f4_6'/>
+6
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5d0ae8f4_6'></a>
+</td>
+<td class=''><pre><span  class=''> * This die returns a random value starting from 1 up to its number of sides.</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5d0ae8f4_7'/>
+7
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5d0ae8f4_7'></a>
+</td>
+<td class=''><pre><span  class=''> * Because why not.</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5d0ae8f4_8'/>
+8
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5d0ae8f4_8'></a>
+</td>
+<td class=''><pre><span  class=''> *</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5d0ae8f4_9'/>
+9
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5d0ae8f4_9'></a>
+</td>
+<td class=''><pre><span  class=''> * @author O</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5d0ae8f4_10'/>
+10
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5d0ae8f4_10'></a>
+</td>
+<td class=''><pre><span  class=''> */</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5d0ae8f4_11'/>
+11
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5d0ae8f4_11'></a>
+</td>
+<td class=''><pre><span  class=''>public class DieRoller implements Die {</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5d0ae8f4_12'/>
+12
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5d0ae8f4_12'></a>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5d0ae8f4_13'/>
+13
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5d0ae8f4_13'></a>
+</td>
+<td class=''><pre><span  class=''>    private Random rand;</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5d0ae8f4_14'/>
+14
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5d0ae8f4_14'></a>
+</td>
+<td class=''><pre><span  class=''>    private int dieSides;</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5d0ae8f4_15'/>
+15
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5d0ae8f4_15'></a>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5d0ae8f4_16'/>
+16
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5d0ae8f4_16'></a>
+</td>
+<td class=''><pre><span  class=''>    /**</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5d0ae8f4_17'/>
+17
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5d0ae8f4_17'></a>
+</td>
+<td class=''><pre><span  class=''>     * Constructs a basic 10-sided die.</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5d0ae8f4_18'/>
+18
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5d0ae8f4_18'></a>
+</td>
+<td class=''><pre><span  class=''>     */</span></pre></td></tr>
+
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5d0ae8f4_19'/>
+19
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5d0ae8f4_19'></a>
+</td>
+<td class='covered'><pre><span  class=''>    public DieRoller() {</span></pre></td></tr>
+
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5d0ae8f4_20'/>
+20
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5d0ae8f4_20'></a>
+</td>
+<td class='covered'><pre><span  class=''>        this.rand = new Random();</span></pre></td></tr>
+
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5d0ae8f4_21'/>
+21
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5d0ae8f4_21'></a>
+</td>
+<td class='covered'><pre><span  class=''>        this.dieSides = 10;</span></pre></td></tr>
+
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5d0ae8f4_22'/>
+22
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5d0ae8f4_22'></a>
+</td>
+<td class='covered'><pre><span  class=''>    }</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5d0ae8f4_23'/>
+23
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5d0ae8f4_23'></a>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5d0ae8f4_24'/>
+24
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5d0ae8f4_24'></a>
+</td>
+<td class=''><pre><span  class=''>    /**</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5d0ae8f4_25'/>
+25
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5d0ae8f4_25'></a>
+</td>
+<td class=''><pre><span  class=''>     * Constructs a die with custom number of sides.</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5d0ae8f4_26'/>
+26
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5d0ae8f4_26'></a>
+</td>
+<td class=''><pre><span  class=''>     *</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5d0ae8f4_27'/>
+27
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5d0ae8f4_27'></a>
+</td>
+<td class=''><pre><span  class=''>     * @param dieSides if less than 1, the die will always roll 1. It&#39;s like a</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5d0ae8f4_28'/>
+28
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5d0ae8f4_28'></a>
+</td>
+<td class=''><pre><span  class=''>     * ball or something I guess.</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5d0ae8f4_29'/>
+29
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5d0ae8f4_29'></a>
+</td>
+<td class=''><pre><span  class=''>     */</span></pre></td></tr>
+
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5d0ae8f4_30'/>
+30
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5d0ae8f4_30'></a>
+</td>
+<td class='covered'><pre><span  class=''>    public DieRoller(int dieSides) {</span></pre></td></tr>
+
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5d0ae8f4_31'/>
+31
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5d0ae8f4_31'></a>
+</td>
+<td class='covered'><pre><span  class=''>        this.rand = new Random();</span></pre></td></tr>
+
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5d0ae8f4_32'/>
+32
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5d0ae8f4_32'></a>
+</td>
+<td class='covered'><pre><span  class=''>        this.dieSides = dieSides;</span></pre></td></tr>
+
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5d0ae8f4_33'/>
+33
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5d0ae8f4_33'></a>
+</td>
+<td class='covered'><pre><span  class=''>    }</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5d0ae8f4_34'/>
+34
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5d0ae8f4_34'></a>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5d0ae8f4_35'/>
+35
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5d0ae8f4_35'></a>
+</td>
+<td class=''><pre><span  class=''>    /**</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5d0ae8f4_36'/>
+36
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5d0ae8f4_36'></a>
+</td>
+<td class=''><pre><span  class=''>     * @return random integer between 1 and dieSides.</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5d0ae8f4_37'/>
+37
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5d0ae8f4_37'></a>
+</td>
+<td class=''><pre><span  class=''>     */</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5d0ae8f4_38'/>
+38
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5d0ae8f4_38'></a>
+</td>
+<td class=''><pre><span  class=''>    @Override</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5d0ae8f4_39'/>
+39
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5d0ae8f4_39'></a>
+</td>
+<td class=''><pre><span  class=''>    public int roll() {</span></pre></td></tr>
+
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5d0ae8f4_40'/>
+40
+</td>
+<td class='survived'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5d0ae8f4_40'>2</a>
+</td>
+<td class='covered'><pre><span  class='survived'>        if (dieSides &#60; 2) {</span></pre></td></tr>
+
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5d0ae8f4_41'/>
+41
+</td>
+<td class='killed'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5d0ae8f4_41'>1</a>
+</td>
+<td class='covered'><pre><span  class='killed'>            return 1;</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5d0ae8f4_42'/>
+42
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5d0ae8f4_42'></a>
+</td>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5d0ae8f4_43'/>
+43
+</td>
+<td class='killed'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5d0ae8f4_43'>2</a>
+</td>
+<td class='covered'><pre><span  class='killed'>        return rand.nextInt(dieSides) + 1;</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5d0ae8f4_44'/>
+44
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5d0ae8f4_44'></a>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@5d0ae8f4_45'/>
+45
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@5d0ae8f4_45'></a>
+</td>
+<td class=''><pre><span  class=''>}</span></pre></td></tr>
+
+
+
+
+<tr><td></td><td></td><td><h2>Mutations</h2></td></tr>
+
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@5d0ae8f4_40'>40</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@5d0ae8f4_40'/> 
+
+<p class='KILLED'>negated conditional : KILLED -> tacticulous.game.utility.DieTest.oneSideDieWorks(tacticulous.game.utility.DieTest)</p> <p class='SURVIVED'>changed conditional boundary : SURVIVED</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@5d0ae8f4_41'>41</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@5d0ae8f4_41'/> 
+
+<p class='KILLED'>replaced return of integer sized value with (x == 0 ? 1 : 0) : KILLED -> tacticulous.game.utility.DieTest.oneSideDieWorks(tacticulous.game.utility.DieTest)</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@5d0ae8f4_43'>43</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@5d0ae8f4_43'/> 
+
+<p class='KILLED'>replaced return of integer sized value with (x == 0 ? 1 : 0) : KILLED -> tacticulous.game.commands.GameCommandTest.autoTurnToggleWorks(tacticulous.game.commands.GameCommandTest)</p> <p class='KILLED'>Replaced integer addition with subtraction : KILLED -> tacticulous.game.domain.GameTest.newGameNoNullAssets(tacticulous.game.domain.GameTest)</p> 
+</td>
+</tr>
+
+</table>
+
+
+<h2>Active mutators</h2>
+<ul>
+
+<li class='mutator'>INCREMENTS_MUTATOR</li>
+
+<li class='mutator'>CONDITIONALS_BOUNDARY_MUTATOR</li>
+
+<li class='mutator'>RETURN_VALS_MUTATOR</li>
+
+<li class='mutator'>VOID_METHOD_CALL_MUTATOR</li>
+
+<li class='mutator'>INVERT_NEGS_MUTATOR</li>
+
+<li class='mutator'>MATH_MUTATOR</li>
+
+<li class='mutator'>NEGATE_CONDITIONALS_MUTATOR</li>
+
+</ul>
+
+<h2>Tests examined</h2>
+<ul>
+<li>tacticulous.game.commands.UnitCommandTest.tooSlowMoveDoesNotWork(tacticulous.game.commands.UnitCommandTest) (13 ms)</li><li>tacticulous.game.domain.BattleMapTest.legitCheckWorks(tacticulous.game.domain.BattleMapTest) (2 ms)</li><li>tacticulous.game.commands.GameCommandTest.delayTurnCommandWorks(tacticulous.game.commands.GameCommandTest) (8 ms)</li><li>tacticulous.game.utility.DieTest.rolledDieWorks(tacticulous.game.utility.DieTest) (2 ms)</li><li>tacticulous.game.commands.UnitCommandTest.chanceToHitWorks(tacticulous.game.commands.UnitCommandTest) (3 ms)</li><li>tacticulous.game.commands.UnitCommandTest.lethalAttackRemovesTarget(tacticulous.game.commands.UnitCommandTest) (3 ms)</li><li>tacticulous.game.commands.UnitCommandTest.legalAttackCheckWorks(tacticulous.game.commands.UnitCommandTest) (4 ms)</li><li>tacticulous.game.domain.PlayerTest.putCorpseWorks(tacticulous.game.domain.PlayerTest) (2 ms)</li><li>tacticulous.game.domain.GameTest.newGameNoNullAssets(tacticulous.game.domain.GameTest) (2 ms)</li><li>tacticulous.game.commands.GameCommandTest.attackCommandWorks2(tacticulous.game.commands.GameCommandTest) (7 ms)</li><li>tacticulous.game.domain.PlayerTest.detectDeadLeaderWorks(tacticulous.game.domain.PlayerTest) (2 ms)</li><li>tacticulous.game.domain.GameTest.unitPlacementWorks(tacticulous.game.domain.GameTest) (2 ms)</li><li>tacticulous.game.commands.GameCommandTest.endRoundCheckWorks(tacticulous.game.commands.GameCommandTest) (6 ms)</li><li>tacticulous.tira.ai.ArtificialIntelligenceTest.multiTurnAINoCrash(tacticulous.tira.ai.ArtificialIntelligenceTest) (2782 ms)</li><li>tacticulous.game.commands.GameCommandTest.attackCommandWorks(tacticulous.game.commands.GameCommandTest) (6 ms)</li><li>tacticulous.game.commands.GameCommandTest.nextPlayerWorks(tacticulous.game.commands.GameCommandTest) (13 ms)</li><li>tacticulous.game.utility.DieTest.rolledDieWorks2(tacticulous.game.utility.DieTest) (1 ms)</li><li>tacticulous.game.commands.UnitCommandTest.targetMustBeWithinMapBoundaries(tacticulous.game.commands.UnitCommandTest) (4 ms)</li><li>tacticulous.game.commands.UnitCommandTest.cannotAttackItself(tacticulous.game.commands.UnitCommandTest) (4 ms)</li><li>tacticulous.game.utility.DieTest.oneSideDieWorks(tacticulous.game.utility.DieTest) (2 ms)</li><li>tacticulous.game.commands.GameCommandTest.newRoundWorks(tacticulous.game.commands.GameCommandTest) (7 ms)</li><li>tacticulous.game.domain.GameTest.unitPlacementReturnsFalseIfTooManyUnits(tacticulous.game.domain.GameTest) (3 ms)</li><li>tacticulous.game.commands.UnitCommandTest.mustHaveTarget(tacticulous.game.commands.UnitCommandTest) (3 ms)</li><li>tacticulous.game.commands.GameCommandTest.attackCommandWorks3(tacticulous.game.commands.GameCommandTest) (5 ms)</li><li>tacticulous.game.commands.UnitCommandTest.nonLethalAttackDoesNotRemoveTarget(tacticulous.game.commands.UnitCommandTest) (3 ms)</li><li>tacticulous.game.commands.GameCommandTest.autoTurnToggleWorks(tacticulous.game.commands.GameCommandTest) (178 ms)</li><li>tacticulous.game.commands.GameCommandTest.moveCommandWorks(tacticulous.game.commands.GameCommandTest) (6 ms)</li><li>tacticulous.game.domain.BattleMapTest.unitPlacingWorks(tacticulous.game.domain.BattleMapTest) (3 ms)</li><li>tacticulous.game.commands.GameCommandTest.nextPlayerSkipsPlayerWithNoUnitsWithActionsLeft(tacticulous.game.commands.GameCommandTest) (29 ms)</li><li>tacticulous.game.commands.GameCommandTest.nextPlayerDetectsRoundOver(tacticulous.game.commands.GameCommandTest) (7 ms)</li><li>tacticulous.game.commands.GameCommandTest.aiAutoTurnCheckWorks(tacticulous.game.commands.GameCommandTest) (352 ms)</li><li>tacticulous.game.commands.UnitCommandTest.outOfBoundsMoveDoesNotWork(tacticulous.game.commands.UnitCommandTest) (4 ms)</li><li>tacticulous.game.commands.GameCommandTest.autoTurnWorks(tacticulous.game.commands.GameCommandTest) (7 ms)</li><li>tacticulous.game.commands.GameCommandTest.nextPlayerDetectsGameOver(tacticulous.game.commands.GameCommandTest) (6 ms)</li><li>tacticulous.game.domain.PlayerTest.getFirstUnitWithActionsWorks(tacticulous.game.domain.PlayerTest) (2 ms)</li><li>tacticulous.tira.ai.ArtificialIntelligenceTest.atLeastDoesNotCrashOrRebel(tacticulous.tira.ai.ArtificialIntelligenceTest) (513 ms)</li><li>tacticulous.game.commands.GameCommandTest.nextTurnWorks(tacticulous.game.commands.GameCommandTest) (7 ms)</li><li>tacticulous.game.commands.GameCommandTest.gameOverWorks(tacticulous.game.commands.GameCommandTest) (7 ms)</li><li>tacticulous.game.commands.UnitCommandTest.CannotMoveIfTargetTileOccupied(tacticulous.game.commands.UnitCommandTest) (3 ms)</li><li>tacticulous.game.commands.GameCommandTest.endTurnCommandWorks(tacticulous.game.commands.GameCommandTest) (7 ms)</li><li>tacticulous.game.commands.GameCommandTest.rollForInitiativeWorks(tacticulous.game.commands.GameCommandTest) (8 ms)</li><li>tacticulous.game.commands.UnitCommandTest.targetNotInRange(tacticulous.game.commands.UnitCommandTest) (3 ms)</li><li>tacticulous.game.commands.GameCommandTest.killLeaderEndsGame(tacticulous.game.commands.GameCommandTest) (5 ms)</li><li>tacticulous.game.commands.UnitCommandTest.legalMoveAndCheckWorks(tacticulous.game.commands.UnitCommandTest) (6 ms)</li><li>tacticulous.game.commands.UnitCommandTest.missingAttackDoesNotRemoveTarget(tacticulous.game.commands.UnitCommandTest) (3 ms)</li>
+</ul>
+
+<br/>
+
+Report generated by <a href='http://pitest.org'>PIT</a> 0.30
+
+</body>
+</html>

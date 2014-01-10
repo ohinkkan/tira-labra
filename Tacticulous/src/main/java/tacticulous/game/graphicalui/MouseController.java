@@ -49,7 +49,8 @@ public class MouseController implements MouseListener {
                 if (game.command().getTargetTile().getUnit() != null) {
                     if (game.command().getTargetTile().getUnit().getPlayer()
                             == game.command().getCurrentPlayer()
-                            && !game.command().getTargetTile().getUnit().doneForTheRound()) {
+                            && !game.command().getTargetTile().getUnit().doneForTheRound()
+                            && !game.command().unitSelectionDisabled()) {
                         game.command().setActiveUnit(game.command().getTargetTile().getUnit());
                     } else if (game.getActions().canAttack()
                             && game.command().getTargetTile().getUnit().getPlayer()

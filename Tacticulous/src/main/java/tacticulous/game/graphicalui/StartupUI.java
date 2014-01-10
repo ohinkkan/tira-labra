@@ -27,6 +27,7 @@ import tacticulous.game.domain.Unit;
 import tacticulous.tira.ai.ArtificialIntelligence;
 
 /**
+ * Game startup user interface class, includes various thingyListeners.
  *
  * @author O
  */
@@ -61,6 +62,11 @@ public class StartupUI implements ActionListener, ItemListener, ListSelectionLis
     private int[] player2UnitCounter;
     private String[] unitNames;
 
+    /**
+     * Creates the startup menu window.
+     *
+     * @param game provides access to necessary data
+     */
     public void spawn(Game game) {
         this.game = game;
         game.startup();
@@ -68,12 +74,17 @@ public class StartupUI implements ActionListener, ItemListener, ListSelectionLis
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setPreferredSize(new Dimension(800, 800));
         frame.setLocation(200, 50);
-        createComponents(frame.getContentPane(), game);
+        createComponents(frame.getContentPane());
         frame.pack();
         frame.setVisible(true);
     }
 
-    private void createComponents(Container container, Game game) {
+    /**
+     * Creates most of the game UI components.
+     *
+     * @param container
+     */
+    private void createComponents(Container container) {
         container.setLayout(new GridLayout(3, 1));
         JPanel top = new JPanel();
         JPanel middle = new JPanel();
@@ -105,7 +116,7 @@ public class StartupUI implements ActionListener, ItemListener, ListSelectionLis
         ai2LoadPicker.setSelectedIndex(0);
         ai2LoadPicker.addActionListener(this);
         ai2LoadPicker.setEnabled(false);
-        
+
         String gameTypes[] = {"Kill everything", "Kill leader"};
         String maps[] = {"Small and smooth", "Small and rough",
             "Medium and smooth", "Medium and rough",
@@ -150,6 +161,11 @@ public class StartupUI implements ActionListener, ItemListener, ListSelectionLis
         quickStart.addActionListener(this);
     }
 
+    /**
+     * Constructs the unit selector component.
+     *
+     * @return
+     */
     private JPanel unitSelectorBuilder() {
         unitSelector = new JPanel(new GridLayout(3, 2));
         String players[] = {"Player 1", "Player 2"};
@@ -189,6 +205,10 @@ public class StartupUI implements ActionListener, ItemListener, ListSelectionLis
         return unitSelector;
     }
 
+    /**
+     * Checks if all players have at least 1 unit and not too many units
+     * compared to map size.
+     */
     private void gameCanStart() {
         if (unitCount(player1UnitCounter) <= game.getMap().size()
                 && unitCount(player2UnitCounter) <= game.getMap().size()
@@ -200,6 +220,13 @@ public class StartupUI implements ActionListener, ItemListener, ListSelectionLis
         }
     }
 
+    /**
+     * Creates units for the game.
+     *
+     * @param j determines which unit
+     * @param player determines which player this unit belongs to.
+     * @return some unit...
+     */
     private Unit gimmeUnit(int j, Player player) {
         if (j == 0) {
             return new Unit(6, 2, 3, 3, 2, "Sharpshooter", player);
@@ -210,6 +237,9 @@ public class StartupUI implements ActionListener, ItemListener, ListSelectionLis
         }
     }
 
+    /**
+     * Adds commander units to players if game type is Kill Leader.
+     */
     private void addLeadersIfNecessary() {
         if (game.isKillLeader()) {
             for (Player player : game.getPlayers()) {
@@ -218,6 +248,14 @@ public class StartupUI implements ActionListener, ItemListener, ListSelectionLis
         }
     }
 
+    /**
+     * Checks how many units total are in an unit selection array.
+     *
+     * @param unitCounter an array where one element is a number of one type of
+     * unit.
+     *
+     * @return total number of units
+     */
     private int unitCount(int[] unitCounter) {
         int count = 0;
         for (int i = 0; i < unitCounter.length; i++) {
@@ -226,6 +264,11 @@ public class StartupUI implements ActionListener, ItemListener, ListSelectionLis
         return count;
     }
 
+    /**
+     * Toggles game type.
+     *
+     * @param selectedIndex from game type dropdown list.
+     */
     private void setGameType(int selectedIndex) {
         if (selectedIndex == 0) {
             game.setKillLeader(false);
@@ -234,6 +277,12 @@ public class StartupUI implements ActionListener, ItemListener, ListSelectionLis
         }
     }
 
+    /**
+     * Gives the unit counter for the player currently selected in unit selector
+     * drowdown menu.
+     *
+     * @return correct unit array...
+     */
     private int[] getCorrectUnitCounter() {
         if (currentlySelectedPlayer == 0) {
             return player1UnitCounter;
@@ -242,6 +291,12 @@ public class StartupUI implements ActionListener, ItemListener, ListSelectionLis
         }
     }
 
+    /**
+     * Replaces the currently selected player's unit array with the given array.
+     * Used by AI unit selection.
+     *
+     * @param newUnits new unit selection.
+     */
     private void setCorrectUnitCounter(int[] newUnits) {
         if (currentlySelectedPlayer == 0) {
             player1UnitCounter = newUnits;
@@ -250,6 +305,11 @@ public class StartupUI implements ActionListener, ItemListener, ListSelectionLis
         }
     }
 
+    /**
+     * What is shown in selected units display.
+     *
+     * @return
+     */
     private String updateDisplay() {
         gameCanStart();
         int[] unitCounter = getCorrectUnitCounter();
@@ -264,6 +324,12 @@ public class StartupUI implements ActionListener, ItemListener, ListSelectionLis
         return list;
     }
 
+    /**
+     * Sets the player AI type, or turns it off.
+     *
+     * @param selectedIndex from AI type dropdown menu or AI toggle button.
+     * @param i player's index whose AI is being set.
+     */
     private void setPlayerAI(int selectedIndex, int i) {
         if (selectedIndex == -1) {
             game.getPlayers().get(i).setAI(null);
@@ -278,6 +344,12 @@ public class StartupUI implements ActionListener, ItemListener, ListSelectionLis
         }
     }
 
+    /**
+     * Sets how many turns AI simulates.
+     *
+     * @param selectedIndex from AI turn simulation dropdown menu.
+     * @param player which player's AI is being adjusted.
+     */
     private void setAILoad(int selectedIndex, int player) {
         if (player == 0) {
             aiLoad1 = selectedIndex + 1;
@@ -286,6 +358,9 @@ public class StartupUI implements ActionListener, ItemListener, ListSelectionLis
         }
     }
 
+    /**
+     * Actually updates the AI turns simulated number.
+     */
     private void updateAILoads() {
         if (game.getPlayers().get(0).isAi()) {
             game.getPlayers().get(0).getAi().setTurnsToSimulate(aiLoad1);
@@ -295,6 +370,11 @@ public class StartupUI implements ActionListener, ItemListener, ListSelectionLis
         }
     }
 
+    /**
+     * Sets the game map size and terrain roughness.
+     *
+     * @param selectedIndex from map selection dropdown menu.
+     */
     private void setMap(int selectedIndex) {
         if (selectedIndex == 0) {
             game.setMap(new BattleMap(8, 2));
@@ -314,6 +394,9 @@ public class StartupUI implements ActionListener, ItemListener, ListSelectionLis
         gameCanStart();
     }
 
+    /**
+     * Toggles AI unit pick button on or off.
+     */
     private void updateAIUnitPickButton() {
         if (game.getPlayers().get(pickPlayer.getSelectedIndex()).isAi()) {
             aiUnitSelect.setEnabled(true);
@@ -322,11 +405,18 @@ public class StartupUI implements ActionListener, ItemListener, ListSelectionLis
         }
     }
 
+    /**
+     * tells the currently selected player's AI to pick its own damn units.
+     */
     private void haveAIPickUnits() {
         setCorrectUnitCounter(game.getPlayers().get(currentlySelectedPlayer)
                 .getAi().pickUnits(3, game.getMap().size() - 1));
     }
 
+    /**
+     * Actually adds the units from unit selection arrays to players' unit
+     * lists.
+     */
     private void addUnitsToPlayers() {
         currentlySelectedPlayer = 0;
         for (Player player : game.getPlayers()) {

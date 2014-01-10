@@ -32,6 +32,13 @@ public class UnitTest {
     }
 
     @Test
+    public void leaderIsLeader() {
+        unit = new Unit(null);
+        assertTrue(unit.isLeader());
+
+    }
+
+    @Test
     public void hitRemovesHealth() {
         unit = new Unit(1, 1, 1, 2, "A");
         unit.isHitAndDies();
@@ -53,7 +60,7 @@ public class UnitTest {
     @Test
     public void doneForTheRoundAndNewRoundWork() {
         Player player = new Player("A", null);
-        player.testUnits();
+        player.quickStartUnits(1);
         player.newRoundUnitReset();
         unit = player.getUnits().get(0);
         assertTrue(!unit.doneForTheRound());

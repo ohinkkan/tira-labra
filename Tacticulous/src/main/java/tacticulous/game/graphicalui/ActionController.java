@@ -4,7 +4,6 @@ import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-//import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
@@ -64,6 +63,7 @@ public class ActionController implements ActionListener {
     /**
      * constructs game command buttons
      *
+     * @param container access to main container
      * @param game access to game data
      * @param mapDisplay access to map display
      * @param activeUnitDisplay displays current unit's description

@@ -1,7 +1,6 @@
 package tacticulous.game.domain;
 
 import java.awt.Color;
-//import java.util.ArrayList;
 import tacticulous.tira.ai.ArtificialIntelligence;
 import tacticulous.tira.datastructure.TacList;
 
@@ -36,7 +35,7 @@ public class Player {
     }
 
     /**
-     * New round initialization. Adds all units to unitsWithActions.
+     * New round initialization. Resets all unit actions.
      *
      * @see tacticulous.game.domain.Unit#newRound()
      */
@@ -106,7 +105,9 @@ public class Player {
      * ROBOT APOCALYPSE (apocalypse not yet fully implemented). Makes the player
      * AI-controlled.
      *
-     * @param ai Artifical Intelligence of ROBOT APOCALYPSE.
+     * @param ai Artifical Intelligence of ROBOT APOCALYPSE. Null will toggle
+     * the ai off.
+     *
      */
     public void setAI(ArtificialIntelligence ai) {
         isAi = ai != null;
@@ -114,20 +115,16 @@ public class Player {
     }
 
     /**
-     * Creates a few units for testing purposes. Will be moved to testing.
-     */
-    public void testUnits() {
-        units.add(new Unit(6, 2, 3, 3, 2, "Sharpshooter", this));
-        units.add(new Unit(4, 0, 0, 5, 2, "Artillery", this));
-        units.add(new Unit(9, 4, 0, 2, 1, "Fast", this));
-    }
-
-    /**
-     * Creates a lot of units for testing purposes. Will be moved to testing.
+     * Adds a set of three units to the player's unit list for quickstart games
+     * and some tests.
+     *
+     * @param multiplier how many sets of three units are created
      */
     public void quickStartUnits(int multiplier) {
         for (int i = 0; i < multiplier; i++) {
-            testUnits();
+            units.add(new Unit(6, 2, 3, 3, 2, "Sharpshooter", this));
+            units.add(new Unit(4, 0, 0, 5, 2, "Artillery", this));
+            units.add(new Unit(9, 4, 0, 2, 1, "Scout", this));
         }
     }
 
@@ -152,6 +149,11 @@ public class Player {
         }
     }
 
+    /**
+     * Checks if player's leader unit is dead (not in unit list.)
+     *
+     * @return false if leader is in unit list.
+     */
     public boolean leaderIsDead() {
         for (Unit unit : units) {
             if (unit.isLeader()) {

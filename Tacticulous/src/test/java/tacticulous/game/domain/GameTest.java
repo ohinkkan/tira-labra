@@ -1,8 +1,9 @@
 package tacticulous.game.domain;
 
-import java.util.ArrayList;
+//import java.util.ArrayList;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.Before;
 import tacticulous.game.commands.GameCommand;
 import tacticulous.tira.datastructure.TacList;
 
@@ -13,21 +14,25 @@ import tacticulous.tira.datastructure.TacList;
 public class GameTest {
 
     Game game;
+    GameCommand command;
 
+    @Before
+    public void setUp() {
+        game = new Game();
+        command = new GameCommand(game);
+        game.setMap(new BattleMap(12, 4));
+        game.setCommand(command);
+        game.getPlayers().add(new Player("Player 1", null));
+        game.getPlayers().add(new Player("Player 2", null));
+        for (Player player : game.getPlayers()) {
+            player.quickStartUnits(2);
+            player.setGame(game);
+            game.placeUnits(player.getUnits());
+        }
+
+    }
     @Test
     public void newGameNoNullAssets() {
-        game = new Game();
-        game.oldstartup();
-        game.oldstartup2();
-        assertNotNull(game.getDie());
-        assertNotNull(game.getMap());
-        assertNotNull(game.getPlayers());
-    }
-
-    @Test
-    public void newGameNoNullAssets2() {
-        game = new Game();
-        game.oldstartup2();
         assertNotNull(game.getDie());
         assertNotNull(game.getMap());
         assertNotNull(game.getPlayers());
@@ -38,8 +43,8 @@ public class GameTest {
         game = new Game();
         game.getPlayers().add(new Player("Player 1", null));
         game.getPlayers().add(new Player("Player 2", null));
-        game.getPlayers().get(0).testUnits();
-        game.getPlayers().get(1).testUnits();
+        game.getPlayers().get(0).quickStartUnits(1);
+        game.getPlayers().get(1).quickStartUnits(1);
         game.setMap(new BattleMap(10, 1));
         game.placeUnits(game.getPlayers().get(0).getUnits());
         game.placeUnits(game.getPlayers().get(1).getUnits());
@@ -49,8 +54,6 @@ public class GameTest {
 
     @Test
     public void unitPlacementReturnsFalseIfTooManyUnits() {
-        game = new Game();
-        game.oldstartup();
         TacList<Unit> units = game.getPlayers().get(0).getUnits();
         for (int i = 0; i < game.getMap().size(); i++) {
             units.add(new Unit(1, 1, 1, 1, "A"));

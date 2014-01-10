@@ -1,6 +1,5 @@
 package tacticulous.tira.ai;
 
-//import java.util.ArrayList;
 import tacticulous.game.domain.BattleMap;
 import tacticulous.game.domain.Game;
 import tacticulous.game.domain.Player;
