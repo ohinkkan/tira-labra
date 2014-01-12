@@ -43,7 +43,6 @@ public class AIUnit extends Unit {
     /**
      * Used for target value evaluation.
      *
-     * @author O
      * @return calculated from the sum of speed, attack, defensa and range,
      * divided by hit points
      * @see tacticulous.tira.ai.ArtificialIntelligence
@@ -56,22 +55,37 @@ public class AIUnit extends Unit {
         return leaderMultiplier * (speed + attack + defense + range) / (hitPoints + attackedCount);
     }
 
+    /**
+     *
+     */
     public void undoMove() {
         notMoved = true;
     }
 
+    /**
+     *
+     */
     public void undoAttack() {
         notAttacked = true;
     }
 
+    /**
+     *
+     */
     public void undoDelay() {
         notDelayed = true;
     }
 
+    /**
+     *
+     */
     public void attacked() {
         attackedCount++;
     }
 
+    /**
+     *
+     */
     public void undoAttacked() {
         attackedCount--;
     }
@@ -81,6 +95,10 @@ public class AIUnit extends Unit {
         return "" + attackedCount;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getAttackedCount() {
         return attackedCount;
     }

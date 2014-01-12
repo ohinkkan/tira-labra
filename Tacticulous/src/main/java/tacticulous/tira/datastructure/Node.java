@@ -15,10 +15,20 @@ public class Node implements Comparable<Node>{
     private int y;
     private int heapIndex = 0;
 
+    /**
+     * Used by heap value update
+     *
+     * @return location if this node in heap
+     */
     public int getHeapIndex() {
         return heapIndex;
     }
 
+    /**
+     * Used by heap value update
+     *
+     * @param heapIndex new location if this node in heap
+     */
     public void setHeapIndex(int heapIndex) {
         this.heapIndex = heapIndex;
     }

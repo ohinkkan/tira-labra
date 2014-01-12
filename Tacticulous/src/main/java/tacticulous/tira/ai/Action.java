@@ -21,22 +21,26 @@ public class Action {
     private int movementX;
     private int movementY;
 
+    /**
+     * Basic contructor, unit's coordinates are copied to the action
+     *
+     * @param value initial value
+     * @param unit x and y coordinates are copied from here
+     */
     public Action(int value, AIUnit unit) {
         this.value = value;
         unitX = unit.getX();
         unitY = unit.getY();
     }
 
+    /**
+     * Only initial value is stored, this is typically used for comparison or
+     * through updateValue
+     *
+     * @param value initial value
+     */
     public Action(int value) {
         this.value = value;
-    }
-
-    public int getValue() {
-        return value;
-    }
-
-    public ActionType getType() {
-        return type;
     }
 
     /**
@@ -83,6 +87,11 @@ public class Action {
         value = -value;
     }
 
+    /**
+     * This was used quite a bit for initial debugging. Nostalgia value.
+     *
+     * @return Argh, the memories.
+     */
     @Override
     public String toString() {
         return "value=" + value + "\ntype=" + type //                + "\nunitX="
@@ -91,6 +100,7 @@ public class Action {
                 //                + movementX + "\nmovementY=" + movementY
                 ;
     }
+
 
     void setMovementCoordinates(int x, int y) {
         movementX = x;
@@ -141,6 +151,7 @@ public class Action {
             command.delay();
         } else if (type == ActionType.ATTACKANDENDTURN) {
             command.setTargetTile(game.getMap().getTile(attackX, attackY));
+            unit.moves();
             command.attack();
         } else if (type == ActionType.ATTACKANDMOVE) {
             command.setTargetTile(game.getMap().getTile(attackX, attackY));
@@ -158,12 +169,45 @@ public class Action {
             command.delay();
         } else if (type == ActionType.MOVEANDENDTURN) {
             command.setTargetTile(game.getMap().getTile(movementX, movementY));
+            unit.attacks();
             command.move();
         } else if (type == ActionType.DELAY) {
             command.delay();
         } else if (type == ActionType.ENDTURN) {
             command.endTurn();
         }
+    }
+
+    public int getValue() {
+        return value;
+    }
+
+    public int getUnitX() {
+        return unitX;
+    }
+
+    public int getUnitY() {
+        return unitY;
+    }
+
+    public int getAttackX() {
+        return attackX;
+    }
+
+    public int getAttackY() {
+        return attackY;
+    }
+
+    public int getMovementX() {
+        return movementX;
+    }
+
+    public int getMovementY() {
+        return movementY;
+    }
+
+    public ActionType getType() {
+        return type;
     }
 
 }

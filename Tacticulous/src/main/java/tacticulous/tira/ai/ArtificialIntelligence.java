@@ -77,9 +77,10 @@ public class ArtificialIntelligence {
      * (notMoved, etc).
      *
      * @param player units from here
+     * @param theMatrix units are placed here
      * @return also includes units not in players currentlyActiveUnits
      */
-    private TacList<AIUnit> enterTheMatrix(Player player, BattleMap theMatrix) {
+    public TacList<AIUnit> enterTheMatrix(Player player, BattleMap theMatrix) {
         TacList<AIUnit> temporaryUnits = new TacList(player.getUnits().size());
         for (Unit unit : player.getUnits()) {
 
@@ -94,6 +95,15 @@ public class ArtificialIntelligence {
         return temporaryUnits;
     }
 
+    /**
+     * This is used by the AI unit pick button in startup menu. This will simply
+     * randomise unit selsection so that more aggressive AI prefers units near the
+     * beginning of the startupUI's unit list. Basically a placeholder with a big ego.
+     *
+     * @param numberOfUnits tells how many different units there are
+     * @param maxUnits how many units in total are randomized
+     * @return array with cells equal to numberOfUnits and their sum is maxUnits
+     */
     public int[] pickUnits(int numberOfUnits, int maxUnits) {
         int i = 0;
         int[] units = new int[numberOfUnits];

@@ -43,6 +43,13 @@ public abstract class GameUsage {
         return costs;
     }
 
+    /**
+     * Used by SimulatedRound to determine, where unit can move.
+     *
+     * @param unit acting unit
+     * @param map where's the happenink? here's the happenink.
+     * @return List of nodes in unit's movement range
+     */
     public static TacList<Node> getTilesToMoveTo(Unit unit, BattleMap map) {
         Node[][] moveCosts = PathFind.dijkstraWithHeap(map, unit.getX(), unit.getY(), unit.getSpeed());
         int fromX = Math.max(0, unit.getX() - unit.getSpeed());

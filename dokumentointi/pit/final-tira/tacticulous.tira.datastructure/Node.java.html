@@ -1,0 +1,1010 @@
+<html>
+<head>
+<style type='text/css'>
+html, body, div, span, p, blockquote, pre {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	font-weight: inherit;
+	font-style: inherit;
+	font-size: 100%;
+	font-family: inherit;
+	vertical-align: baseline;
+}
+
+body{
+	line-height: 1;
+	color: black;
+	background: white;
+	margin-left: 20px;
+}
+
+.src { 
+border: 1px solid #dddddd;
+padding-top: 10px;
+padding-right: 5px;
+padding-left: 5px;
+}
+
+
+.covered {background-color: #ddffdd}
+.uncovered {background-color: #ffdddd}
+.killed {background-color: #aaffaa}
+.survived {background-color: #ffaaaa}
+.uncertain {background-color: #dde7ef}
+.run_error {background-color: #dde7ef}
+.na {background-color: #eeeeee}
+.timed_out {background-color: #dde7ef}
+.non_viable {background-color: #aaffaa}
+.memory_error {background-color: #dde7ef}
+.not_started {background-color: #dde7ef; color : red}
+.no_coverage {background-color: #ffaaaa}
+
+</style>
+
+</head>
+<body>
+
+
+<h1>Node.java</h1>
+
+<table class="src">
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@559339d3_1'/>
+1
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@559339d3_1'></a>
+</td>
+<td class=''><pre><span  class=''>package tacticulous.tira.datastructure;</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@559339d3_2'/>
+2
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@559339d3_2'></a>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@559339d3_3'/>
+3
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@559339d3_3'></a>
+</td>
+<td class=''><pre><span  class=''>/**</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@559339d3_4'/>
+4
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@559339d3_4'></a>
+</td>
+<td class=''><pre><span  class=''> * Utility class, used by PathFind.</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@559339d3_5'/>
+5
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@559339d3_5'></a>
+</td>
+<td class=''><pre><span  class=''> * HeapIndex is used by MinHeap.update(Node)</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@559339d3_6'/>
+6
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@559339d3_6'></a>
+</td>
+<td class=''><pre><span  class=''> *</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@559339d3_7'/>
+7
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@559339d3_7'></a>
+</td>
+<td class=''><pre><span  class=''> * @author O</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@559339d3_8'/>
+8
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@559339d3_8'></a>
+</td>
+<td class=''><pre><span  class=''> *</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@559339d3_9'/>
+9
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@559339d3_9'></a>
+</td>
+<td class=''><pre><span  class=''> */</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@559339d3_10'/>
+10
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@559339d3_10'></a>
+</td>
+<td class=''><pre><span  class=''>public class Node implements Comparable&#60;Node&#62;{</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@559339d3_11'/>
+11
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@559339d3_11'></a>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@559339d3_12'/>
+12
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@559339d3_12'></a>
+</td>
+<td class=''><pre><span  class=''>    private int distance;</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@559339d3_13'/>
+13
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@559339d3_13'></a>
+</td>
+<td class=''><pre><span  class=''>    private int moveCost;</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@559339d3_14'/>
+14
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@559339d3_14'></a>
+</td>
+<td class=''><pre><span  class=''>    private int x;</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@559339d3_15'/>
+15
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@559339d3_15'></a>
+</td>
+<td class=''><pre><span  class=''>    private int y;</span></pre></td></tr>
+
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@559339d3_16'/>
+16
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@559339d3_16'></a>
+</td>
+<td class='covered'><pre><span  class=''>    private int heapIndex = 0;</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@559339d3_17'/>
+17
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@559339d3_17'></a>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@559339d3_18'/>
+18
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@559339d3_18'></a>
+</td>
+<td class=''><pre><span  class=''>    /**</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@559339d3_19'/>
+19
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@559339d3_19'></a>
+</td>
+<td class=''><pre><span  class=''>     * Used by heap value update</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@559339d3_20'/>
+20
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@559339d3_20'></a>
+</td>
+<td class=''><pre><span  class=''>     *</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@559339d3_21'/>
+21
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@559339d3_21'></a>
+</td>
+<td class=''><pre><span  class=''>     * @return location if this node in heap</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@559339d3_22'/>
+22
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@559339d3_22'></a>
+</td>
+<td class=''><pre><span  class=''>     */</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@559339d3_23'/>
+23
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@559339d3_23'></a>
+</td>
+<td class=''><pre><span  class=''>    public int getHeapIndex() {</span></pre></td></tr>
+
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@559339d3_24'/>
+24
+</td>
+<td class='killed'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@559339d3_24'>1</a>
+</td>
+<td class='covered'><pre><span  class='killed'>        return heapIndex;</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@559339d3_25'/>
+25
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@559339d3_25'></a>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@559339d3_26'/>
+26
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@559339d3_26'></a>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@559339d3_27'/>
+27
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@559339d3_27'></a>
+</td>
+<td class=''><pre><span  class=''>    /**</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@559339d3_28'/>
+28
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@559339d3_28'></a>
+</td>
+<td class=''><pre><span  class=''>     * Used by heap value update</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@559339d3_29'/>
+29
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@559339d3_29'></a>
+</td>
+<td class=''><pre><span  class=''>     *</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@559339d3_30'/>
+30
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@559339d3_30'></a>
+</td>
+<td class=''><pre><span  class=''>     * @param heapIndex new location if this node in heap</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@559339d3_31'/>
+31
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@559339d3_31'></a>
+</td>
+<td class=''><pre><span  class=''>     */</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@559339d3_32'/>
+32
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@559339d3_32'></a>
+</td>
+<td class=''><pre><span  class=''>    public void setHeapIndex(int heapIndex) {</span></pre></td></tr>
+
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@559339d3_33'/>
+33
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@559339d3_33'></a>
+</td>
+<td class='covered'><pre><span  class=''>        this.heapIndex = heapIndex;</span></pre></td></tr>
+
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@559339d3_34'/>
+34
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@559339d3_34'></a>
+</td>
+<td class='covered'><pre><span  class=''>    }</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@559339d3_35'/>
+35
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@559339d3_35'></a>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@559339d3_36'/>
+36
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@559339d3_36'></a>
+</td>
+<td class=''><pre><span  class=''>    public int getMoveCost() {</span></pre></td></tr>
+
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@559339d3_37'/>
+37
+</td>
+<td class='killed'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@559339d3_37'>1</a>
+</td>
+<td class='covered'><pre><span  class='killed'>        return moveCost;</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@559339d3_38'/>
+38
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@559339d3_38'></a>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@559339d3_39'/>
+39
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@559339d3_39'></a>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@559339d3_40'/>
+40
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@559339d3_40'></a>
+</td>
+<td class=''><pre><span  class=''>    public int getX() {</span></pre></td></tr>
+
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@559339d3_41'/>
+41
+</td>
+<td class='killed'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@559339d3_41'>1</a>
+</td>
+<td class='covered'><pre><span  class='killed'>        return x;</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@559339d3_42'/>
+42
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@559339d3_42'></a>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@559339d3_43'/>
+43
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@559339d3_43'></a>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@559339d3_44'/>
+44
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@559339d3_44'></a>
+</td>
+<td class=''><pre><span  class=''>    public int getY() {</span></pre></td></tr>
+
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@559339d3_45'/>
+45
+</td>
+<td class='killed'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@559339d3_45'>1</a>
+</td>
+<td class='covered'><pre><span  class='killed'>        return y;</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@559339d3_46'/>
+46
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@559339d3_46'></a>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@559339d3_47'/>
+47
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@559339d3_47'></a>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@559339d3_48'/>
+48
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@559339d3_48'></a>
+</td>
+<td class='covered'><pre><span  class=''>    public Node(int distance, int moveCost, int x, int y) {</span></pre></td></tr>
+
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@559339d3_49'/>
+49
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@559339d3_49'></a>
+</td>
+<td class='covered'><pre><span  class=''>        this.distance = distance;</span></pre></td></tr>
+
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@559339d3_50'/>
+50
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@559339d3_50'></a>
+</td>
+<td class='covered'><pre><span  class=''>        this.moveCost = moveCost;</span></pre></td></tr>
+
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@559339d3_51'/>
+51
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@559339d3_51'></a>
+</td>
+<td class='covered'><pre><span  class=''>        this.x = x;</span></pre></td></tr>
+
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@559339d3_52'/>
+52
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@559339d3_52'></a>
+</td>
+<td class='covered'><pre><span  class=''>        this.y = y;</span></pre></td></tr>
+
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@559339d3_53'/>
+53
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@559339d3_53'></a>
+</td>
+<td class='covered'><pre><span  class=''>    }</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@559339d3_54'/>
+54
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@559339d3_54'></a>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@559339d3_55'/>
+55
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@559339d3_55'></a>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@559339d3_56'/>
+56
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@559339d3_56'></a>
+</td>
+<td class=''><pre><span  class=''>    public int getDistance() {</span></pre></td></tr>
+
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@559339d3_57'/>
+57
+</td>
+<td class='killed'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@559339d3_57'>1</a>
+</td>
+<td class='covered'><pre><span  class='killed'>        return distance;</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@559339d3_58'/>
+58
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@559339d3_58'></a>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@559339d3_59'/>
+59
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@559339d3_59'></a>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@559339d3_60'/>
+60
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@559339d3_60'></a>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@559339d3_61'/>
+61
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@559339d3_61'></a>
+</td>
+<td class=''><pre><span  class=''>    public void setDistance(int distance) {</span></pre></td></tr>
+
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@559339d3_62'/>
+62
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@559339d3_62'></a>
+</td>
+<td class='covered'><pre><span  class=''>        this.distance = distance;</span></pre></td></tr>
+
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@559339d3_63'/>
+63
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@559339d3_63'></a>
+</td>
+<td class='covered'><pre><span  class=''>    }</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@559339d3_64'/>
+64
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@559339d3_64'></a>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@559339d3_65'/>
+65
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@559339d3_65'></a>
+</td>
+<td class=''><pre><span  class=''>    @Override</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@559339d3_66'/>
+66
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@559339d3_66'></a>
+</td>
+<td class=''><pre><span  class=''>    public int compareTo(Node t) {</span></pre></td></tr>
+
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@559339d3_67'/>
+67
+</td>
+<td class='survived'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@559339d3_67'>2</a>
+</td>
+<td class='uncovered'><pre><span  class='survived'>       return this.distance-t.getDistance();</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@559339d3_68'/>
+68
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@559339d3_68'></a>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@559339d3_69'/>
+69
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@559339d3_69'></a>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@559339d3_70'/>
+70
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@559339d3_70'></a>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@559339d3_71'/>
+71
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@559339d3_71'></a>
+</td>
+<td class=''><pre><span  class=''>}</span></pre></td></tr>
+
+
+
+
+<tr><td></td><td></td><td><h2>Mutations</h2></td></tr>
+
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@559339d3_24'>24</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@559339d3_24'/> 
+
+<p class='KILLED'>replaced return of integer sized value with (x == 0 ? 1 : 0) : KILLED -> tacticulous.tira.algorithms.GameUsageTest.getTilesToMoveToIsCorrect(tacticulous.tira.algorithms.GameUsageTest)</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@559339d3_37'>37</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@559339d3_37'/> 
+
+<p class='KILLED'>replaced return of integer sized value with (x == 0 ? 1 : 0) : KILLED -> tacticulous.tira.algorithms.GameUsageTest.getTilesToMoveToIsCorrect(tacticulous.tira.algorithms.GameUsageTest)</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@559339d3_41'>41</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@559339d3_41'/> 
+
+<p class='KILLED'>replaced return of integer sized value with (x == 0 ? 1 : 0) : KILLED -> tacticulous.tira.algorithms.GameUsageTest.getTilesToMoveToIsCorrect(tacticulous.tira.algorithms.GameUsageTest)</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@559339d3_45'>45</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@559339d3_45'/> 
+
+<p class='KILLED'>replaced return of integer sized value with (x == 0 ? 1 : 0) : KILLED -> tacticulous.tira.algorithms.GameUsageTest.getTilesToMoveToIsCorrect(tacticulous.tira.algorithms.GameUsageTest)</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@559339d3_57'>57</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@559339d3_57'/> 
+
+<p class='KILLED'>replaced return of integer sized value with (x == 0 ? 1 : 0) : KILLED -> tacticulous.tira.datastructure.MinHeapTest.heapInsertAndDelWorksHarder(tacticulous.tira.datastructure.MinHeapTest)</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@559339d3_67'>67</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@559339d3_67'/> 
+
+<p class='NO_COVERAGE'>replaced return of integer sized value with (x == 0 ? 1 : 0) : NO_COVERAGE</p> <p class='NO_COVERAGE'>Replaced integer subtraction with addition : NO_COVERAGE</p> 
+</td>
+</tr>
+
+</table>
+
+
+<h2>Active mutators</h2>
+<ul>
+
+<li class='mutator'>INCREMENTS_MUTATOR</li>
+
+<li class='mutator'>CONDITIONALS_BOUNDARY_MUTATOR</li>
+
+<li class='mutator'>RETURN_VALS_MUTATOR</li>
+
+<li class='mutator'>VOID_METHOD_CALL_MUTATOR</li>
+
+<li class='mutator'>INVERT_NEGS_MUTATOR</li>
+
+<li class='mutator'>MATH_MUTATOR</li>
+
+<li class='mutator'>NEGATE_CONDITIONALS_MUTATOR</li>
+
+</ul>
+
+<h2>Tests examined</h2>
+<ul>
+<li>tacticulous.tira.ai.ActionTest.moveAndAttackWorks(tacticulous.tira.ai.ActionTest) (5 ms)</li><li>tacticulous.game.commands.GameCommandTest.delayTurnCommandWorks(tacticulous.game.commands.GameCommandTest) (8 ms)</li><li>tacticulous.tira.ai.SimulatedRoundTest.allMovesAndEndTurnTest(tacticulous.tira.ai.SimulatedRoundTest) (4 ms)</li><li>tacticulous.tira.ai.ValueLogicTest.movementValueEnemiesNotThreatening(tacticulous.tira.ai.ValueLogicTest) (2 ms)</li><li>tacticulous.tira.ai.SimulatedRoundTest.allAttacksAndMoves(tacticulous.tira.ai.SimulatedRoundTest) (5 ms)</li><li>tacticulous.tira.ai.ActionTest.attackAndMoveWorks(tacticulous.tira.ai.ActionTest) (3 ms)</li><li>tacticulous.game.commands.GameCommandTest.attackCommandWorks(tacticulous.game.commands.GameCommandTest) (11 ms)</li><li>tacticulous.game.commands.GameCommandTest.nextPlayerWorks(tacticulous.game.commands.GameCommandTest) (9 ms)</li><li>tacticulous.tira.ai.SimulatedRoundTest.singleMoveAndEndTurnTest(tacticulous.tira.ai.SimulatedRoundTest) (3 ms)</li><li>tacticulous.tira.ai.ActionTest.moveAndEndTurnWorks(tacticulous.tira.ai.ActionTest) (4 ms)</li><li>tacticulous.tira.ai.SimulatedRoundTest.allAttacksAndDelayTest(tacticulous.tira.ai.SimulatedRoundTest) (297 ms)</li><li>tacticulous.tira.algorithms.GameUsageTest.speedRangeReturnIsCorrect(tacticulous.tira.algorithms.GameUsageTest) (3 ms)</li><li>tacticulous.game.commands.GameCommandTest.autoTurnToggleWorks(tacticulous.game.commands.GameCommandTest) (120 ms)</li><li>tacticulous.game.commands.GameCommandTest.moveCommandWorks(tacticulous.game.commands.GameCommandTest) (6 ms)</li><li>tacticulous.game.commands.GameCommandTest.aiAutoTurnCheckWorks(tacticulous.game.commands.GameCommandTest) (420 ms)</li><li>tacticulous.game.commands.GameCommandTest.autoTurnWorks(tacticulous.game.commands.GameCommandTest) (6 ms)</li><li>tacticulous.tira.ai.ValueLogicTest.movementValue1(tacticulous.tira.ai.ValueLogicTest) (2 ms)</li><li>tacticulous.game.commands.GameCommandTest.nextTurnWorks(tacticulous.game.commands.GameCommandTest) (6 ms)</li><li>tacticulous.game.commands.GameCommandTest.gameOverWorks(tacticulous.game.commands.GameCommandTest) (6 ms)</li><li>tacticulous.tira.ai.ValueLogicTest.delayValue1(tacticulous.tira.ai.ValueLogicTest) (2 ms)</li><li>tacticulous.tira.datastructure.MinHeapTest.heapNotTooBig(tacticulous.tira.datastructure.MinHeapTest) (1 ms)</li><li>tacticulous.tira.ai.ValueLogicTest.delayValueDefensivenessDecreasesValueWhenEnemiesInRange(tacticulous.tira.ai.ValueLogicTest) (1 ms)</li><li>tacticulous.game.commands.GameCommandTest.endTurnCommandWorks(tacticulous.game.commands.GameCommandTest) (13 ms)</li><li>tacticulous.game.commands.GameCommandTest.rollForInitiativeWorks(tacticulous.game.commands.GameCommandTest) (8 ms)</li><li>tacticulous.game.commands.GameCommandTest.killLeaderEndsGame(tacticulous.game.commands.GameCommandTest) (6 ms)</li><li>tacticulous.tira.ai.ActionTest.valueThingysWork(tacticulous.tira.ai.ActionTest) (3 ms)</li><li>tacticulous.tira.ai.ActionTest.moveAndDelayWorks(tacticulous.tira.ai.ActionTest) (4 ms)</li><li>tacticulous.tira.ai.SimulatedRoundTest.singleMoveAndDelayTest(tacticulous.tira.ai.SimulatedRoundTest) (3 ms)</li><li>tacticulous.tira.ai.SimulatedRoundTest.returnsActionTest(tacticulous.tira.ai.SimulatedRoundTest) (7 ms)</li><li>tacticulous.tira.ai.SimulatedRoundTest.singleAttackTest(tacticulous.tira.ai.SimulatedRoundTest) (3 ms)</li><li>tacticulous.tira.ai.ValueLogicTest.delayValueEnemiesNotThreatening(tacticulous.tira.ai.ValueLogicTest) (1 ms)</li><li>tacticulous.tira.ai.SimulatedRoundTest.targetsInRangeTesta(tacticulous.tira.ai.SimulatedRoundTest) (5 ms)</li><li>tacticulous.tira.ai.ActionTest.delayWorks(tacticulous.tira.ai.ActionTest) (3 ms)</li><li>tacticulous.game.domain.PlayerTest.putCorpseWorks(tacticulous.game.domain.PlayerTest) (3 ms)</li><li>tacticulous.tira.datastructure.MinHeapTest.heapUpdateWorks(tacticulous.tira.datastructure.MinHeapTest) (1 ms)</li><li>tacticulous.game.commands.GameCommandTest.attackCommandWorks2(tacticulous.game.commands.GameCommandTest) (8 ms)</li><li>tacticulous.tira.datastructure.MinHeapTest.heapNotTooSmall(tacticulous.tira.datastructure.MinHeapTest) (1 ms)</li><li>tacticulous.tira.ai.SimulatedRoundTest.allMovesAndAttacksTest(tacticulous.tira.ai.SimulatedRoundTest) (5 ms)</li><li>tacticulous.tira.datastructure.MinHeapTest.heapInsertAndDelWorksHarder(tacticulous.tira.datastructure.MinHeapTest) (1 ms)</li><li>tacticulous.tira.algorithms.GameUsageTest.speedRangeReturnWorks(tacticulous.tira.algorithms.GameUsageTest) (1 ms)</li><li>tacticulous.game.commands.GameCommandTest.endRoundCheckWorks(tacticulous.game.commands.GameCommandTest) (6 ms)</li><li>tacticulous.tira.ai.ValueLogicTest.attackValue1(tacticulous.tira.ai.ValueLogicTest) (2 ms)</li><li>tacticulous.tira.ai.SimulatedRoundTest.endTurnTest(tacticulous.tira.ai.SimulatedRoundTest) (4 ms)</li><li>tacticulous.tira.ai.ArtificialIntelligenceTest.multiTurnAINoCrash(tacticulous.tira.ai.ArtificialIntelligenceTest) (2634 ms)</li><li>tacticulous.tira.ai.ActionTest.nullEndsTurn(tacticulous.tira.ai.ActionTest) (3 ms)</li><li>tacticulous.tira.ai.ActionTest.attackAndDelayWorks(tacticulous.tira.ai.ActionTest) (105 ms)</li><li>tacticulous.tira.datastructure.MinHeapTest.heapInsertAndDelWorksEasyAndEndsEmpty(tacticulous.tira.datastructure.MinHeapTest) (3 ms)</li><li>tacticulous.tira.ai.ValueLogicTest.attackValueAggressionIncreasesValue(tacticulous.tira.ai.ValueLogicTest) (2 ms)</li><li>tacticulous.tira.ai.ActionTest.attackDoesNotWorksIfIllegalTarget(tacticulous.tira.ai.ActionTest) (4 ms)</li><li>tacticulous.tira.ai.SimulatedRoundTest.targetsInRangeTest(tacticulous.tira.ai.SimulatedRoundTest) (3 ms)</li><li>tacticulous.tira.algorithms.GameUsageTest.speedRangeMultipleRandoms(tacticulous.tira.algorithms.GameUsageTest) (10379 ms)</li><li>tacticulous.game.commands.GameCommandTest.newRoundWorks(tacticulous.game.commands.GameCommandTest) (14 ms)</li><li>tacticulous.tira.ai.ActionTest.endTurnWorks(tacticulous.tira.ai.ActionTest) (5 ms)</li><li>tacticulous.tira.algorithms.GameUsageTest.getTilesToMoveToIsCorrect(tacticulous.tira.algorithms.GameUsageTest) (1 ms)</li><li>tacticulous.game.commands.GameCommandTest.attackCommandWorks3(tacticulous.game.commands.GameCommandTest) (6 ms)</li><li>tacticulous.tira.ai.SimulatedRoundTest.onlyDelayTest(tacticulous.tira.ai.SimulatedRoundTest) (4 ms)</li><li>tacticulous.tira.ai.ActionTest.attackAndEndTurnWorks(tacticulous.tira.ai.ActionTest) (3 ms)</li><li>tacticulous.tira.ai.SimulatedRoundTest.allAttacksAndEndTurnTest(tacticulous.tira.ai.SimulatedRoundTest) (3 ms)</li><li>tacticulous.game.commands.GameCommandTest.nextPlayerSkipsPlayerWithNoUnitsWithActionsLeft(tacticulous.game.commands.GameCommandTest) (8 ms)</li><li>tacticulous.game.commands.GameCommandTest.nextPlayerDetectsRoundOver(tacticulous.game.commands.GameCommandTest) (9 ms)</li><li>tacticulous.game.domain.PlayerTest.getFirstUnitWithActionsWorks(tacticulous.game.domain.PlayerTest) (3 ms)</li><li>tacticulous.game.commands.GameCommandTest.nextPlayerDetectsGameOver(tacticulous.game.commands.GameCommandTest) (5 ms)</li><li>tacticulous.tira.ai.ArtificialIntelligenceTest.atLeastDoesNotCrashOrRebel(tacticulous.tira.ai.ArtificialIntelligenceTest) (44053 ms)</li><li>tacticulous.tira.ai.SimulatedRoundTest.allMovesAndDelayTest(tacticulous.tira.ai.SimulatedRoundTest) (6 ms)</li><li>tacticulous.tira.ai.SimulatedRoundTest.singleMoveTest(tacticulous.tira.ai.SimulatedRoundTest) (3 ms)</li><li>tacticulous.tira.ai.ActionTest.actionCopyingWorks(tacticulous.tira.ai.ActionTest) (3 ms)</li><li>tacticulous.tira.ai.SimulatedRoundTest.singleMoveAndAllAttacksTest(tacticulous.tira.ai.SimulatedRoundTest) (3 ms)</li>
+</ul>
+
+<br/>
+
+Report generated by <a href='http://pitest.org'>PIT</a> 0.30
+
+</body>
+</html>

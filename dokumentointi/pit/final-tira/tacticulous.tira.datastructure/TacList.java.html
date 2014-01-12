@@ -1,0 +1,2607 @@
+<html>
+<head>
+<style type='text/css'>
+html, body, div, span, p, blockquote, pre {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	font-weight: inherit;
+	font-style: inherit;
+	font-size: 100%;
+	font-family: inherit;
+	vertical-align: baseline;
+}
+
+body{
+	line-height: 1;
+	color: black;
+	background: white;
+	margin-left: 20px;
+}
+
+.src { 
+border: 1px solid #dddddd;
+padding-top: 10px;
+padding-right: 5px;
+padding-left: 5px;
+}
+
+
+.covered {background-color: #ddffdd}
+.uncovered {background-color: #ffdddd}
+.killed {background-color: #aaffaa}
+.survived {background-color: #ffaaaa}
+.uncertain {background-color: #dde7ef}
+.run_error {background-color: #dde7ef}
+.na {background-color: #eeeeee}
+.timed_out {background-color: #dde7ef}
+.non_viable {background-color: #aaffaa}
+.memory_error {background-color: #dde7ef}
+.not_started {background-color: #dde7ef; color : red}
+.no_coverage {background-color: #ffaaaa}
+
+</style>
+
+</head>
+<body>
+
+
+<h1>TacList.java</h1>
+
+<table class="src">
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_1'/>
+1
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_1'></a>
+</td>
+<td class=''><pre><span  class=''>package tacticulous.tira.datastructure;</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_2'/>
+2
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_2'></a>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_3'/>
+3
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_3'></a>
+</td>
+<td class=''><pre><span  class=''>import java.util.Iterator;</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_4'/>
+4
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_4'></a>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_5'/>
+5
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_5'></a>
+</td>
+<td class=''><pre><span  class=''>/**</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_6'/>
+6
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_6'></a>
+</td>
+<td class=''><pre><span  class=''> * Replacement for arraylist.</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_7'/>
+7
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_7'></a>
+</td>
+<td class=''><pre><span  class=''> *</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_8'/>
+8
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_8'></a>
+</td>
+<td class=''><pre><span  class=''> * @author O</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_9'/>
+9
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_9'></a>
+</td>
+<td class=''><pre><span  class=''> * @param &#60;T&#62; class of stuff stored in a particular instance of the list.</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_10'/>
+10
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_10'></a>
+</td>
+<td class=''><pre><span  class=''> */</span></pre></td></tr>
+
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_11'/>
+11
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_11'></a>
+</td>
+<td class='covered'><pre><span  class=''>public class TacList&#60;T&#62; implements Iterable&#60;T&#62; {</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_12'/>
+12
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_12'></a>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_13'/>
+13
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_13'></a>
+</td>
+<td class=''><pre><span  class=''>    private T[] container;</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_14'/>
+14
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_14'></a>
+</td>
+<td class=''><pre><span  class=''>    private int size;</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_15'/>
+15
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_15'></a>
+</td>
+<td class=''><pre><span  class=''>    private int maxSize;</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_16'/>
+16
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_16'></a>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_17'/>
+17
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_17'></a>
+</td>
+<td class=''><pre><span  class=''>    /**</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_18'/>
+18
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_18'></a>
+</td>
+<td class=''><pre><span  class=''>     * Adds thingy at the end of the list. If necessary, list will increase it&#39;s container</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_19'/>
+19
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_19'></a>
+</td>
+<td class=''><pre><span  class=''>     * array&#39;s size which will take longer.</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_20'/>
+20
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_20'></a>
+</td>
+<td class=''><pre><span  class=''>     *</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_21'/>
+21
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_21'></a>
+</td>
+<td class=''><pre><span  class=''>     * @param thingy hello thingy!</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_22'/>
+22
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_22'></a>
+</td>
+<td class=''><pre><span  class=''>     */</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_23'/>
+23
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_23'></a>
+</td>
+<td class=''><pre><span  class=''>    public void add(T thingy) {</span></pre></td></tr>
+
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_24'/>
+24
+</td>
+<td class='uncertain'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_24'>1</a>
+</td>
+<td class='covered'><pre><span  class='uncertain'>        if (size == maxSize) {</span></pre></td></tr>
+
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_25'/>
+25
+</td>
+<td class='killed'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_25'>1</a>
+</td>
+<td class='covered'><pre><span  class='killed'>            maxSize = maxSize * 2;</span></pre></td></tr>
+
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_26'/>
+26
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_26'></a>
+</td>
+<td class='covered'><pre><span  class=''>            T[] tempContainer = (T[]) new Object[maxSize];</span></pre></td></tr>
+
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_27'/>
+27
+</td>
+<td class='killed'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_27'>1</a>
+</td>
+<td class='covered'><pre><span  class='killed'>            System.arraycopy(container, 0, tempContainer, 0, size);</span></pre></td></tr>
+
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_28'/>
+28
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_28'></a>
+</td>
+<td class='covered'><pre><span  class=''>            container = tempContainer;</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_29'/>
+29
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_29'></a>
+</td>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_30'/>
+30
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_30'></a>
+</td>
+<td class='covered'><pre><span  class=''>        container[size] = thingy;</span></pre></td></tr>
+
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_31'/>
+31
+</td>
+<td class='killed'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_31'>1</a>
+</td>
+<td class='covered'><pre><span  class='killed'>        size++;</span></pre></td></tr>
+
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_32'/>
+32
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_32'></a>
+</td>
+<td class='covered'><pre><span  class=''>    }</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_33'/>
+33
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_33'></a>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_34'/>
+34
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_34'></a>
+</td>
+<td class=''><pre><span  class=''>    /**</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_35'/>
+35
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_35'></a>
+</td>
+<td class=''><pre><span  class=''>     * Gets (does not remove) the thingy stored at the provided index.</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_36'/>
+36
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_36'></a>
+</td>
+<td class=''><pre><span  class=''>     *</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_37'/>
+37
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_37'></a>
+</td>
+<td class=''><pre><span  class=''>     * @param index where at yo</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_38'/>
+38
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_38'></a>
+</td>
+<td class=''><pre><span  class=''>     * @return wanted thingy</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_39'/>
+39
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_39'></a>
+</td>
+<td class=''><pre><span  class=''>     */</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_40'/>
+40
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_40'></a>
+</td>
+<td class=''><pre><span  class=''>    public T get(int index) {</span></pre></td></tr>
+
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_41'/>
+41
+</td>
+<td class='killed'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_41'>4</a>
+</td>
+<td class='covered'><pre><span  class='killed'>        if (index &#62;= size || index &#60; 0) {</span></pre></td></tr>
+
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_42'/>
+42
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_42'></a>
+</td>
+<td class='covered'><pre><span  class=''>            throw new IndexOutOfBoundsException();</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_43'/>
+43
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_43'></a>
+</td>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_44'/>
+44
+</td>
+<td class='killed'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_44'>1</a>
+</td>
+<td class='covered'><pre><span  class='killed'>        return container[index];</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_45'/>
+45
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_45'></a>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_46'/>
+46
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_46'></a>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_47'/>
+47
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_47'></a>
+</td>
+<td class=''><pre><span  class=''>    /**</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_48'/>
+48
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_48'></a>
+</td>
+<td class=''><pre><span  class=''>     * Construcs a new list with an initial size.</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_49'/>
+49
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_49'></a>
+</td>
+<td class=''><pre><span  class=''>     *</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_50'/>
+50
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_50'></a>
+</td>
+<td class=''><pre><span  class=''>     * @param maxSize initial size</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_51'/>
+51
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_51'></a>
+</td>
+<td class=''><pre><span  class=''>     */</span></pre></td></tr>
+
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_52'/>
+52
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_52'></a>
+</td>
+<td class='covered'><pre><span  class=''>    public TacList(int maxSize) {</span></pre></td></tr>
+
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_53'/>
+53
+</td>
+<td class='survived'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_53'>2</a>
+</td>
+<td class='covered'><pre><span  class='survived'>        if (maxSize &#60; 1) {</span></pre></td></tr>
+
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_54'/>
+54
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_54'></a>
+</td>
+<td class='covered'><pre><span  class=''>            container = (T[]) new Object[1];</span></pre></td></tr>
+
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_55'/>
+55
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_55'></a>
+</td>
+<td class='covered'><pre><span  class=''>            this.maxSize = 1;</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_56'/>
+56
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_56'></a>
+</td>
+<td class=''><pre><span  class=''>        } else {</span></pre></td></tr>
+
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_57'/>
+57
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_57'></a>
+</td>
+<td class='covered'><pre><span  class=''>            container = (T[]) new Object[maxSize];</span></pre></td></tr>
+
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_58'/>
+58
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_58'></a>
+</td>
+<td class='covered'><pre><span  class=''>            this.maxSize = maxSize;</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_59'/>
+59
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_59'></a>
+</td>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_60'/>
+60
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_60'></a>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_61'/>
+61
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_61'></a>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_62'/>
+62
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_62'></a>
+</td>
+<td class='covered'><pre><span  class=''>        size = 0;</span></pre></td></tr>
+
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_63'/>
+63
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_63'></a>
+</td>
+<td class='covered'><pre><span  class=''>    }</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_64'/>
+64
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_64'></a>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_65'/>
+65
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_65'></a>
+</td>
+<td class=''><pre><span  class=''>    /**</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_66'/>
+66
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_66'></a>
+</td>
+<td class=''><pre><span  class=''>     * Checks if provided thingy is in the list.</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_67'/>
+67
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_67'></a>
+</td>
+<td class=''><pre><span  class=''>     *</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_68'/>
+68
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_68'></a>
+</td>
+<td class=''><pre><span  class=''>     * @param t thingly whose existance is in question</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_69'/>
+69
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_69'></a>
+</td>
+<td class=''><pre><span  class=''>     * @return true if found</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_70'/>
+70
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_70'></a>
+</td>
+<td class=''><pre><span  class=''>     */</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_71'/>
+71
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_71'></a>
+</td>
+<td class=''><pre><span  class=''>    public boolean contains(T t) {</span></pre></td></tr>
+
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_72'/>
+72
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_72'></a>
+</td>
+<td class='covered'><pre><span  class=''>        int i = 0;</span></pre></td></tr>
+
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_73'/>
+73
+</td>
+<td class='killed'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_73'>2</a>
+</td>
+<td class='covered'><pre><span  class='killed'>        while (i &#60; size) {</span></pre></td></tr>
+
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_74'/>
+74
+</td>
+<td class='killed'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_74'>1</a>
+</td>
+<td class='covered'><pre><span  class='killed'>            if (container[i] == t) {</span></pre></td></tr>
+
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_75'/>
+75
+</td>
+<td class='killed'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_75'>1</a>
+</td>
+<td class='covered'><pre><span  class='killed'>                return true;</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_76'/>
+76
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_76'></a>
+</td>
+<td class=''><pre><span  class=''>            }</span></pre></td></tr>
+
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_77'/>
+77
+</td>
+<td class='killed'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_77'>1</a>
+</td>
+<td class='covered'><pre><span  class='killed'>            i++;</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_78'/>
+78
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_78'></a>
+</td>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_79'/>
+79
+</td>
+<td class='killed'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_79'>1</a>
+</td>
+<td class='covered'><pre><span  class='killed'>        return false;</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_80'/>
+80
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_80'></a>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_81'/>
+81
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_81'></a>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_82'/>
+82
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_82'></a>
+</td>
+<td class=''><pre><span  class=''>    /**</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_83'/>
+83
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_83'></a>
+</td>
+<td class=''><pre><span  class=''>     * removes a thingy from the list. Takes a while, since thingy must first</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_84'/>
+84
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_84'></a>
+</td>
+<td class=''><pre><span  class=''>     * be found and then everything after it will be moved a slot backwards.</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_85'/>
+85
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_85'></a>
+</td>
+<td class=''><pre><span  class=''>     *</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_86'/>
+86
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_86'></a>
+</td>
+<td class=''><pre><span  class=''>     * @param t thingy to be removed.</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_87'/>
+87
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_87'></a>
+</td>
+<td class=''><pre><span  class=''>     */</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_88'/>
+88
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_88'></a>
+</td>
+<td class=''><pre><span  class=''>    public void remove(T t) {</span></pre></td></tr>
+
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_89'/>
+89
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_89'></a>
+</td>
+<td class='covered'><pre><span  class=''>        int i = 0;</span></pre></td></tr>
+
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_90'/>
+90
+</td>
+<td class='survived'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_90'>2</a>
+</td>
+<td class='covered'><pre><span  class='survived'>        while (i &#60; size) {</span></pre></td></tr>
+
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_91'/>
+91
+</td>
+<td class='killed'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_91'>1</a>
+</td>
+<td class='covered'><pre><span  class='killed'>            if (container[i] == t) {</span></pre></td></tr>
+
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_92'/>
+92
+</td>
+<td class='killed'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_92'>1</a>
+</td>
+<td class='covered'><pre><span  class='killed'>                size--;</span></pre></td></tr>
+
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_93'/>
+93
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_93'></a>
+</td>
+<td class='covered'><pre><span  class=''>                break;</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_94'/>
+94
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_94'></a>
+</td>
+<td class=''><pre><span  class=''>            }</span></pre></td></tr>
+
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_95'/>
+95
+</td>
+<td class='killed'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_95'>1</a>
+</td>
+<td class='covered'><pre><span  class='killed'>            i++;</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_96'/>
+96
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_96'></a>
+</td>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_97'/>
+97
+</td>
+<td class='killed'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_97'>2</a>
+</td>
+<td class='covered'><pre><span  class='killed'>        while (i &#60; size) {</span></pre></td></tr>
+
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_98'/>
+98
+</td>
+<td class='killed'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_98'>1</a>
+</td>
+<td class='covered'><pre><span  class='killed'>            container[i] = container[i + 1];</span></pre></td></tr>
+
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_99'/>
+99
+</td>
+<td class='killed'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_99'>1</a>
+</td>
+<td class='covered'><pre><span  class='killed'>            i++;</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_100'/>
+100
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_100'></a>
+</td>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_101'/>
+101
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_101'></a>
+</td>
+<td class='covered'><pre><span  class=''>    }</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_102'/>
+102
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_102'></a>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_103'/>
+103
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_103'></a>
+</td>
+<td class=''><pre><span  class=''>    /**</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_104'/>
+104
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_104'></a>
+</td>
+<td class=''><pre><span  class=''>     * Removes everything from the list. Well, that was a lie. Actually only tells</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_105'/>
+105
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_105'></a>
+</td>
+<td class=''><pre><span  class=''>     * other methods to ignore everything.</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_106'/>
+106
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_106'></a>
+</td>
+<td class=''><pre><span  class=''>     *</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_107'/>
+107
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_107'></a>
+</td>
+<td class=''><pre><span  class=''>     */</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_108'/>
+108
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_108'></a>
+</td>
+<td class=''><pre><span  class=''>    public void clear() {</span></pre></td></tr>
+
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_109'/>
+109
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_109'></a>
+</td>
+<td class='covered'><pre><span  class=''>        size = 0;</span></pre></td></tr>
+
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_110'/>
+110
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_110'></a>
+</td>
+<td class='covered'><pre><span  class=''>    }</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_111'/>
+111
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_111'></a>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_112'/>
+112
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_112'></a>
+</td>
+<td class=''><pre><span  class=''>    /**</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_113'/>
+113
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_113'></a>
+</td>
+<td class=''><pre><span  class=''>     * Returns the number of thingies on the list.</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_114'/>
+114
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_114'></a>
+</td>
+<td class=''><pre><span  class=''>     *</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_115'/>
+115
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_115'></a>
+</td>
+<td class=''><pre><span  class=''>     * @return how many thingies</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_116'/>
+116
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_116'></a>
+</td>
+<td class=''><pre><span  class=''>     */</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_117'/>
+117
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_117'></a>
+</td>
+<td class=''><pre><span  class=''>    public int size() {</span></pre></td></tr>
+
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_118'/>
+118
+</td>
+<td class='killed'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_118'>1</a>
+</td>
+<td class='covered'><pre><span  class='killed'>        return size;</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_119'/>
+119
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_119'></a>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_120'/>
+120
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_120'></a>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_121'/>
+121
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_121'></a>
+</td>
+<td class=''><pre><span  class=''>    /**</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_122'/>
+122
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_122'></a>
+</td>
+<td class=''><pre><span  class=''>     * Checks if there are any thingies on the list.</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_123'/>
+123
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_123'></a>
+</td>
+<td class=''><pre><span  class=''>     *</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_124'/>
+124
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_124'></a>
+</td>
+<td class=''><pre><span  class=''>     * @return true if no thingies, false if even a single thingy!!!!!!</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_125'/>
+125
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_125'></a>
+</td>
+<td class=''><pre><span  class=''>     */</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_126'/>
+126
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_126'></a>
+</td>
+<td class=''><pre><span  class=''>    public boolean isEmpty() {</span></pre></td></tr>
+
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_127'/>
+127
+</td>
+<td class='killed'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_127'>3</a>
+</td>
+<td class='covered'><pre><span  class='killed'>        return size &#60;= 0;</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_128'/>
+128
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_128'></a>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_129'/>
+129
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_129'></a>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_130'/>
+130
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_130'></a>
+</td>
+<td class=''><pre><span  class=''>    /**</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_131'/>
+131
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_131'></a>
+</td>
+<td class=''><pre><span  class=''>     * Used for nifty forlooping.</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_132'/>
+132
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_132'></a>
+</td>
+<td class=''><pre><span  class=''>     *</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_133'/>
+133
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_133'></a>
+</td>
+<td class=''><pre><span  class=''>     * @return horror.</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_134'/>
+134
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_134'></a>
+</td>
+<td class=''><pre><span  class=''>     */</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_135'/>
+135
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_135'></a>
+</td>
+<td class=''><pre><span  class=''>    @Override</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_136'/>
+136
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_136'></a>
+</td>
+<td class=''><pre><span  class=''>    public Iterator iterator() {</span></pre></td></tr>
+
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_137'/>
+137
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_137'></a>
+</td>
+<td class='covered'><pre><span  class=''>        TacIterator tac = new TacIterator();</span></pre></td></tr>
+
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_138'/>
+138
+</td>
+<td class='killed'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_138'>1</a>
+</td>
+<td class='covered'><pre><span  class='killed'>        return tac;</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_139'/>
+139
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_139'></a>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_140'/>
+140
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_140'></a>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_141'/>
+141
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_141'></a>
+</td>
+<td class='covered'><pre><span  class=''>    private class TacIterator implements Iterator {</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_142'/>
+142
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_142'></a>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_143'/>
+143
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_143'></a>
+</td>
+<td class='covered'><pre><span  class=''>        private int next = 0;</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_144'/>
+144
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_144'></a>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_145'/>
+145
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_145'></a>
+</td>
+<td class=''><pre><span  class=''>        @Override</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_146'/>
+146
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_146'></a>
+</td>
+<td class=''><pre><span  class=''>        public boolean hasNext() {</span></pre></td></tr>
+
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_147'/>
+147
+</td>
+<td class='killed'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_147'>3</a>
+</td>
+<td class='covered'><pre><span  class='killed'>            return next &#60; size;</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_148'/>
+148
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_148'></a>
+</td>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_149'/>
+149
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_149'></a>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_150'/>
+150
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_150'></a>
+</td>
+<td class=''><pre><span  class=''>        @Override</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_151'/>
+151
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_151'></a>
+</td>
+<td class=''><pre><span  class=''>        public T next() {</span></pre></td></tr>
+
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_152'/>
+152
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_152'></a>
+</td>
+<td class='covered'><pre><span  class=''>            T ret = (T) container[next];</span></pre></td></tr>
+
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_153'/>
+153
+</td>
+<td class='killed'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_153'>1</a>
+</td>
+<td class='covered'><pre><span  class='killed'>            next++;</span></pre></td></tr>
+
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_154'/>
+154
+</td>
+<td class='killed'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_154'>1</a>
+</td>
+<td class='covered'><pre><span  class='killed'>            return ret;</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_155'/>
+155
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_155'></a>
+</td>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_156'/>
+156
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_156'></a>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_157'/>
+157
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_157'></a>
+</td>
+<td class=''><pre><span  class=''>        @Override</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_158'/>
+158
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_158'></a>
+</td>
+<td class=''><pre><span  class=''>        public void remove() {</span></pre></td></tr>
+
+
+
+<tr>
+<td class='uncovered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_159'/>
+159
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_159'></a>
+</td>
+<td class='uncovered'><pre><span  class=''>        }</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_160'/>
+160
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_160'></a>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_161'/>
+161
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_161'></a>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_162'/>
+162
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_162'></a>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_163'/>
+163
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_163'></a>
+</td>
+<td class=''><pre><span  class=''>    /**</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_164'/>
+164
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_164'></a>
+</td>
+<td class=''><pre><span  class=''>     * Thingys from this list.</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_165'/>
+165
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_165'></a>
+</td>
+<td class=''><pre><span  class=''>     *</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_166'/>
+166
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_166'></a>
+</td>
+<td class=''><pre><span  class=''>     * @return a string with thingy toStrings on it!</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_167'/>
+167
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_167'></a>
+</td>
+<td class=''><pre><span  class=''>     */</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_168'/>
+168
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_168'></a>
+</td>
+<td class=''><pre><span  class=''>    @Override</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_169'/>
+169
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_169'></a>
+</td>
+<td class=''><pre><span  class=''>    public String toString() {</span></pre></td></tr>
+
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_170'/>
+170
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_170'></a>
+</td>
+<td class='covered'><pre><span  class=''>        StringBuilder sb = new StringBuilder(&#34;[&#34;);</span></pre></td></tr>
+
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_171'/>
+171
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_171'></a>
+</td>
+<td class='covered'><pre><span  class=''>        int i = 0;</span></pre></td></tr>
+
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_172'/>
+172
+</td>
+<td class='killed'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_172'>3</a>
+</td>
+<td class='covered'><pre><span  class='killed'>        while (i &#60; size - 1) {</span></pre></td></tr>
+
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_173'/>
+173
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_173'></a>
+</td>
+<td class='covered'><pre><span  class=''>            sb.append(container[i]).append(&#34;, &#34;);</span></pre></td></tr>
+
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_174'/>
+174
+</td>
+<td class='killed'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_174'>1</a>
+</td>
+<td class='covered'><pre><span  class='killed'>            i++;</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_175'/>
+175
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_175'></a>
+</td>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_176'/>
+176
+</td>
+<td class='killed'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_176'>2</a>
+</td>
+<td class='covered'><pre><span  class='killed'>        if (size &#62; 0) {</span></pre></td></tr>
+
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_177'/>
+177
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_177'></a>
+</td>
+<td class='covered'><pre><span  class=''>            sb.append(container[i]);</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_178'/>
+178
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_178'></a>
+</td>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_179'/>
+179
+</td>
+<td class='killed'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_179'>1</a>
+</td>
+<td class='covered'><pre><span  class='killed'>        return sb + &#34;]&#34;;</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_180'/>
+180
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_180'></a>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_181'/>
+181
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_181'></a>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_182'/>
+182
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_182'></a>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@3b6e6236_183'/>
+183
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_183'></a>
+</td>
+<td class=''><pre><span  class=''>}</span></pre></td></tr>
+
+
+
+
+<tr><td></td><td></td><td><h2>Mutations</h2></td></tr>
+
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@3b6e6236_24'>24</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_24'/> 
+
+<p class='TIMED_OUT'>negated conditional : TIMED_OUT</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@3b6e6236_25'>25</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_25'/> 
+
+<p class='KILLED'>Replaced integer multiplication with division : KILLED -> tacticulous.tira.datastructure.TacListTest.sizeWorks(tacticulous.tira.datastructure.TacListTest)</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@3b6e6236_27'>27</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_27'/> 
+
+<p class='KILLED'>removed call to java/lang/System::arraycopy : KILLED -> tacticulous.tira.datastructure.TacListTest.listIncreasingAddWorks(tacticulous.tira.datastructure.TacListTest)</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@3b6e6236_31'>31</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_31'/> 
+
+<p class='KILLED'>Replaced integer addition with subtraction : KILLED -> tacticulous.tira.datastructure.TacListTest.basicAddWorks(tacticulous.tira.datastructure.TacListTest)</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@3b6e6236_41'>41</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_41'/> 
+
+<p class='KILLED'>negated conditional : KILLED -> tacticulous.tira.datastructure.TacListTest.illegalIndex1(tacticulous.tira.datastructure.TacListTest)</p> <p class='KILLED'>negated conditional : KILLED -> tacticulous.tira.datastructure.TacListTest.smallSizeWorks(tacticulous.tira.datastructure.TacListTest)</p> <p class='KILLED'>changed conditional boundary : KILLED -> tacticulous.tira.datastructure.TacListTest.smallSizeWorks(tacticulous.tira.datastructure.TacListTest)</p> <p class='KILLED'>changed conditional boundary : KILLED -> tacticulous.tira.datastructure.TacListTest.illegalIndex1(tacticulous.tira.datastructure.TacListTest)</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@3b6e6236_44'>44</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_44'/> 
+
+<p class='KILLED'>mutated return of Object value for tacticulous/tira/datastructure/TacList::get to ( if (x != null) null else throw new RuntimeException ) : KILLED -> tacticulous.tira.datastructure.TacListTest.smallSizeWorks(tacticulous.tira.datastructure.TacListTest)</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@3b6e6236_53'>53</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_53'/> 
+
+<p class='KILLED'>negated conditional : KILLED -> tacticulous.tira.datastructure.TacListTest.smallSizeWorks(tacticulous.tira.datastructure.TacListTest)</p> <p class='SURVIVED'>changed conditional boundary : SURVIVED</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@3b6e6236_73'>73</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_73'/> 
+
+<p class='KILLED'>negated conditional : KILLED -> tacticulous.tira.datastructure.TacListTest.containsWorks(tacticulous.tira.datastructure.TacListTest)</p> <p class='KILLED'>changed conditional boundary : KILLED -> tacticulous.game.commands.UnitCommandTest.lethalAttackRemovesTarget(tacticulous.game.commands.UnitCommandTest)</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@3b6e6236_74'>74</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_74'/> 
+
+<p class='KILLED'>negated conditional : KILLED -> tacticulous.tira.datastructure.TacListTest.containsWorks(tacticulous.tira.datastructure.TacListTest)</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@3b6e6236_75'>75</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_75'/> 
+
+<p class='KILLED'>replaced return of integer sized value with (x == 0 ? 1 : 0) : KILLED -> tacticulous.tira.datastructure.TacListTest.containsWorks(tacticulous.tira.datastructure.TacListTest)</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@3b6e6236_77'>77</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_77'/> 
+
+<p class='KILLED'>Changed increment from 1 to -1 : KILLED -> tacticulous.tira.datastructure.TacListTest.containsWorks(tacticulous.tira.datastructure.TacListTest)</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@3b6e6236_79'>79</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_79'/> 
+
+<p class='KILLED'>replaced return of integer sized value with (x == 0 ? 1 : 0) : KILLED -> tacticulous.tira.datastructure.TacListTest.containsWorks(tacticulous.tira.datastructure.TacListTest)</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@3b6e6236_90'>90</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_90'/> 
+
+<p class='SURVIVED'>changed conditional boundary : SURVIVED</p> <p class='KILLED'>negated conditional : KILLED -> tacticulous.tira.datastructure.TacListTest.getWorks(tacticulous.tira.datastructure.TacListTest)</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@3b6e6236_91'>91</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_91'/> 
+
+<p class='KILLED'>negated conditional : KILLED -> tacticulous.tira.datastructure.TacListTest.containsWorks(tacticulous.tira.datastructure.TacListTest)</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@3b6e6236_92'>92</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_92'/> 
+
+<p class='KILLED'>Replaced integer subtraction with addition : KILLED -> tacticulous.tira.datastructure.TacListTest.getWorks(tacticulous.tira.datastructure.TacListTest)</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@3b6e6236_95'>95</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_95'/> 
+
+<p class='KILLED'>Changed increment from 1 to -1 : KILLED -> tacticulous.tira.datastructure.TacListTest.getWorks(tacticulous.tira.datastructure.TacListTest)</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@3b6e6236_97'>97</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_97'/> 
+
+<p class='KILLED'>changed conditional boundary : KILLED -> tacticulous.tira.datastructure.TacListTest.getWorks(tacticulous.tira.datastructure.TacListTest)</p> <p class='KILLED'>negated conditional : KILLED -> tacticulous.tira.datastructure.TacListTest.getWorks(tacticulous.tira.datastructure.TacListTest)</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@3b6e6236_98'>98</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_98'/> 
+
+<p class='KILLED'>Replaced integer addition with subtraction : KILLED -> tacticulous.tira.datastructure.TacListTest.getWorks(tacticulous.tira.datastructure.TacListTest)</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@3b6e6236_99'>99</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_99'/> 
+
+<p class='KILLED'>Changed increment from 1 to -1 : KILLED -> tacticulous.tira.datastructure.TacListTest.getWorks(tacticulous.tira.datastructure.TacListTest)</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@3b6e6236_118'>118</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_118'/> 
+
+<p class='KILLED'>replaced return of integer sized value with (x == 0 ? 1 : 0) : KILLED -> tacticulous.tira.datastructure.TacListTest.sizeWorks(tacticulous.tira.datastructure.TacListTest)</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@3b6e6236_127'>127</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_127'/> 
+
+<p class='KILLED'>negated conditional : KILLED -> tacticulous.tira.datastructure.TacListTest.isEmptyAndClearWork(tacticulous.tira.datastructure.TacListTest)</p> <p class='KILLED'>changed conditional boundary : KILLED -> tacticulous.tira.datastructure.TacListTest.isEmptyAndClearWork(tacticulous.tira.datastructure.TacListTest)</p> <p class='KILLED'>replaced return of integer sized value with (x == 0 ? 1 : 0) : KILLED -> tacticulous.tira.datastructure.TacListTest.isEmptyAndClearWork(tacticulous.tira.datastructure.TacListTest)</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@3b6e6236_138'>138</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_138'/> 
+
+<p class='KILLED'>mutated return of Object value for tacticulous/tira/datastructure/TacList::iterator to ( if (x != null) null else throw new RuntimeException ) : KILLED -> tacticulous.tira.datastructure.TacListTest.iteratorWorks(tacticulous.tira.datastructure.TacListTest)</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@3b6e6236_147'>147</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_147'/> 
+
+<p class='KILLED'>replaced return of integer sized value with (x == 0 ? 1 : 0) : KILLED -> tacticulous.tira.datastructure.TacListTest.iteratorWorks(tacticulous.tira.datastructure.TacListTest)</p> <p class='KILLED'>negated conditional : KILLED -> tacticulous.tira.datastructure.TacListTest.iteratorWorks(tacticulous.tira.datastructure.TacListTest)</p> <p class='KILLED'>changed conditional boundary : KILLED -> tacticulous.tira.datastructure.TacListTest.iteratorWorks(tacticulous.tira.datastructure.TacListTest)</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@3b6e6236_153'>153</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_153'/> 
+
+<p class='KILLED'>Replaced integer addition with subtraction : KILLED -> tacticulous.tira.datastructure.TacListTest.iteratorWorks(tacticulous.tira.datastructure.TacListTest)</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@3b6e6236_154'>154</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_154'/> 
+
+<p class='KILLED'>mutated return of Object value for tacticulous/tira/datastructure/TacList$TacIterator::next to ( if (x != null) null else throw new RuntimeException ) : KILLED -> tacticulous.tira.datastructure.TacListTest.iteratorWorks(tacticulous.tira.datastructure.TacListTest)</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@3b6e6236_172'>172</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_172'/> 
+
+<p class='KILLED'>negated conditional : KILLED -> tacticulous.tira.datastructure.TacListTest.basicAddWorks(tacticulous.tira.datastructure.TacListTest)</p> <p class='KILLED'>changed conditional boundary : KILLED -> tacticulous.tira.datastructure.TacListTest.basicAddWorks(tacticulous.tira.datastructure.TacListTest)</p> <p class='KILLED'>Replaced integer subtraction with addition : KILLED -> tacticulous.tira.datastructure.TacListTest.basicAddWorks(tacticulous.tira.datastructure.TacListTest)</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@3b6e6236_174'>174</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_174'/> 
+
+<p class='KILLED'>Changed increment from 1 to -1 : KILLED -> tacticulous.tira.datastructure.TacListTest.basicAddWorks(tacticulous.tira.datastructure.TacListTest)</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@3b6e6236_176'>176</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_176'/> 
+
+<p class='KILLED'>changed conditional boundary : KILLED -> tacticulous.tira.datastructure.TacListTest.isEmptyAndClearWork(tacticulous.tira.datastructure.TacListTest)</p> <p class='KILLED'>negated conditional : KILLED -> tacticulous.tira.datastructure.TacListTest.basicAddWorks(tacticulous.tira.datastructure.TacListTest)</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@3b6e6236_179'>179</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@3b6e6236_179'/> 
+
+<p class='KILLED'>mutated return of Object value for tacticulous/tira/datastructure/TacList::toString to ( if (x != null) null else throw new RuntimeException ) : KILLED -> tacticulous.tira.datastructure.TacListTest.basicAddWorks(tacticulous.tira.datastructure.TacListTest)</p> 
+</td>
+</tr>
+
+</table>
+
+
+<h2>Active mutators</h2>
+<ul>
+
+<li class='mutator'>INCREMENTS_MUTATOR</li>
+
+<li class='mutator'>CONDITIONALS_BOUNDARY_MUTATOR</li>
+
+<li class='mutator'>RETURN_VALS_MUTATOR</li>
+
+<li class='mutator'>VOID_METHOD_CALL_MUTATOR</li>
+
+<li class='mutator'>INVERT_NEGS_MUTATOR</li>
+
+<li class='mutator'>MATH_MUTATOR</li>
+
+<li class='mutator'>NEGATE_CONDITIONALS_MUTATOR</li>
+
+</ul>
+
+<h2>Tests examined</h2>
+<ul>
+<li>tacticulous.tira.datastructure.TacListTest.sizeWorks1(tacticulous.tira.datastructure.TacListTest) (2 ms)</li><li>tacticulous.tira.ai.ActionTest.moveAndAttackWorks(tacticulous.tira.ai.ActionTest) (5 ms)</li><li>tacticulous.game.domain.BattleMapTest.legitCheckWorks(tacticulous.game.domain.BattleMapTest) (4 ms)</li><li>tacticulous.game.commands.GameCommandTest.delayTurnCommandWorks(tacticulous.game.commands.GameCommandTest) (8 ms)</li><li>tacticulous.tira.ai.SimulatedRoundTest.allMovesAndEndTurnTest(tacticulous.tira.ai.SimulatedRoundTest) (4 ms)</li><li>tacticulous.tira.datastructure.TacListTest.containsWorks(tacticulous.tira.datastructure.TacListTest) (2 ms)</li><li>tacticulous.tira.datastructure.TacListTest.sizeWorks(tacticulous.tira.datastructure.TacListTest) (2 ms)</li><li>tacticulous.tira.ai.ActionTest.attackAndMoveWorks(tacticulous.tira.ai.ActionTest) (3 ms)</li><li>tacticulous.tira.datastructure.TacListTest.removeWorks1(tacticulous.tira.datastructure.TacListTest) (3 ms)</li><li>tacticulous.game.commands.GameCommandTest.nextPlayerWorks(tacticulous.game.commands.GameCommandTest) (9 ms)</li><li>tacticulous.tira.ai.SimulatedRoundTest.singleMoveAndEndTurnTest(tacticulous.tira.ai.SimulatedRoundTest) (3 ms)</li><li>tacticulous.game.domain.BattleMapTest.legalFixedTerrainForMap(tacticulous.game.domain.BattleMapTest) (2 ms)</li><li>tacticulous.game.domain.BattleMapTest.unitPlacingWorks(tacticulous.game.domain.BattleMapTest) (2 ms)</li><li>tacticulous.game.domain.TileTest.tileToStringWorksOrAtLeastDoesNotCauseErrors(tacticulous.game.domain.TileTest) (2 ms)</li><li>tacticulous.game.commands.GameCommandTest.autoTurnWorks(tacticulous.game.commands.GameCommandTest) (6 ms)</li><li>tacticulous.tira.ai.ValueLogicTest.movementValue1(tacticulous.tira.ai.ValueLogicTest) (2 ms)</li><li>tacticulous.game.commands.GameCommandTest.nextTurnWorks(tacticulous.game.commands.GameCommandTest) (6 ms)</li><li>tacticulous.tira.ai.ValueLogicTest.delayValue1(tacticulous.tira.ai.ValueLogicTest) (2 ms)</li><li>tacticulous.game.commands.GameCommandTest.endTurnCommandWorks(tacticulous.game.commands.GameCommandTest) (13 ms)</li><li>tacticulous.game.commands.GameCommandTest.killLeaderEndsGame(tacticulous.game.commands.GameCommandTest) (6 ms)</li><li>tacticulous.tira.ai.SimulatedRoundTest.returnsActionTest(tacticulous.tira.ai.SimulatedRoundTest) (7 ms)</li><li>tacticulous.tira.ai.ValueLogicTest.delayValueEnemiesNotThreatening(tacticulous.tira.ai.ValueLogicTest) (1 ms)</li><li>tacticulous.tira.ai.SimulatedRoundTest.targetsInRangeTesta(tacticulous.tira.ai.SimulatedRoundTest) (5 ms)</li><li>tacticulous.game.commands.UnitCommandTest.chanceToHitWorks(tacticulous.game.commands.UnitCommandTest) (3 ms)</li><li>tacticulous.game.commands.UnitCommandTest.lethalAttackRemovesTarget(tacticulous.game.commands.UnitCommandTest) (3 ms)</li><li>tacticulous.game.commands.GameCommandTest.attackCommandWorks2(tacticulous.game.commands.GameCommandTest) (8 ms)</li><li>tacticulous.tira.datastructure.TacListTest.getWorks(tacticulous.tira.datastructure.TacListTest) (2 ms)</li><li>tacticulous.tira.algorithms.GameUsageTest.speedRangeReturnWorks(tacticulous.tira.algorithms.GameUsageTest) (1 ms)</li><li>tacticulous.tira.ai.SimulatedRoundTest.allMovesAndAttacksTest(tacticulous.tira.ai.SimulatedRoundTest) (5 ms)</li><li>tacticulous.game.commands.GameCommandTest.endRoundCheckWorks(tacticulous.game.commands.GameCommandTest) (6 ms)</li><li>tacticulous.game.domain.TileTest.tileToTileDistanceWorks(tacticulous.game.domain.TileTest) (2 ms)</li><li>tacticulous.tira.ai.ValueLogicTest.attackValue1(tacticulous.tira.ai.ValueLogicTest) (2 ms)</li><li>tacticulous.tira.datastructure.TacListTest.isEmptyAndClearWork(tacticulous.tira.datastructure.TacListTest) (2 ms)</li><li>tacticulous.tira.ai.ArtificialIntelligenceTest.multiTurnAINoCrash(tacticulous.tira.ai.ArtificialIntelligenceTest) (2634 ms)</li><li>tacticulous.tira.ai.AIUnitTest.constructorWorks(tacticulous.tira.ai.AIUnitTest) (1 ms)</li><li>tacticulous.tira.ai.ActionTest.attackAndDelayWorks(tacticulous.tira.ai.ActionTest) (105 ms)</li><li>tacticulous.game.commands.UnitCommandTest.targetMustBeWithinMapBoundaries(tacticulous.game.commands.UnitCommandTest) (7 ms)</li><li>tacticulous.tira.ai.ActionTest.attackDoesNotWorksIfIllegalTarget(tacticulous.tira.ai.ActionTest) (4 ms)</li><li>tacticulous.tira.ai.SimulatedRoundTest.targetsInRangeTest(tacticulous.tira.ai.SimulatedRoundTest) (3 ms)</li><li>tacticulous.game.domain.PlayerTest.doneForTheRoundAndNewRoundWork(tacticulous.game.domain.PlayerTest) (1 ms)</li><li>tacticulous.game.commands.UnitCommandTest.mustHaveTarget(tacticulous.game.commands.UnitCommandTest) (3 ms)</li><li>tacticulous.tira.ai.SimulatedRoundTest.onlyDelayTest(tacticulous.tira.ai.SimulatedRoundTest) (4 ms)</li><li>tacticulous.game.commands.UnitCommandTest.nonLethalAttackDoesNotRemoveTarget(tacticulous.game.commands.UnitCommandTest) (3 ms)</li><li>tacticulous.tira.ai.ActionTest.attackAndEndTurnWorks(tacticulous.tira.ai.ActionTest) (3 ms)</li><li>tacticulous.game.commands.GameCommandTest.nextPlayerDetectsRoundOver(tacticulous.game.commands.GameCommandTest) (9 ms)</li><li>tacticulous.game.commands.UnitCommandTest.legalMoveAndCheckWorks(tacticulous.game.commands.UnitCommandTest) (5 ms)</li><li>tacticulous.tira.ai.ActionTest.actionCopyingWorks(tacticulous.tira.ai.ActionTest) (3 ms)</li><li>tacticulous.tira.ai.SimulatedRoundTest.singleMoveAndAllAttacksTest(tacticulous.tira.ai.SimulatedRoundTest) (3 ms)</li><li>tacticulous.tira.ai.AIUnitTest.undosWork(tacticulous.tira.ai.AIUnitTest) (2 ms)</li><li>tacticulous.tira.ai.ValueLogicTest.movementValueEnemiesNotThreatening(tacticulous.tira.ai.ValueLogicTest) (2 ms)</li><li>tacticulous.tira.datastructure.TacListTest.illegalIndex1(tacticulous.tira.datastructure.TacListTest) (1 ms)</li><li>tacticulous.game.domain.GameTest.newGameNoNullAssets(tacticulous.game.domain.GameTest) (2 ms)</li><li>tacticulous.tira.ai.SimulatedRoundTest.allAttacksAndMoves(tacticulous.tira.ai.SimulatedRoundTest) (5 ms)</li><li>tacticulous.game.domain.BattleMapTest.illegalFixedTerrainForMap2(tacticulous.game.domain.BattleMapTest) (2 ms)</li><li>tacticulous.game.commands.GameCommandTest.attackCommandWorks(tacticulous.game.commands.GameCommandTest) (11 ms)</li><li>tacticulous.tira.ai.ActionTest.moveAndEndTurnWorks(tacticulous.tira.ai.ActionTest) (4 ms)</li><li>tacticulous.game.domain.UnitTest.doneForTheRoundAndNewRoundWork(tacticulous.game.domain.UnitTest) (6 ms)</li><li>tacticulous.tira.ai.SimulatedRoundTest.allAttacksAndDelayTest(tacticulous.tira.ai.SimulatedRoundTest) (297 ms)</li><li>tacticulous.game.commands.UnitCommandTest.cannotAttackItself(tacticulous.game.commands.UnitCommandTest) (4 ms)</li><li>tacticulous.game.domain.GameTest.unitPlacementReturnsFalseIfTooManyUnits(tacticulous.game.domain.GameTest) (2 ms)</li><li>tacticulous.tira.algorithms.GameUsageTest.speedRangeReturnIsCorrect(tacticulous.tira.algorithms.GameUsageTest) (3 ms)</li><li>tacticulous.tira.datastructure.TacListTest.illegalIndex2(tacticulous.tira.datastructure.TacListTest) (2 ms)</li><li>tacticulous.game.domain.TileTest.tileToUnitDistanceWorks(tacticulous.game.domain.TileTest) (3 ms)</li><li>tacticulous.game.commands.GameCommandTest.moveCommandWorks(tacticulous.game.commands.GameCommandTest) (6 ms)</li><li>tacticulous.tira.datastructure.TacListTest.removeWorks2(tacticulous.tira.datastructure.TacListTest) (2 ms)</li><li>tacticulous.game.commands.GameCommandTest.autoTurnToggleWorks(tacticulous.game.commands.GameCommandTest) (120 ms)</li><li>tacticulous.game.commands.GameCommandTest.aiAutoTurnCheckWorks(tacticulous.game.commands.GameCommandTest) (420 ms)</li><li>tacticulous.game.commands.UnitCommandTest.CannotMoveIfTargetTileOccupied(tacticulous.game.commands.UnitCommandTest) (6 ms)</li><li>tacticulous.game.commands.GameCommandTest.gameOverWorks(tacticulous.game.commands.GameCommandTest) (6 ms)</li><li>tacticulous.tira.datastructure.TacListTest.smallSizeWorks(tacticulous.tira.datastructure.TacListTest) (2 ms)</li><li>tacticulous.tira.ai.ValueLogicTest.delayValueDefensivenessDecreasesValueWhenEnemiesInRange(tacticulous.tira.ai.ValueLogicTest) (1 ms)</li><li>tacticulous.game.commands.GameCommandTest.rollForInitiativeWorks(tacticulous.game.commands.GameCommandTest) (8 ms)</li><li>tacticulous.tira.datastructure.TacListTest.listIncreasingAddWorks(tacticulous.tira.datastructure.TacListTest) (2 ms)</li><li>tacticulous.game.domain.TileTest.nullUnitSetWorks(tacticulous.game.domain.TileTest) (2 ms)</li><li>tacticulous.tira.ai.ActionTest.valueThingysWork(tacticulous.tira.ai.ActionTest) (3 ms)</li><li>tacticulous.game.domain.TileTest.notNullUnitSetWorks(tacticulous.game.domain.TileTest) (6 ms)</li><li>tacticulous.game.commands.UnitCommandTest.missingAttackDoesNotRemoveTarget(tacticulous.game.commands.UnitCommandTest) (3 ms)</li><li>tacticulous.tira.ai.SimulatedRoundTest.singleMoveAndDelayTest(tacticulous.tira.ai.SimulatedRoundTest) (3 ms)</li><li>tacticulous.tira.ai.ActionTest.moveAndDelayWorks(tacticulous.tira.ai.ActionTest) (4 ms)</li><li>tacticulous.game.commands.UnitCommandTest.tooSlowMoveDoesNotWork(tacticulous.game.commands.UnitCommandTest) (5 ms)</li><li>tacticulous.tira.ai.SimulatedRoundTest.singleAttackTest(tacticulous.tira.ai.SimulatedRoundTest) (3 ms)</li><li>tacticulous.tira.ai.ActionTest.delayWorks(tacticulous.tira.ai.ActionTest) (3 ms)</li><li>tacticulous.game.commands.UnitCommandTest.legalAttackCheckWorks(tacticulous.game.commands.UnitCommandTest) (4 ms)</li><li>tacticulous.game.domain.PlayerTest.putCorpseWorks(tacticulous.game.domain.PlayerTest) (3 ms)</li><li>tacticulous.game.domain.PlayerTest.detectDeadLeaderWorks(tacticulous.game.domain.PlayerTest) (2 ms)</li><li>tacticulous.game.domain.GameTest.unitPlacementWorks(tacticulous.game.domain.GameTest) (2 ms)</li><li>tacticulous.tira.datastructure.TacListTest.hugeListWorks(tacticulous.tira.datastructure.TacListTest) (3824 ms)</li><li>tacticulous.tira.ai.SimulatedRoundTest.endTurnTest(tacticulous.tira.ai.SimulatedRoundTest) (4 ms)</li><li>tacticulous.tira.ai.ActionTest.nullEndsTurn(tacticulous.tira.ai.ActionTest) (3 ms)</li><li>tacticulous.tira.ai.AIUnitTest.valueWorks(tacticulous.tira.ai.AIUnitTest) (1 ms)</li><li>tacticulous.tira.ai.ValueLogicTest.attackValueAggressionIncreasesValue(tacticulous.tira.ai.ValueLogicTest) (2 ms)</li><li>tacticulous.tira.algorithms.GameUsageTest.speedRangeMultipleRandoms(tacticulous.tira.algorithms.GameUsageTest) (10379 ms)</li><li>tacticulous.game.commands.GameCommandTest.newRoundWorks(tacticulous.game.commands.GameCommandTest) (14 ms)</li><li>tacticulous.tira.ai.ActionTest.endTurnWorks(tacticulous.tira.ai.ActionTest) (5 ms)</li><li>tacticulous.tira.datastructure.TacListTest.iteratorWorks(tacticulous.tira.datastructure.TacListTest) (2 ms)</li><li>tacticulous.tira.algorithms.GameUsageTest.getTilesToMoveToIsCorrect(tacticulous.tira.algorithms.GameUsageTest) (1 ms)</li><li>tacticulous.game.commands.GameCommandTest.attackCommandWorks3(tacticulous.game.commands.GameCommandTest) (6 ms)</li><li>tacticulous.tira.datastructure.TacListTest.illegalIndex3(tacticulous.tira.datastructure.TacListTest) (2 ms)</li><li>tacticulous.tira.datastructure.TacListTest.basicAddWorks(tacticulous.tira.datastructure.TacListTest) (1 ms)</li><li>tacticulous.tira.ai.SimulatedRoundTest.allAttacksAndEndTurnTest(tacticulous.tira.ai.SimulatedRoundTest) (3 ms)</li><li>tacticulous.game.commands.GameCommandTest.nextPlayerSkipsPlayerWithNoUnitsWithActionsLeft(tacticulous.game.commands.GameCommandTest) (8 ms)</li><li>tacticulous.game.commands.UnitCommandTest.outOfBoundsMoveDoesNotWork(tacticulous.game.commands.UnitCommandTest) (3 ms)</li><li>tacticulous.game.commands.GameCommandTest.nextPlayerDetectsGameOver(tacticulous.game.commands.GameCommandTest) (5 ms)</li><li>tacticulous.game.domain.PlayerTest.getFirstUnitWithActionsWorks(tacticulous.game.domain.PlayerTest) (3 ms)</li><li>tacticulous.tira.ai.ArtificialIntelligenceTest.atLeastDoesNotCrashOrRebel(tacticulous.tira.ai.ArtificialIntelligenceTest) (44053 ms)</li><li>tacticulous.tira.ai.SimulatedRoundTest.singleMoveTest(tacticulous.tira.ai.SimulatedRoundTest) (3 ms)</li><li>tacticulous.tira.ai.SimulatedRoundTest.allMovesAndDelayTest(tacticulous.tira.ai.SimulatedRoundTest) (6 ms)</li><li>tacticulous.game.commands.UnitCommandTest.targetNotInRange(tacticulous.game.commands.UnitCommandTest) (3 ms)</li>
+</ul>
+
+<br/>
+
+Report generated by <a href='http://pitest.org'>PIT</a> 0.30
+
+</body>
+</html>

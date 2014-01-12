@@ -20,6 +20,10 @@ public class MinHeap {
         return heapSize == 0;
     }
 
+    /**
+     *
+     * @return
+     */
     public int size() {
         return heapSize;
     }

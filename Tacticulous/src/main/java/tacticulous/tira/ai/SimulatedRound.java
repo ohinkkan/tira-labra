@@ -22,6 +22,13 @@ public class SimulatedRound {
     private final ArtificialIntelligence superiorIntellect;
     private final BattleMap theMatrix;
 
+    /**
+     *
+     * @param activeUnits
+     * @param hostiles
+     * @param mind
+     * @param theMatrix
+     */
     public SimulatedRound(TacList<AIUnit> activeUnits, TacList<AIUnit> hostiles,
             ArtificialIntelligence mind, BattleMap theMatrix) {
         this.activeUnits = activeUnits;
@@ -93,10 +100,10 @@ public class SimulatedRound {
      * Simulates both moving and attacking during the same turn
      *
      * @param unit unit taking the simulated action
-     * @param current optimal action
+     * @param optimal current optimal action
      * @return the action with highest value, possibly original optimal action
      */
-    private Action allMovesAndAttacks(AIUnit unit, Action optimal) {
+    public Action allMovesAndAttacks(AIUnit unit, Action optimal) {
         Action currentAction;
         for (Node node : GameUsage.getTilesToMoveTo(unit, theMatrix)) {
             currentAction = singleMoveAndAllAttacks(unit, nodeToTile(node));
@@ -107,10 +114,15 @@ public class SimulatedRound {
     }
 
     /**
+     * Simulates a single move and all possible attacks at the destination tile.
      *
-     * @param unit
-     * @param tile
-     * @return
+     * Did not originally update attacks value correctly, which apparently gave
+     * an advantage to multi-turn AI. Bug restored, 'cuz it amuses me.
+     *
+     * @param unit acting unit
+     * @param tile target tile for movement
+     * @return best action; if end tile has no targets in range, will return
+     * with value Integer.MIN_VALUE/2.
      */
     public Action singleMoveAndAllAttacks(AIUnit unit, Tile tile) {
         Action action = new Action(0, unit);
@@ -126,6 +138,7 @@ public class SimulatedRound {
                     unit.undoAttack();
                 }
                 action.copyAttackCoordinates(bestAttack);
+//                action.updateValue(bestAttack); //uncommenting this makes multi-turn AI relatively worse, or 1-turn better
             } else {
                 action.negate();
             }
@@ -141,10 +154,10 @@ public class SimulatedRound {
      * Simulates both attacking and moving during the same turn
      *
      * @param unit unit taking the simulated action
-     * @param current optimal action
+     * @param optimal current optimal action
      * @return the action with highest value, possibly original optimal action
      */
-    private Action allAttacksAndMoves(AIUnit unit, Action optimal) {
+    public Action allAttacksAndMoves(AIUnit unit, Action optimal) {
         Action currentAction;
         for (Node node : GameUsage.getTilesToMoveTo(unit, theMatrix)) {
             if (!getTargetsInRange(unit, getHostiles()).isEmpty()) {
@@ -157,10 +170,11 @@ public class SimulatedRound {
     }
 
     /**
+     * Unit takes all possible attacks from start tile and then moves.
      *
-     * @param unit
-     * @param tile
-     * @return
+     * @param unit acting unit
+     * @param tile target tile
+     * @return best action
      */
     public Action allAttacksAndSingleMove(AIUnit unit, Tile tile) {
         Tile undoMovement = tileFromUnit(unit);
@@ -187,10 +201,10 @@ public class SimulatedRound {
      * Simulates only moving and then delaying
      *
      * @param unit unit taking the simulated action
-     * @param current optimal action
+     * @param optimal current optimal action
      * @return the action with highest value, possibly original optimal action
      */
-    private Action allMovesAndDelay(AIUnit unit, Action optimal) {
+    public Action allMovesAndDelay(AIUnit unit, Action optimal) {
         Action currentAction;
         for (Node node : GameUsage.getTilesToMoveTo(unit, theMatrix)) {
             currentAction = singleMoveAndDelay(unit, nodeToTile(node));
@@ -201,10 +215,11 @@ public class SimulatedRound {
     }
 
     /**
+     * Unit moves once and delays
      *
-     * @param unit
-     * @param tile
-     * @return
+     * @param unit acting unit
+     * @param tile target tile
+     * @return best action
      */
     public Action singleMoveAndDelay(AIUnit unit, Tile tile) {
         Tile undo = tileFromUnit(unit);
@@ -226,10 +241,10 @@ public class SimulatedRound {
      * Simulates moving and then ending turn
      *
      * @param unit unit taking the simulated action
-     * @param current optimal action
+     * @param optimal current optimal action
      * @return the action with highest value, possibly original optimal action
      */
-    private Action allMovesAndEndTurn(AIUnit unit, Action optimal) {
+    public Action allMovesAndEndTurn(AIUnit unit, Action optimal) {
         Action currentAction;
         for (Node node : GameUsage.getTilesToMoveTo(unit, theMatrix)) {
             currentAction = singleMoveAndEndTurn(unit, nodeToTile(node));
@@ -239,6 +254,13 @@ public class SimulatedRound {
         return optimal;
     }
 
+    /**
+     * Unit moves once and ends turn
+     *
+     * @param unit acting unit
+     * @param tile target tile
+     * @return best action
+     */
     public Action singleMoveAndEndTurn(AIUnit unit, Tile tile) {
         Tile undoMovement = tileFromUnit(unit);
         Action action = new Action(0, unit);
@@ -257,10 +279,10 @@ public class SimulatedRound {
      * Simulates only attacking and then delaying
      *
      * @param unit unit taking the simulated action
-     * @param current optimal action
+     * @param optimal current optimal action
      * @return the action with highest value, possibly original optimal action
      */
-    private Action allAttacksAndDelay(AIUnit unit, Action optimal) {
+    public Action allAttacksAndDelay(AIUnit unit, Action optimal) {
         if (!getTargetsInRange(unit, hostiles).isEmpty()) {
             Action currentAction = new Action(Integer.MIN_VALUE / 2);
             for (AIUnit target : getTargetsInRange(unit, hostiles)) {
@@ -282,10 +304,10 @@ public class SimulatedRound {
      * Simulates attacking and then ending turn
      *
      * @param unit unit taking the simulated action
-     * @param current optimal action
+     * @param optimal current optimal action
      * @return the action with highest value, possibly original optimal action
      */
-    private Action allAttacksAndEndTurn(AIUnit unit, Action optimal) {
+    public Action allAttacksAndEndTurn(AIUnit unit, Action optimal) {
         if (!getTargetsInRange(unit, hostiles).isEmpty()) {
             Action currentAction = new Action(Integer.MIN_VALUE / 2);
             for (AIUnit target : getTargetsInRange(unit, hostiles)) {
@@ -305,10 +327,10 @@ public class SimulatedRound {
      * Simulates only delaying this turn
      *
      * @param unit unit taking the simulated action
-     * @param current optimal action
+     * @param optimal current optimal action
      * @return the action with highest value, possibly original optimal action
      */
-    private Action onlyDelay(AIUnit unit, Action optimal) {
+    public Action onlyDelay(AIUnit unit, Action optimal) {
         Action currentAction;
         currentAction = delay(unit);
         currentAction.updateValue(checkIfShouldSimulateNextTurn());
@@ -319,9 +341,10 @@ public class SimulatedRound {
     }
 
     /**
+     * Unit delays.
      *
-     * @param unit
-     * @return
+     * @param unit acting unit
+     * @return action with only delay value calculated.
      */
     public Action delay(AIUnit unit) {
         Action action = new Action(superiorIntellect.getValueLogic().delayValue(unit, this), unit);
@@ -330,7 +353,11 @@ public class SimulatedRound {
     }
 
     /**
-     * performs the actual simulated move
+     * Does the actual simulated move
+     *
+     * @param unit acting unit
+     * @param tile target tile
+     * @return action with only movement value calculated
      */
     public Action singleMove(AIUnit unit, Tile tile) {
         Action action = new Action(superiorIntellect.getValueLogic().movementValue(unit, tile, this), unit);
@@ -340,7 +367,11 @@ public class SimulatedRound {
     }
 
     /**
-     * performs the actual simulated attack
+     * Performs the actual simulated attack
+     *
+     * @param unit acting unit
+     * @param target target unit
+     * @return action with only attack value calculated
      */
     public Action singleAttack(AIUnit unit, AIUnit target) {
         Action action = new Action(pseudoAttack(unit, target), unit);
@@ -349,9 +380,14 @@ public class SimulatedRound {
     }
 
     /**
-     * ends current turn, only if no other action is available.
+     * Ends current turn, only if no other action is available.
+     *
+     * @param unit acting unit
+     * @param optimal current optimal action
+     * @return returns a new action with type set to END_TURN if original action
+     * type was null. otherwise returns original optimal action.
      */
-    private Action endTurn(AIUnit unit, Action optimal) {
+    public Action endTurn(AIUnit unit, Action optimal) {
         Action currentAction = new Action(Integer.MIN_VALUE / 2, unit);
         currentAction.setType(ActionType.ENDTURN);
         if (optimal.getType() == null) {
@@ -407,7 +443,7 @@ public class SimulatedRound {
     }
 
     /**
-     * begins new simulated round
+     * Begins a new simulated round
      */
     private SimulatedRound newRound() {
         BattleMap newMatrix = theMatrix.copy();
@@ -416,9 +452,10 @@ public class SimulatedRound {
     }
 
     /**
+     * Returns a tile determined by unit's location coordinates.
      *
-     * @param unit
-     * @return
+     * @param unit coordinates from here
+     * @return tile the unit's at
      */
     private Tile tileFromUnit(AIUnit unit) {
         return theMatrix.getTile(unit.getX(), unit.getY());

@@ -1,6 +1,7 @@
 package tacticulous.game;
 
 import tacticulous.game.domain.Game;
+import tacticulous.tira.testing.AIDueler;
 
 /**
  * Starts the game.

@@ -21,6 +21,12 @@
             <version>4.10</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+            <version>1.9.0</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -79,7 +85,7 @@
                         <param>tacticulous.game.utility.*</param>
                         <param>tacticulous.game.commands.*</param>
                         <param>tacticulous.tira.ai.*</param>
-                        <param>tacticulous.tira.algoritms.*</param>
+                        <param>tacticulous.tira.algorithms.*</param>
                         <param>tacticulous.tira.datastructure.*</param>
                     </targetClasses>
                     <targetTests>
@@ -87,7 +93,7 @@
                         <param>tacticulous.game.utility.*</param>
                         <param>tacticulous.game.commands.*</param>
                         <param>tacticulous.tira.ai.*</param>
-                        <param>tacticulous.tira.algoritms.*</param>
+                        <param>tacticulous.tira.algorithms.*</param>
                         <param>tacticulous.tira.datastructure.*</param>
                     </targetTests>
                 </configuration>

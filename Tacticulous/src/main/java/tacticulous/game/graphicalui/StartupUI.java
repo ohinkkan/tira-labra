@@ -25,6 +25,8 @@ import tacticulous.game.domain.Game;
 import tacticulous.game.domain.Player;
 import tacticulous.game.domain.Unit;
 import tacticulous.tira.ai.ArtificialIntelligence;
+import tacticulous.tira.testing.AIDueler;
+import tacticulous.tira.testing.Performance;
 
 /**
  * Game startup user interface class, includes various thingyListeners.
@@ -40,6 +42,8 @@ public class StartupUI implements ActionListener, ItemListener, ListSelectionLis
     private JButton aiUnitSelect;
     private JButton addUnit;
     private JButton removeUnit;
+    private JButton aiDueler;
+    private JButton performanceTester;
     private JToggleButton player1typeToggle;
     private JToggleButton player2typeToggle;
     private JComboBox player1AItype;
@@ -85,13 +89,19 @@ public class StartupUI implements ActionListener, ItemListener, ListSelectionLis
      * @param container
      */
     private void createComponents(Container container) {
-        container.setLayout(new GridLayout(3, 1));
+        container.setLayout(new GridLayout(4, 1));
+        JPanel moreTop = new JPanel();
         JPanel top = new JPanel();
         JPanel middle = new JPanel();
         JPanel bottom = new JPanel();
 
         String aiTypes[] = {"Aggressive", "Defensive", "Neutral", "Weird"};
         String aiLoads[] = {"Simulated turns: 1", "Simulated turns: 2", "Simulated turns: 3", "Simulated turns: 4", "Simulated turns: 5"};
+
+        aiDueler = new JButton("AI tester (console)");
+        performanceTester = new JButton("Performance tests (console)");
+        aiDueler.addActionListener(this);
+        performanceTester.addActionListener(this);
 
         player1typeToggle = new JToggleButton("Toggle Player1 AI");
         player2typeToggle = new JToggleButton("Toggle Player2 AI");
@@ -136,13 +146,17 @@ public class StartupUI implements ActionListener, ItemListener, ListSelectionLis
         mapList.setSelectedIndex(0);
         mapList.addActionListener(this);
 
+        moreTop.setLayout(new GridLayout(1, 2));
         top.setLayout(new GridLayout(2, 3));
         middle.setLayout(new GridLayout(2, 2));
         bottom.setLayout(new GridLayout());
 
+        container.add(moreTop);
         container.add(top);
         container.add(middle);
         container.add(bottom);
+        moreTop.add(aiDueler);
+        moreTop.add(performanceTester);
         top.add(player1typeToggle);
         top.add(player1AItype);
         top.add(ai1LoadPicker);
@@ -486,6 +500,17 @@ public class StartupUI implements ActionListener, ItemListener, ListSelectionLis
         } else if (ae.getSource() == aiUnitSelect) {
             haveAIPickUnits();
             selectedUnitDisplay.setText(updateDisplay());
+        } else if (ae.getSource() == aiDueler) {
+            frame.dispose();
+            AIDueler.aiTester();
+            Game newGame = new Game();
+            newGame.run();
+        } else if (ae.getSource() == performanceTester) {
+            frame.dispose();
+            Performance.heapComparisons();
+            Performance.listComparisons();
+            Game newGame = new Game();
+            newGame.run();
         }
     }
 
